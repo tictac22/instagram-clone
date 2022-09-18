@@ -2,4 +2,35 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import "./style.css"
 
-createApp(App).mount("#app")
+import { library } from "@fortawesome/fontawesome-svg-core"
+
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+import {
+	faCircleXmark,
+	faHouse,
+	faMagnifyingGlass
+} from "@fortawesome/free-solid-svg-icons"
+
+library.add(faHouse, faMagnifyingGlass, faCircleXmark)
+
+const clickOutside = {
+	beforeMount: (el, binding) => {
+		el.clickOutsideEvent = (event) => {
+			// here I check that click was outside the el and his children
+			if (!(el == event.target || el.contains(event.target))) {
+				// and if it did, call method provided in attribute value
+				binding.value()
+			}
+		}
+		document.addEventListener("click", el.clickOutsideEvent)
+	},
+	unmounted: (el) => {
+		document.removeEventListener("click", el.clickOutsideEvent)
+	}
+}
+
+createApp(App)
+	.component("font-awesome-icon", FontAwesomeIcon)
+	.directive("click-outside", clickOutside)
+	.mount("#app")
