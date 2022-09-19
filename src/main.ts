@@ -7,14 +7,28 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import {
+	faBookmark,
 	faCircleXmark,
+	faComment,
 	faCompass,
+	faHeart,
 	faHouse,
 	faMagnifyingGlass,
+	faSmile,
 	faSquarePlus
 } from "@fortawesome/free-solid-svg-icons"
 
-library.add(faHouse, faMagnifyingGlass, faCircleXmark, faSquarePlus, faCompass)
+library.add(
+	faHouse,
+	faMagnifyingGlass,
+	faCircleXmark,
+	faSquarePlus,
+	faCompass,
+	faHeart,
+	faComment,
+	faBookmark,
+	faSmile
+)
 
 const clickOutside = {
 	beforeMount: (el, binding) => {

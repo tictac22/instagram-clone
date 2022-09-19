@@ -57,6 +57,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@popperjs/core@^2.11.0":
+  version "2.11.6"
+  resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
+  integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
+
 "@types/node@^18.7.18":
   version "18.7.18"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.7.18.tgz#633184f55c322e4fb08612307c274ee6d5ed3154"
@@ -863,7 +868,15 @@ vue-tsc@^0.40.4:
     "@volar/vue-language-core" "0.40.13"
     "@volar/vue-typescript" "0.40.13"
 
-vue@^3.2.37:
+vue3-emoji-picker@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/vue3-emoji-picker/-/vue3-emoji-picker-1.1.4.tgz#53362965b0016b918d99e95c2cd12c58923fefeb"
+  integrity sha512-6HJkrwTlyr61TLspAWxf+SP+mHtfcKVH2gPYqvKF7FQJx+cRD/xHO6RqVsxmRS+ytp3DCgs88j1GTOTzMwLsJQ==
+  dependencies:
+    "@popperjs/core" "^2.11.0"
+    vue "^3.2.23"
+
+vue@^3.2.23, vue@^3.2.37:
   version "3.2.39"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.39.tgz#de071c56c4c32c41cbd54e55f11404295c0dd62d"
   integrity sha512-tRkguhRTw9NmIPXhzk21YFBqXHT2t+6C6wPOgQ50fcFVWnPdetmRqbmySRHznrYjX2E47u0cGlKGcxKZJ38R/g==

@@ -6,6 +6,23 @@
 	.triangle {
 		@apply w-0 h-0 border-solid border-l-[11px] border-l-[transparent] border-r-[11px] border-r-[transparent] border-b-[17px] border-b-white content-[""] absolute;
 	}
+	.hide {
+		@apply opacity-0 invisible pointer-events-none;
+	}
+	.show {
+		@apply opacity-25 visible pointer-events-auto;
+	}
+}
+@layer utilities {
+	/* Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
 }
 html,
 body {
