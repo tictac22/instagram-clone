@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import Dropdown from "./dropdown.vue"
 import Search from "./search.vue"
+
+/** 
+ * <font-awesome-icon
+					icon="fa-solid fa-house"
+					class="w-6 h-6 ml-6 "
+				/>
+ * 
+*/
 </script>
 
 <template>
@@ -27,8 +36,20 @@ import Search from "./search.vue"
 				</svg>
 			</div>
 			<Search />
-			<div>
-				<font-awesome-icon icon="fa-solid fa-house" class="" />
+			<div class="flex items-center">
+				<font-awesome-icon
+					icon="fa-solid fa-house"
+					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
+				/>
+				<font-awesome-icon
+					icon="fa-solid fa-square-plus"
+					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
+				/>
+				<font-awesome-icon
+					icon="fa-solid fa-compass"
+					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
+				/>
+				<Dropdown />
 			</div>
 		</div>
 	</header>

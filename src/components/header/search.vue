@@ -29,10 +29,15 @@ const collapseContainer = () => (state.isExpanded = false)
 		</div>
 
 		<div
-			class="absolute h-[375px] w-[375px] -translate-x-12 bg-white p-3"
-			v-if="state.isExpanded"
+			class="absolute h-[375px] w-[375px] -translate-x-12 top-[50px] bg-white drop-shadow rounded-lg transition-all"
+			:class="[
+				state.isExpanded
+					? 'opacity-1 visible pointer-events-auto translate-y-0'
+					: 'opacity-0 invisible pointer-events-none -translate-y-3'
+			]"
 		>
-			<div class="flex items-center flex-col h-full">
+			<div class="triangle -top-[13px] left-1/2 -translate-x-1/2" />
+			<div class="flex items-center flex-col h-full relative p-3">
 				<h4 class="font-bold self-start">Recent</h4>
 				<p class="flex-auto flex items-center text-gray-400">
 					No recent searches.

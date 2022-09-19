@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+	.triangle {
+		@apply w-0 h-0 border-solid border-l-[11px] border-l-[transparent] border-r-[11px] border-r-[transparent] border-b-[17px] border-b-white content-[""] absolute;
+	}
+}
 html,
 body {
 	height: 100%;
