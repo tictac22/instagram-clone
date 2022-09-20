@@ -17,6 +17,7 @@ import {
 	faSmile,
 	faSquarePlus
 } from "@fortawesome/free-solid-svg-icons"
+import { router } from "./route"
 
 library.add(
 	faHouse,
@@ -47,6 +48,7 @@ const clickOutside = {
 }
 
 createApp(App)
+	.use(router)
 	.component("font-awesome-icon", FontAwesomeIcon)
 	.directive("click-outside", clickOutside)
 	.mount("#app")
