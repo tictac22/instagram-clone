@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Header from "@/header/header.vue"
-import Post from "@/post/post.vue"
+import Header from "@/components/header/header.vue"
+import Post from "@/components/post/post.vue"
 import { reactive } from "vue"
 const count = reactive({
 	count: 0

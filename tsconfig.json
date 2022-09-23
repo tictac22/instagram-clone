@@ -14,7 +14,9 @@
 		"skipLibCheck": true,
 		"types": ["node"],
 		"paths": {
-			"@/*": ["./src/components/*"]
+			"@/components/*": ["./src/components/*"],
+			"@/pages/*": ["./src/pages/*"],
+			"@/utils/*": ["./src/utils/*"]
 		}
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
