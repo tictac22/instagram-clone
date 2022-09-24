@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import {
 	faBookmark,
+	faCircleCheck,
 	faCircleXmark,
 	faComment,
 	faCompass,
@@ -28,7 +29,8 @@ library.add(
 	faHeart,
 	faComment,
 	faBookmark,
-	faSmile
+	faSmile,
+	faCircleCheck
 )
 
 const clickOutside = {
