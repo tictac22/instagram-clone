@@ -19,7 +19,7 @@
 		</svg>
 		<div class="mt-6 flex flex-col">
 			<input
-				placeholder="Phone number, username, or email"
+				placeholder="Email"
 				class="pl-[9px] pr-[7px] pb-[8px] bg-[#fafafa] border border-solid border-[#dbdbdb] placeholder:text-xs rounded outline-none focus:border-[#a6a4a4] w-full"
 				type="text"
 			/>
