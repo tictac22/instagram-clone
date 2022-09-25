@@ -4,14 +4,17 @@ import { initializeApp } from "firebase/app"
 import {
 	createUserWithEmailAndPassword,
 	deleteUser,
-	getAuth
+	FacebookAuthProvider,
+	getAuth,
+	signInWithPopup
 } from "firebase/auth"
 import {
-	addDoc,
 	collection,
+	doc,
 	getDocs,
 	getFirestore,
 	query,
+	setDoc,
 	where
 } from "firebase/firestore"
 const firebaseConfig = {
@@ -36,27 +39,48 @@ type SignUp = {
 	fullName: string
 }
 
-export const signUp = async (signUp: SignUp) => {
+export const signInWithFacebook = async () => {
+	try {
+		const provider = new FacebookAuthProvider()
+		const result = await signInWithPopup(auth, provider)
+
+		const usersCollectionRef = doc(db, "users", result.user.uid)
+		await setDoc(usersCollectionRef, {
+			userId: result.user.uid
+		})
+	} catch (error) {
+		console.log(error)
+		throw new CustomError(ErrorMessages.email, "email")
+	}
+}
+export const signUp = async ({
+	email,
+	password,
+	username,
+	fullName
+}: SignUp) => {
 	try {
 		const registration = await createUserWithEmailAndPassword(
 			auth,
-			signUp.email,
-			signUp.password
+			email,
+			password
 		)
-
-		const isTaken = await isNameTaken(signUp.username)
+		const isTaken = await isNameTaken(username)
 		if (isTaken) {
 			await deleteUser(registration.user)
-			throw new Error("such name is already taken")
+			throw new CustomError(ErrorMessages.username, "username")
 		}
-		const usersCollectionRef = collection(db, "users")
-		await addDoc(usersCollectionRef, {
+		const usersCollectionRef = doc(db, "users", registration.user.uid)
+		await setDoc(usersCollectionRef, {
 			userId: registration.user.uid,
-			username: signUp.username,
-			age: 12
+			username,
+			fullName
 		})
 	} catch (error) {
-		console.error(error)
+		if (error instanceof CustomError) {
+			throw error
+		}
+		throw new CustomError(ErrorMessages.email, "email")
 	}
 }
 const isNameTaken = async (username: string) => {
@@ -75,4 +99,21 @@ const isNameTaken = async (username: string) => {
 	} catch (error) {
 		console.error(error)
 	}
+}
+
+class CustomError extends Error {
+	status: number
+	data: object
+	constructor(message: string, field: string) {
+		super(message)
+		this.status = 404
+		this.data = {
+			[field]: [message]
+		}
+	}
+}
+
+const enum ErrorMessages {
+	email = "Email is already in use",
+	username = "Username is already in use"
 }

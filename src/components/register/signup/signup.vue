@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { signInWithFacebook } from "@/utils/firebase"
 import GetApp from "../getApp.vue"
 import Form from "./form.vue"
 </script>
@@ -15,6 +16,7 @@ import Form from "./form.vue"
 				Sign up to see photos and videos from your friends.
 			</p>
 			<button
+				@click="signInWithFacebook"
 				class="text-white bg-[#0095f6] flex items-center w-full justify-center rounded p-2 my-4 cursor-pointer"
 			>
 				<div class="bg-white p-1 rounded-sm">

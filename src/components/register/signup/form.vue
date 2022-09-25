@@ -35,9 +35,15 @@ const rules = computed(() => ({
 const form = useVuelidate(rules, state, { $externalResults })
 
 const submit = async () => {
-	await signUp({
-		...state
-	})
+	form.value.$clearExternalResults()
+	try {
+		await signUp({
+			...state
+		})
+	} catch (error) {
+		console.log(error, error.data)
+		$externalResults.value = error.data
+	}
 }
 
 const inputs = {
@@ -70,8 +76,12 @@ const inputs = {
 				v-for="input in inputs"
 				:touch="form[input.name].$touch"
 				:placeholder="input.placeholder"
-				v-model="state[input.name]"
-				:error="form[input.name].$errors[0]?.$message || null"
+				v-model="form[input.name].$model"
+				:error="
+					form[input.name].$errors[0]?.$message ||
+					form[input.name].$externalResults[0]?.$message ||
+					null
+				"
 				:type="input.type"
 				:invalid="form[input.name].$invalid"
 			/>
