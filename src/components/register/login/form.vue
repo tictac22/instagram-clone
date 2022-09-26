@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import useVuelidate from "@vuelidate/core"
-import { reactive, ref } from "vue"
+import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
 import Spin from "../spin.vue"
@@ -13,8 +13,7 @@ const state = reactive({
 	isLoading: false,
 	isError: false
 })
-const $externalResults = ref({})
-const form = useVuelidate(logInRules, state, { $externalResults })
+const form = useVuelidate(logInRules, state)
 
 const submit = async () => {
 	form.value.$clearExternalResults()
