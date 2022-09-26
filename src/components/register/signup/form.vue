@@ -5,12 +5,17 @@ import { computed, reactive, ref } from "vue"
 import Agreement from "./agreement.vue"
 
 import { signUp } from "@/utils/firebase"
+import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
+import Spin from "../spin.vue"
+
+const router = useRouter()
 const state = reactive({
 	email: "",
 	fullName: "",
 	username: "",
-	password: ""
+	password: "",
+	isLoading: false
 })
 const $externalResults = ref({})
 const rules = computed(() => ({
@@ -36,13 +41,16 @@ const form = useVuelidate(rules, state, { $externalResults })
 
 const submit = async () => {
 	form.value.$clearExternalResults()
+	state.isLoading = true
 	try {
 		await signUp({
 			...state
 		})
+		router.push("/")
 	} catch (error) {
 		console.log(error, error.data)
 		$externalResults.value = error.data
+		state.isLoading = false
 	}
 }
 
@@ -50,22 +58,26 @@ const inputs = {
 	email: {
 		name: "email",
 		placeholder: "Email",
-		type: "text"
+		type: "text",
+		autocomplete: "off"
 	},
 	fullName: {
 		name: "fullName",
 		placeholder: "Full Name",
-		type: "text"
+		type: "text",
+		autocomplete: "off"
 	},
 	username: {
 		name: "username",
 		placeholder: "Username",
-		type: "text"
+		type: "text",
+		autocomplete: "off"
 	},
 	password: {
 		name: "password",
 		placeholder: "Password",
-		type: "password"
+		type: "password",
+		autocomplete: "new-password"
 	}
 }
 </script>
@@ -84,16 +96,17 @@ const inputs = {
 				"
 				:type="input.type"
 				:invalid="form[input.name].$invalid"
+				:autocomplete="input.autocomplete"
 			/>
 		</div>
 		<Agreement />
 		<button
 			type="submit"
-			:disabled="form.$invalid"
+			:disabled="form.$invalid || state.isLoading"
 			:class="[form.$invalid ? 'bg-[#0095f64d]' : 'bg-[#0095f6]']"
-			class="bg-[#0095f6] text-white rounded my-3 py-1 w-full cursor-pointer"
+			class="bg-[#0095f6] text-white rounded my-3 py-1 w-full cursor-pointer flex items-center justify-center"
 		>
-			Next
+			<span v-if="!state.isLoading">Next</span> <Spin v-else />
 		</button>
 	</form>
 </template>

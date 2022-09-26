@@ -1,13 +1,13 @@
+import { RoutePaths } from "@/utils/paths"
 import { createRouter, createWebHistory } from "vue-router"
-
 const Home = () => import("@/pages/home.vue")
-const Test = () => import("./components/register/login/login.vue")
-const SignUp = () => import("./components/register/signup/signup.vue")
+const SignUp = () => import("@/pages/register/signup.vue")
+const Login = () => import("@/pages/register/login.vue")
 
 const routes = [
-	{ path: "/", component: Home },
-	{ path: "/signup", component: SignUp },
-	{ path: "/test", component: Test }
+	{ path: RoutePaths.HOME, component: Home },
+	{ path: RoutePaths.SIGNUP, component: SignUp },
+	{ path: RoutePaths.LOGIN, component: Login }
 ]
 
 export const router = createRouter({

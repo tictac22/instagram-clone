@@ -1,5 +1,5 @@
 <template>
-	<form class="bg-white border border-solid border-[#dbdbdb] px-[40px] pt-9">
+	<form class="">
 		<svg
 			aria-label="Instagram"
 			class="cursor-pointer m-auto w-[175px] h-[51px]"
@@ -38,10 +38,6 @@
 				<span class="bg-[#dbdbdb] h-[1px] w-1/2"></span>
 				<span class="text-gray-500 px-2">OR</span>
 				<span class="bg-[#dbdbdb] h-[1px] w-1/2"></span>
-			</div>
-			<div class="flex items-center justify-center mb-5 mt-2">
-				<img src="facebook.png" alt="facebook" class="w-4 h-4" />
-				<p class="ml-1">Log in with Facebook</p>
 			</div>
 		</div>
 	</form>

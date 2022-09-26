@@ -9,6 +9,7 @@ const props = defineProps<{
 	error: string | null
 	type: string
 	invalid: boolean
+	autocomplete: string
 }>()
 defineEmits<{
 	(e: "update:modelValue", value: string): void
@@ -37,7 +38,7 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 			:class="[isPassword ? 'pr-[72px]' : 'pr-[38px]']"
 			:type="props.type"
 			:value="props.modelValue"
-			:autocomplete="isPassword ? 'new-autocomplete' : 'off'"
+			:autocomplete="props.autocomplete"
 			@input="
 				$emit(
 					'update:modelValue',
