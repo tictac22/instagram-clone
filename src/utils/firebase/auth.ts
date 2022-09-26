@@ -71,6 +71,7 @@ export const logIn = async ({ email, password }: Login) => {
 		throw new CustomError(ErrorMessages.password, "email")
 	}
 }
+
 const isNameTaken = async (username: string) => {
 	try {
 		const usersCollectionRef = collection(db, "users")
