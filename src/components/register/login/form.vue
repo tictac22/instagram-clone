@@ -1,5 +1,39 @@
+<script lang="ts" setup>
+import useVuelidate from "@vuelidate/core"
+import { reactive, ref } from "vue"
+import { useRouter } from "vue-router"
+import FormInput from "../formInput.vue"
+import Spin from "../spin.vue"
+import { logInInputs, logInRules } from "./validation"
+
+const router = useRouter()
+const state = reactive({
+	email: "",
+	password: "",
+	isLoading: false,
+	isError: false
+})
+const $externalResults = ref({})
+const form = useVuelidate(logInRules, state, { $externalResults })
+
+const submit = async () => {
+	form.value.$clearExternalResults()
+	state.isLoading = false
+	state.isLoading = true
+	try {
+		const { logIn } = await import("@/utils/firebase")
+		await logIn({
+			...state
+		})
+		router.push("/")
+	} catch (error) {
+		state.isError = true
+		state.isLoading = false
+	}
+}
+</script>
 <template>
-	<form class="">
+	<form v-on:submit.prevent="submit">
 		<svg
 			aria-label="Instagram"
 			class="cursor-pointer m-auto w-[175px] h-[51px]"
@@ -18,22 +52,33 @@
 			></path>
 		</svg>
 		<div class="mt-6 flex flex-col">
-			<input
-				placeholder="Email"
-				class="pl-[9px] pr-[7px] pb-[8px] bg-[#fafafa] border border-solid border-[#dbdbdb] placeholder:text-xs rounded outline-none focus:border-[#a6a4a4] w-full"
-				type="text"
-			/>
-			<input
-				placeholder="Password"
-				class="pl-[9px] pr-[7px] pb-[8px] bg-[#fafafa] border border-solid border-[#dbdbdb] placeholder:text-xs rounded outline-none focus:border-[#a6a4a4] w-full mt-2"
-				type="password"
+			<FormInput
+				v-for="input in logInInputs"
+				:touch="form[input.name].$touch"
+				:placeholder="input.placeholder"
+				v-model="form[input.name].$model"
+				:error="
+					form[input.name].$errors[0]?.$message ||
+					form[input.name].$externalResults[0]?.$message ||
+					null
+				"
+				:type="input.type"
+				:invalid="form[input.name].$invalid"
+				:autocomplete="input.autocomplete"
 			/>
 			<button
 				type="submit"
-				class="bg-[#0095f6] text-white rounded my-3 py-1"
+				class="text-white rounded my-3 py-1 flex items-center justify-center"
+				:disabled="form.$invalid || state.isLoading"
+				:class="[form.$invalid ? 'bg-[#0095f64d]' : 'bg-[#0095f6]']"
 			>
-				Log In
+				<Spin v-if="state.isLoading" />
+				<span v-else>Log In</span>
 			</button>
+			<p v-if="state.isError" class="text-center my-2 text-red-500">
+				Sorry, your password or email was incorrect. Please double-check
+				form values
+			</p>
 			<div class="flex items-center">
 				<span class="bg-[#dbdbdb] h-[1px] w-1/2"></span>
 				<span class="text-gray-500 px-2">OR</span>

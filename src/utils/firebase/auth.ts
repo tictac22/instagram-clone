@@ -1,43 +1,19 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app"
-
 import {
 	createUserWithEmailAndPassword,
 	deleteUser,
 	FacebookAuthProvider,
-	getAuth,
+	signInWithEmailAndPassword,
 	signInWithPopup
 } from "firebase/auth"
 import {
 	collection,
 	doc,
 	getDocs,
-	getFirestore,
 	query,
 	setDoc,
 	where
 } from "firebase/firestore"
-const firebaseConfig = {
-	apiKey: import.meta.env.VITE_apiKey,
-	authDomain: import.meta.env.VITE_authDomain,
-	projectId: import.meta.env.VITE_projectId,
-	storageBucket: import.meta.env.VITE_storageBucket,
-	messagingSenderId: import.meta.env.VITE_messagingSenderId,
-	appId: import.meta.env.VITE_appId,
-	measurementId: import.meta.env.VITE_measurementId
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
-export const auth = getAuth()
-
-type SignUp = {
-	email: string
-	password: string
-	username: string
-	fullName: string
-}
+import { auth, CustomError, db, ErrorMessages, Login, SignUp } from "./config"
 
 export const signInWithFacebook = async () => {
 	try {
@@ -83,6 +59,18 @@ export const signUp = async ({
 		throw new CustomError(ErrorMessages.email, "email")
 	}
 }
+
+export const logIn = async ({ email, password }: Login) => {
+	try {
+		await signInWithEmailAndPassword(auth, email, password)
+	} catch (error) {
+		const message = error.message
+		if (message === firebaseError.email) {
+			throw new CustomError(ErrorMessages.email, "email")
+		}
+		throw new CustomError(ErrorMessages.password, "email")
+	}
+}
 const isNameTaken = async (username: string) => {
 	try {
 		const usersCollectionRef = collection(db, "users")
@@ -101,19 +89,7 @@ const isNameTaken = async (username: string) => {
 	}
 }
 
-class CustomError extends Error {
-	status: number
-	data: object
-	constructor(message: string, field: string) {
-		super(message)
-		this.status = 404
-		this.data = {
-			[field]: [message]
-		}
-	}
-}
-
-const enum ErrorMessages {
-	email = "Email is already in use",
-	username = "Username is already in use"
+const enum firebaseError {
+	email = "Firebase: Error (auth/user-not-found).",
+	password = "Firebase: Error (auth/wrong-password)."
 }
