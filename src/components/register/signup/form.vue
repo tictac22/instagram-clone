@@ -4,7 +4,6 @@ import { email, minLength, required } from "@vuelidate/validators"
 import { computed, reactive, ref } from "vue"
 import Agreement from "./agreement.vue"
 
-import { signUp } from "@/utils/firebase"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
 import Spin from "../spin.vue"
@@ -43,6 +42,7 @@ const submit = async () => {
 	form.value.$clearExternalResults()
 	state.isLoading = true
 	try {
+		const { signUp } = await import("@/utils/firebase")
 		await signUp({
 			...state
 		})

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { signInWithFacebook } from "@/utils/firebase"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 
@@ -7,6 +6,7 @@ const router = useRouter()
 const alreadyInUse = ref(false)
 const signWithFacebook = async () => {
 	try {
+		const { signInWithFacebook } = await import("@/utils/firebase")
 		await signInWithFacebook()
 		router.push("/")
 	} catch (error) {
