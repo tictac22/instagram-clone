@@ -6,6 +6,9 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
+import { createPinia } from "pinia"
+import { router } from "./route"
+
 import {
 	faBookmark,
 	faCircleCheck,
@@ -18,7 +21,6 @@ import {
 	faSmile,
 	faSquarePlus
 } from "@fortawesome/free-solid-svg-icons"
-import { router } from "./route"
 
 library.add(
 	faHouse,
@@ -51,6 +53,7 @@ const clickOutside = {
 
 createApp(App)
 	.use(router)
+	.use(createPinia())
 	.component("font-awesome-icon", FontAwesomeIcon)
 	.directive("click-outside", clickOutside)
 	.mount("#app")

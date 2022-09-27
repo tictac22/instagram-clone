@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import Header from "@/components/header/header.vue"
-import Post from "@/components/post/post.vue"
-import { reactive } from "vue"
-const count = reactive({
-	count: 0
-})
-const increment = () => count.count++
-const decrement = () => count.count--
-//#fafafa
-const something = "sadasdsadsa"
+import LoginHome from "@/components/register/login/loginHome.vue"
+import { useUserStore } from "@/utils/pinia"
+import { defineAsyncComponent } from "vue"
+const { user } = useUserStore()
+
+const Post = defineAsyncComponent(() => import("@/components/post/post.vue"))
 </script>
 
 <template>
-	<div>
+	<LoginHome v-if="user.isAuthenticated === false" />
+	<div v-else>
 		<Header />
 		<div class="max-w-4xl m-auto mt-8 px-3">
 			<div class="flex items-center">

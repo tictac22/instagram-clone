@@ -16,7 +16,6 @@ const state = reactive({
 const form = useVuelidate(logInRules, state)
 
 const submit = async () => {
-	form.value.$clearExternalResults()
 	state.isLoading = false
 	state.isLoading = true
 	try {
@@ -74,7 +73,10 @@ const submit = async () => {
 				<Spin v-if="state.isLoading" />
 				<span v-else>Log In</span>
 			</button>
-			<p v-if="state.isError" class="text-center my-2 text-red-500">
+			<p
+				v-if="state.isError"
+				class="text-center my-1 text-red-500 max-w-[230px] m-auto"
+			>
 				Sorry, your password or email was incorrect. Please double-check
 				form values
 			</p>
