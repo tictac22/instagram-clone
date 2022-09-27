@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive } from "vue"
+//@ts-ignore
 import EmojiPicker from "vue3-emoji-picker"
 import "../../../node_modules/vue3-emoji-picker/dist/style.css"
 const state = reactive({
@@ -15,7 +16,7 @@ const closePopup = () => (state.popup = false)
 
 const openPopup = () => (state.popup = true)
 
-const setEmoji = (emoji) => (state.textarea += emoji.i)
+const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)
 
 const handleEmojiPicker = () => (state.showEmojiPicker = !state.showEmojiPicker)
 
@@ -23,6 +24,7 @@ const submit = () => {
 	console.log(state.textarea)
 	state.textarea = ""
 }
+//@ts-ignore
 const textareaHandler = (el) => {
 	const target = el.target
 	console.log(target.value.length)
@@ -51,7 +53,11 @@ const textParts = computed(() => {
 		class="w-full border border-solid border-[#DBDBDB] rounded-lg bg-white"
 	>
 		<div class="flex items-center px-3 py-2">
-			<img src="default.jpg" alt="default" class="w-8 h-8 rounded-full" />
+			<img
+				src="/default.jpg"
+				alt="default"
+				class="w-8 h-8 rounded-full"
+			/>
 			<p class="mr-auto ml-2">natgeo</p>
 			<div v-on:click.stop="openPopup">
 				<svg

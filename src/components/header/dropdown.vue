@@ -10,7 +10,7 @@ const collapseMenu = () => (expanded.value = false)
 <template>
 	<div class="relative ml-6" v-click-outside="collapseMenu">
 		<div class="cursor-pointer" v-on:click="expanded = !expanded">
-			<img alt="default" src="default.jpg" class="w-6 h-6" />
+			<img alt="default" src="/default.jpg" class="w-6 h-6" />
 		</div>
 		<div
 			class="bg-white drop-shadow p-2 w-[192px] rounded absolute -right-[10px] top-[40px] transition-all"

@@ -36,7 +36,9 @@ library.add(
 )
 
 const clickOutside = {
+	//@ts-ignore
 	beforeMount: (el, binding) => {
+		//@ts-ignore
 		el.clickOutsideEvent = (event) => {
 			// here I check that click was outside the el and his children
 			if (!(el == event.target || el.contains(event.target))) {
@@ -46,6 +48,7 @@ const clickOutside = {
 		}
 		document.addEventListener("click", el.clickOutsideEvent)
 	},
+	//@ts-ignore
 	unmounted: (el) => {
 		document.removeEventListener("click", el.clickOutsideEvent)
 	}

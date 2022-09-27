@@ -64,6 +64,7 @@ export const logIn = async ({ email, password }: Login) => {
 	try {
 		await signInWithEmailAndPassword(auth, email, password)
 	} catch (error) {
+		//@ts-ignore
 		const message = error.message
 		if (message === firebaseError.email) {
 			throw new CustomError(ErrorMessages.email, "email")

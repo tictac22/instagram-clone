@@ -30,6 +30,7 @@ const submit = async () => {
 		})
 		router.push("/")
 	} catch (error) {
+		//@ts-ignore
 		$externalResults.value = error.data
 		state.isLoading = false
 	}

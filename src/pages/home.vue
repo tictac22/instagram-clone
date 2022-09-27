@@ -20,7 +20,7 @@ const Post = defineAsyncComponent(() => import("@/components/post/post.vue"))
 				<div class="flex items-center self-start mt-4">
 					<img
 						alt="default"
-						src="default.jpg"
+						src="/default.jpg"
 						class="w-14 h-14 rounded-full mr-3"
 					/>
 					<div>
