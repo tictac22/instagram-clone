@@ -1,11 +1,17 @@
 import vue from "@vitejs/plugin-vue"
 import path from "path"
+import { terser } from "rollup-plugin-terser"
 import { defineConfig } from "vite"
 
-// https://vitejs.dev/config/
-console.log(__dirname)
 export default defineConfig({
-	plugins: [vue()],
+	plugins: [
+		vue(),
+		terser({
+			format: {
+				comments: false
+			}
+		})
+	],
 	server: {
 		port: 3000
 	},
