@@ -48,11 +48,11 @@ const clickOutside = {
 				binding.value()
 			}
 		}
-		document.addEventListener("click", el.clickOutsideEvent)
+		document.addEventListener("pointerdown", el.clickOutsideEvent)
 	},
 	//@ts-ignore
 	unmounted: (el) => {
-		document.removeEventListener("click", el.clickOutsideEvent)
+		document.removeEventListener("pointerdown", el.clickOutsideEvent)
 	}
 }
 

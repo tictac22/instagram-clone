@@ -76,45 +76,44 @@ const textParts = computed(() => {
 				</svg>
 			</div>
 		</div>
+
 		<div
-			class="absolute inset-0 z-40 bg-black transition-opacity"
-			:class="[state.popup ? 'show' : 'hide']"
-		/>
-		<div
-			class="fixed overflow-x-auto inset-0 flex justify-center items-center z-50 transition-all"
+			class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 transition-all z-3"
 			:class="[
 				state.popup ? 'show opacity-100 scale-100' : 'hide scale-105'
 			]"
 		>
-			<div
-				class="w-[400px] bg-white rounded"
-				v-click-outside="closePopup"
-			>
-				<p
-					class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+			<div class="flex items-center justify-center min-h-full">
+				<div
+					class="w-[400px] bg-white rounded"
+					v-click-outside="closePopup"
 				>
-					Delete
-				</p>
-				<p
-					class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
-				>
-					Unfollow
-				</p>
-				<p
-					class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
-				>
-					Turn off commenting
-				</p>
-				<p
-					class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
-				>
-					Go to post
-				</p>
-				<p
-					class="text-center py-3 hover:bg-slate-300 cursor-pointer transition-colors"
-				>
-					Copy link
-				</p>
+					<p
+						class="text-center select-none py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+					>
+						Delete
+					</p>
+					<p
+						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+					>
+						Unfollow
+					</p>
+					<p
+						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+					>
+						Turn off commenting
+					</p>
+					<p
+						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+					>
+						Go to post
+					</p>
+					<p
+						class="text-center py-3 hover:bg-slate-300 cursor-pointer transition-colors"
+					>
+						Copy link
+					</p>
+				</div>
 			</div>
 		</div>
 		<div>
