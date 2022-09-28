@@ -19,7 +19,8 @@ import {
 	faHouse,
 	faMagnifyingGlass,
 	faSmile,
-	faSquarePlus
+	faSquarePlus,
+	faXmark
 } from "@fortawesome/free-solid-svg-icons"
 
 library.add(
@@ -32,7 +33,8 @@ library.add(
 	faComment,
 	faBookmark,
 	faSmile,
-	faCircleCheck
+	faCircleCheck,
+	faXmark
 )
 
 const clickOutside = {

@@ -37,3 +37,15 @@ body {
 	position: relative;
 	background-color: #fafafa;
 }
+
+.cropper-view-box {
+	outline: none !important;
+	outline-color: none !important;
+}
+
+.cropper-point {
+	display: none !important;
+}
+.cropper-dashed {
+	border-style: solid !important;
+}

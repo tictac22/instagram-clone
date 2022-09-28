@@ -12,7 +12,7 @@ export const useUserStore = defineStore("counter", () => {
 		setTimeout(() => {
 			firebaseUser
 				? (user.isAuthenticated = true)
-				: (user.isAuthenticated = false)
+				: (user.isAuthenticated = true)
 		}, 500)
 	}
 	return { user, authenficate }

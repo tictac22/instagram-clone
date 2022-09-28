@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CreatePost from "../postForm.vue/createPost.vue"
 import Dropdown from "./dropdown.vue"
 import Search from "./search.vue"
 
@@ -41,10 +42,7 @@ import Search from "./search.vue"
 					icon="fa-solid fa-house"
 					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
 				/>
-				<font-awesome-icon
-					icon="fa-solid fa-square-plus"
-					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
-				/>
+				<CreatePost />
 				<font-awesome-icon
 					icon="fa-solid fa-compass"
 					class="w-6 h-6 ml-6 text-white stroke-black stroke-[30px]"
