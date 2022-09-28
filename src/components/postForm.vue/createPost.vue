@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import Drag from "@/assets/drag.vue"
 import "cropperjs/dist/cropper.css"
-import { defineAsyncComponent, reactive, ref } from "vue"
-import drag from "../../assets/drag.svg"
+import { computed, defineAsyncComponent, reactive, ref } from "vue"
 import IsLoading from "../isLoading.vue"
 const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
 interface InputFileEvent extends Event {
@@ -11,40 +11,52 @@ interface InputFileEvent extends Event {
 interface State {
 	open: boolean
 	file: string | ArrayBuffer | null | undefined
-	loading: boolean
+	isDragging: boolean
 }
-/**
- * <VueCropper
-								:src="state.file"
-								:viewMode="3"
-								:autoCropArea="1"
-								:center="false"
-							/>
- * 
- */
+
 const input = ref<HTMLInputElement | null>(null)
+const cropper = ref<null | typeof VueCropper>(null)
 const state = reactive<State>({
-	loading: false,
-	open: false,
-	file: ""
+	open: true,
+	file: "",
+	isDragging: false
 })
 
 const handlePopup = () => {
 	state.open = !state.open
 }
-const onPickFile = () => {
-	input.value!.click()
-}
+const triggerInputFile = () => input.value!.click()
 
-const handleFile = (event: Event) => {
-	const file = (event as InputFileEvent).target.files![0]
-	console.log(file)
+const uploadFileToCropper = (file: File) => {
 	const reader = new FileReader()
 	reader.readAsDataURL(file)
 	reader.onload = (event) => {
 		state.file = event.target?.result
 	}
 }
+const handleInputFile = (event: Event) => {
+	const file = (event as InputFileEvent).target.files![0]
+	uploadFileToCropper(file)
+}
+const dragOverFile = (event: Event) => (state.isDragging = true)
+const dragLeave = () => (state.isDragging = false)
+const dropFile = (event: Event) => {
+	state.isDragging = false
+	uploadFileToCropper(event.dataTransfer.files[0])
+}
+
+const croppedImage = () => {
+	const canvas = cropper.value!.getCroppedCanvas()
+	console.log(canvas.toDataURL())
+}
+
+const isDraggingStyle = computed(() => ({
+	pointerEvents: state.isDragging
+		? "pointer-events-none"
+		: "pointer-events-auto",
+	background: state.isDragging ? "bg-[rgb(250,250,250)]" : "bg-white",
+	textColor: state.isDragging ? "text-blue-500" : ""
+}))
 </script>
 
 <template>
@@ -73,20 +85,31 @@ const handleFile = (event: Event) => {
 				<div
 					class="flex items-center justify-center m-auto py-2 border-b border-[#DBDBDB]"
 				>
-					<h3 class="font-medium">Create new post</h3>
+					<h3 v-on:click="croppedImage" class="font-medium">
+						Create new post
+					</h3>
 				</div>
-				<div class="bg-white h-full flex justify-center">
+				<div
+					:draggable="true"
+					v-on:dragstart.prevent="dragOverFile"
+					v-on:dragover.prevent="dragOverFile"
+					v-on:drop.prevent="dropFile"
+					v-on:dragleave.prevent="dragLeave"
+					class="h-full flex justify-center"
+					:class="[isDraggingStyle.background]"
+				>
 					<div
 						v-if="!state.file"
 						class="flex items-center justify-center flex-col"
+						:class="[isDraggingStyle.pointerEvents]"
 					>
-						<img :src="drag" />
+						<Drag :class="[isDraggingStyle.textColor]" />
 						<p class="text-xl font-light text-[rgb(38,38,38)]">
 							Drag photos and videos here
 						</p>
 						<button
 							class="bg-blue-500 text-white p-1 px-2 rounded mt-3"
-							v-on:click="onPickFile"
+							v-on:click="triggerInputFile"
 						>
 							Select from computer
 						</button>
@@ -94,13 +117,14 @@ const handleFile = (event: Event) => {
 							ref="input"
 							type="file"
 							class="hidden"
-							v-on:change="handleFile"
+							v-on:change="handleInputFile"
 							accept=".jpg,.jpeg,.png"
 						/>
 					</div>
 					<template v-else>
 						<Suspense>
 							<VueCropper
+								ref="cropper"
 								:src="state.file"
 								:viewMode="3"
 								:autoCropArea="1"
