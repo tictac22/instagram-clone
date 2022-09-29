@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import AddImage from "@/assets/addImage.vue"
 import Drag from "@/assets/drag.vue"
+import OpenGallery from "@/assets/openGallery.vue"
 import "cropperjs/dist/cropper.css"
-import { computed, defineAsyncComponent, reactive, ref } from "vue"
-import IsLoading from "../isLoading.vue"
-const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
+import { computed, reactive, ref } from "vue"
+import VueCropper from "vue-cropperjs"
+//const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
 interface InputFileEvent extends Event {
 	target: HTMLInputElement
 }
@@ -12,14 +14,16 @@ interface State {
 	open: boolean
 	files: string[]
 	isDragging: boolean | null
+	currentSlider: number
 }
 
 const input = ref<HTMLInputElement | null>(null)
-const cropper = ref<null | typeof VueCropper>(null)
+const croppersRefs = ref<null | typeof VueCropper[]>([])
 const state = reactive<State>({
-	open: false,
+	open: true,
 	files: [],
-	isDragging: null
+	isDragging: null,
+	currentSlider: 0
 })
 
 const closePopup = () => (state.open = false)
@@ -50,6 +54,9 @@ const croppedImage = () => {
 }
 
 const isDraggingStyle = computed(() => ({
+	pointerEvent: state.isDragging
+		? "pointer-events-none"
+		: "pointer-pointer-events-auto",
 	open: state.open
 		? "visible pointer-events-auto opacity-100 scale-100"
 		: "invisble pointer-events-none opacity-0 scale-125 ",
@@ -57,6 +64,7 @@ const isDraggingStyle = computed(() => ({
 	background: state.isDragging ? "bg-[rgb(250,250,250)]" : "bg-white",
 	textColor: state.isDragging ? "text-blue-500" : ""
 }))
+const nextCropperSLide = () => state.currentSlider++
 </script>
 
 <template>
@@ -82,22 +90,44 @@ const isDraggingStyle = computed(() => ({
 					<div
 						class="flex items-center justify-center py-2 border-b border-[#DBDBDB]"
 					>
-						<h3 v-on:click="croppedImage" class="font-medium">
+						<h3 v-on:click="nextCropperSLide" class="font-medium">
 							Create new post
 						</h3>
 					</div>
 					<div
-						:draggable="true"
+						:draggable="croppersRefs!.length === 0"
 						v-on:dragstart.prevent="() => {}"
 						v-on:dragover.prevent="dragOverFile"
 						v-on:drop.prevent="dropFile"
 						v-on:dragleave.prevent="dragLeave"
-						class="flex justify-center flex-auto"
+						class="flex justify-center flex-auto relative rounded"
 						:class="[isDraggingStyle.background]"
 					>
+						<div class="absolute right-2 bottom-2 z-10">
+							<button
+								class="bg-black rounded-full flex w-8 h-8 items-center justify-center hover:opacity-70 cursor-pointer transition-opacity"
+							>
+								<OpenGallery />
+							</button>
+							<div
+								class="p-2 flex bg-[#2c3733] rounded absolute right-2 bottom-10"
+							>
+								<div
+									class="mx-1 w-[94px] h-[94px]"
+									v-for="file in state.files"
+								>
+									<img
+										class="w-full h-full object-cover"
+										:src="file"
+									/>
+								</div>
+								<AddImage :handleInputFile="handleInputFile" />
+							</div>
+						</div>
 						<div
 							v-if="state.files.length === 0"
 							class="flex items-center justify-center flex-col"
+							:class="[isDraggingStyle.pointerEvent]"
 						>
 							<Drag :class="[isDraggingStyle.textColor]" />
 							<p class="text-xl font-light text-[rgb(38,38,38)]">
@@ -118,22 +148,20 @@ const isDraggingStyle = computed(() => ({
 							/>
 						</div>
 						<template v-else>
-							<Suspense>
+							<div
+								class="flex items-center overflow-hidden"
+								v-for="(file, index) in state.files"
+							>
 								<VueCropper
-									v-for="file in state.files"
-									ref="cropper"
+									ref="croppersRefs"
 									:src="file"
 									:viewMode="3"
 									:autoCropArea="1"
 									:center="false"
-									class="w-[calc(100vmin-229px)] overflow-hidden"
+									class="w-[calc(100vmin-229px)] h-[calc(100vmin-270px)] items-center justify-center overflow-hidden"
+									v-if="state.currentSlider === index"
 								/>
-								<template #fallback>
-									<div class="flex items-center">
-										<IsLoading />
-									</div>
-								</template>
-							</Suspense>
+							</div>
 						</template>
 					</div>
 				</div>
