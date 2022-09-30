@@ -10,7 +10,7 @@ const triggerClick = () => inputRef.value?.click()
 </script>
 <template>
 	<div
-		class="flex items-center mx-2 justify-center w-[50px] h-[50px] border border-[#DBDBDB] rounded-full cursor-pointer"
+		class="flex items-center mx-2 p-[13px] justify-center w-[50px] h-[50px] border border-[#DBDBDB] rounded-full cursor-pointer"
 		tabindex="0"
 		v-on:click="triggerClick"
 	>
@@ -33,7 +33,7 @@ const triggerClick = () => inputRef.value?.click()
 			ref="inputRef"
 			accept=".jpg,.jpeg,.png"
 			class="hidden"
-			v-on:change="handleInputFile"
+			v-on:change="props.handleInputFile"
 		/>
 	</div>
 </template>

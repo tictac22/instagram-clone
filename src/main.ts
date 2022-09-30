@@ -11,6 +11,8 @@ import { router } from "./route"
 
 import {
 	faBookmark,
+	faChevronLeft,
+	faChevronRight,
 	faCircleCheck,
 	faCircleXmark,
 	faComment,
@@ -34,7 +36,9 @@ library.add(
 	faBookmark,
 	faSmile,
 	faCircleCheck,
-	faXmark
+	faXmark,
+	faChevronRight,
+	faChevronLeft
 )
 
 const clickOutside = {

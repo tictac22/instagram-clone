@@ -49,3 +49,8 @@ body {
 .cropper-dashed {
 	border-style: solid !important;
 }
+
+.swiper-slide {
+	width: 94px !important;
+	height: 94px !important;
+}
