@@ -1,12 +1,31 @@
 <script setup lang="ts">
-import AddImage from "@/assets/addImage.vue"
-import OpenGallery from "@/assets/openGallery.vue"
 import "cropperjs/dist/cropper.css"
-import { computed, reactive, ref } from "vue"
+import { computed, onUpdated, provide, reactive, ref } from "vue"
 import VueCropper from "vue-cropperjs"
+import CropperNavigation from "./cropperNavigation.vue"
 import DragFile from "./dragFile.vue"
-import ImageSlider from "./imageSlider.vue"
+import Navigation from "./navigation.vue"
 //const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
+
+import { key } from "./key"
+const currentSlider = ref(0)
+const nextSlider = () => {
+	currentSlider.value++
+}
+const prevSlider = () => {
+	currentSlider.value--
+}
+const setSlider = (index: number) => {
+	currentSlider.value = index
+}
+
+provide(key, {
+	currentSlider,
+	nextSlider,
+	prevSlider,
+	setSlider
+})
+
 interface InputFileEvent extends Event {
 	target: HTMLInputElement
 }
@@ -15,18 +34,14 @@ interface State {
 	open: boolean
 	files: string[]
 	isDragging: boolean | null
-	currentSlider: number
 }
 
-const cropperRef = ref<null | typeof VueCropper>(null)
-const currentSlider = ref(0)
+const cropperRef = ref<null | typeof VueCropper[]>(null)
 const state = reactive<State>({
 	open: true,
 	files: [],
-	isDragging: null,
-	currentSlider: 0
+	isDragging: null
 })
-
 const closePopup = () => (state.open = false)
 const openPopup = () => (state.open = true)
 
@@ -50,24 +65,20 @@ const isDraggingStyle = computed(() => ({
 		: "pointer-pointer-events-auto",
 	open: state.open
 		? "visible pointer-events-auto opacity-100 scale-100"
-		: "invisble pointer-events-none opacity-0 scale-125 ",
-
-	background: state.isDragging ? "bg-[rgb(250,250,250)]" : "bg-white",
-	textColor: state.isDragging ? "text-blue-500" : "text-black"
+		: "invisble pointer-events-none opacity-0 scale-125 "
 }))
-const nextCropperImage = () => {
-	currentSlider.value++
-	cropperRef.value.replace(state.files[currentSlider.value])
-}
-const prevCropperImage = () => {
-	currentSlider.value--
-	cropperRef.value.replace(state.files[currentSlider.value])
+const swapFiles = (from: number, to: number) => {
+	setSlider(to)
+	state.files.splice(from, 1, state.files.splice(to, 1, state.files[from])[0])
 }
 
 const test = () => {
-	const canvas = cropperRef.value.getCroppedCanvas()
-	console.log(canvas)
+	//const canvas = cropperRef.value.getCroppedCanvas()
+	console.log("test")
 }
+onUpdated(() => {
+	console.log(cropperRef.value)
+})
 </script>
 
 <template>
@@ -93,50 +104,41 @@ const test = () => {
 					<div
 						class="flex items-center justify-center py-2 border-b border-[#DBDBDB]"
 					>
-						<h3 class="font-medium" v-on:click="nextCropperImage">
-							Create new post
-						</h3>
+						<h3 class="font-medium">Create new post</h3>
 					</div>
-					<div
-						class="flex justify-center flex-auto relative rounded h-full"
-						:class="[isDraggingStyle.background]"
-					>
-						<div
-							v-if="state.files.length > 0"
-							class="absolute right-0 bottom-0 w-full z-10"
-						>
-							<div class="flex flex-col items-end p-4">
-								<button
-									v-on:click="prevCropperImage"
-									class="bg-black mt-3 rounded-full order-1 flex w-8 h-8 items-center justify-center hover:opacity-70 cursor-pointer transition-opacity"
-								>
-									<OpenGallery />
-								</button>
-								<div
-									class="p-2 max-w-full flex bg-[#2c3733] rounded"
-								>
-									<ImageSlider />
-									<AddImage
-										:handleInputFile="handleInputFile"
-									/>
-								</div>
-							</div>
-						</div>
+					<div class="flex-auto relative rounded h-full">
 						<DragFile
 							v-if="state.files.length === 0"
 							:handleInputFile="handleInputFile"
 							:uploadFileToCropper="uploadFileToCropper"
 						/>
 						<template v-else>
-							<VueCropper
-								ref="cropperRef"
-								:src="state.files[0]"
-								:viewMode="3"
-								:autoCropArea="1"
-								:center="false"
-								class="items-center justify-center overflow-hidden"
-								@cropend="test"
+							<CropperNavigation
+								:imagesLength="state.files.length"
 							/>
+							<Navigation
+								:handleInputFile="handleInputFile"
+								:images="state.files"
+								:swap-files="swapFiles"
+							/>
+							<div class="overflow-hidden h-full relative">
+								<VueCropper
+									v-for="(images, index) in state.files"
+									ref="cropperRef"
+									:src="images"
+									:viewMode="3"
+									:autoCropArea="1"
+									:center="false"
+									:alt="index"
+									class="h-[calc(100vmin-270px)] absolute inset-0 w-full"
+									:class="[
+										currentSlider === index
+											? 'z-[2]'
+											: 'z-0'
+									]"
+									@cropend="test"
+								/>
+							</div>
 						</template>
 					</div>
 				</div>

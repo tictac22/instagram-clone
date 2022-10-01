@@ -5,49 +5,34 @@ import "swiper/css"
 import "swiper/css/navigation"
 import { Swiper, SwiperSlide } from "swiper/vue"
 import { reactive } from "vue"
+
+const props = defineProps<{
+	images: string[]
+	swapFiles: (from: number, to: number) => void
+}>()
 const onSwiper = (swiper) => {
 	console.log(swiper)
 }
 const onSlideChange = () => {
 	console.log("slide change")
 }
-/**
- * <div
-											class="mx-1 w-[94px] h-[94px]"
-											v-for="file in state.files"
-										>
-											<img
-												class="w-full h-full object-cover"
-												:src="file"
-											/>
-										</div>
- * 
- * 
- */
+
 const state = reactive({
-	images: [
-		"/test.jpg",
-		"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-		"https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg",
-		"https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg",
-		"https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg",
-		"https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg"
-	],
-	currentDrag: 0
+	currentDrag: null
 })
 const dragStart = (event: Event, index: number) => {
 	state.currentDrag = index
 }
-const dragOver = (event: Event) => {}
+
+const dragOver = (event: Event, index: number) => {
+	console.log("dragOver", index)
+}
 const dragEnd = () => {}
 const dragDrop = (event: Event, index: number) => {
 	console.log("currentDrag", state.currentDrag)
 	console.log("drop", index)
-	state.images[state.currentDrag] = state.images.splice(
-		index,
-		1,
-		state.images[state.currentDrag]
-	)[0]
+	props.swapFiles(state.currentDrag!, index)
+	state.currentDrag = null
 }
 </script>
 
@@ -67,17 +52,21 @@ const dragDrop = (event: Event, index: number) => {
 			:slides-per-view="'auto'"
 		>
 			<SwiperSlide
-				v-for="(image, index) in state.images"
+				v-for="(image, index) in props.images"
 				:draggable="true"
-				v-on:dragstart="(event) => dragStart(event, index)"
-				v-on:dragover.prevent="dragOver"
+				v-on:dragstart="dragStart($event, index)"
+				v-on:dragover.prevent="dragOver($event, index)"
 				v-on:dragleave="dragEnd"
 				v-on:dragend="dragEnd"
 				v-on:drop.prevent="(event) => dragDrop(event, index)"
 				class="select-all"
 				style="-webkit-user-drag: auto"
 				><div class="w-[94px] h-[94px]">
-					<img :src="image" alt="test" class="w-full h-full" /></div
+					<img
+						:src="image"
+						alt="test"
+						class="w-full h-full object-cover"
+					/></div
 			></SwiperSlide>
 			<div
 				class="swiper-button__next w-5 h-5 z-10 -translate-y-1/2 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 right-[10px] flex items-center justify-center"
