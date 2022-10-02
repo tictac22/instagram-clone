@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import Drag from "@/assets/drag.vue"
-import { computed, onMounted, ref } from "vue"
+import { computed, inject, onMounted, ref } from "vue"
+import { key } from "../context/key"
 
 interface InputFileEvent extends Event {
 	target: HTMLInputElement
 }
 const triggerInputFile = () => input.value!.click()
 const input = ref<HTMLInputElement | null>(null)
-const props = defineProps<{
-	handleInputFile: (event: Event) => void
-	uploadFileToCropper: (file: File) => void
-}>()
+
+const { uploadFileToCropper } = inject(key)!
 
 const isDragging = ref<null | boolean>(null)
 
@@ -21,10 +20,15 @@ const dragLeave = () => (isDragging.value = false)
 const dropFile = (event: Event) => {
 	const target = (event as InputFileEvent).target
 	isDragging.value = false
-	props.uploadFileToCropper(event.dataTransfer.files[0])
+	uploadFileToCropper(event.dataTransfer.files[0])
 	target.value = ""
 }
-
+const handleInputFile = (event: Event) => {
+	const target = (event as InputFileEvent).target
+	const file = target.files![0]
+	uploadFileToCropper(file)
+	target.value = ""
+}
 const isDraggingStyle = computed(() => ({
 	pointerEvent: isDragging.value
 		? "pointer-events-none"
@@ -66,7 +70,7 @@ console.log(isDragging.value)
 				ref="input"
 				type="file"
 				class="hidden"
-				v-on:change="props.handleInputFile"
+				v-on:change="handleInputFile"
 				accept=".jpg,.jpeg,.png"
 			/>
 		</div>

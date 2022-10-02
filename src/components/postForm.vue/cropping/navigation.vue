@@ -2,13 +2,21 @@
 import AddImage from "@/assets/addImage.vue"
 import OpenGallery from "@/assets/openGallery.vue"
 import "cropperjs/dist/cropper.css"
+import { inject } from "vue"
+import { key } from "../context/key"
 import ImageSlider from "./imageSlider.vue"
+interface InputFileEvent extends Event {
+	target: HTMLInputElement
+}
 
-const props = defineProps<{
-	handleInputFile: (event: Event) => void
-	swapFiles: (from: number, to: number) => void
-	images: string[]
-}>()
+const { uploadFileToCropper } = inject(key)!
+
+const handleInputFile = (event: Event) => {
+	const target = (event as InputFileEvent).target
+	const file = target.files![0]
+	uploadFileToCropper(file)
+	target.value = ""
+}
 </script>
 <template>
 	<div class="absolute right-0 bottom-0 w-full z-10">
@@ -19,11 +27,8 @@ const props = defineProps<{
 				<OpenGallery />
 			</button>
 			<div class="p-2 max-w-full flex bg-[#2c3733] rounded">
-				<ImageSlider
-					:images="props.images"
-					:swap-files="props.swapFiles"
-				/>
-				<AddImage :handleInputFile="props.handleInputFile" />
+				<ImageSlider />
+				<AddImage :handleInputFile="handleInputFile" />
 			</div>
 		</div>
 	</div>

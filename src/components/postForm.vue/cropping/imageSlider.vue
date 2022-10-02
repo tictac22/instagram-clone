@@ -4,12 +4,10 @@ import { Navigation } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
 import { Swiper, SwiperSlide } from "swiper/vue"
-import { reactive } from "vue"
+import { inject, reactive } from "vue"
+import { key } from "../context/key"
+const { files, swapFiles, deleteFile } = inject(key)!
 
-const props = defineProps<{
-	images: string[]
-	swapFiles: (from: number, to: number) => void
-}>()
 const onSwiper = (swiper) => {
 	console.log(swiper)
 }
@@ -22,6 +20,7 @@ const state = reactive({
 })
 const dragStart = (event: Event, index: number) => {
 	state.currentDrag = index
+	console.log(state.currentDrag)
 }
 
 const dragOver = (event: Event, index: number) => {
@@ -31,8 +30,11 @@ const dragEnd = () => {}
 const dragDrop = (event: Event, index: number) => {
 	console.log("currentDrag", state.currentDrag)
 	console.log("drop", index)
-	props.swapFiles(state.currentDrag!, index)
+	swapFiles(state.currentDrag!, index)
 	state.currentDrag = null
+}
+const mouseDown = () => {
+	return false
 }
 </script>
 
@@ -52,22 +54,33 @@ const dragDrop = (event: Event, index: number) => {
 			:slides-per-view="'auto'"
 		>
 			<SwiperSlide
-				v-for="(image, index) in props.images"
+				v-for="(image, index) in files"
 				:draggable="true"
 				v-on:dragstart="dragStart($event, index)"
 				v-on:dragover.prevent="dragOver($event, index)"
 				v-on:dragleave="dragEnd"
 				v-on:dragend="dragEnd"
-				v-on:drop.prevent="(event) => dragDrop(event, index)"
+				v-on:mousedown="mouseDown"
+				v-on:drop.prevent="dragDrop($event, index)"
 				class="select-all"
 				style="-webkit-user-drag: auto"
 				><div class="w-[94px] h-[94px]">
+					<div
+						v-on:click="deleteFile(index)"
+						class="bg-gray-600 rounded-full absolute right-1 top-1 h-5 w-5 flex items-center justify-center"
+					>
+						<font-awesome-icon
+							icon="fa-solid fa-xmark"
+							class="text-white w-3 h-3"
+						/>
+					</div>
 					<img
 						:src="image"
 						alt="test"
 						class="w-full h-full object-cover"
-					/></div
-			></SwiperSlide>
+					/>
+				</div>
+			</SwiperSlide>
 			<div
 				class="swiper-button__next w-5 h-5 z-10 -translate-y-1/2 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 right-[10px] flex items-center justify-center"
 			>

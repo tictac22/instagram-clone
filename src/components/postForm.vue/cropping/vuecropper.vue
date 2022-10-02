@@ -2,7 +2,7 @@
 import "cropperjs/dist/cropper.css"
 import { inject } from "vue"
 import VueCropper from "vue-cropperjs"
-import { key } from "./key"
+import { key } from "./context/key"
 
 const { currentSlider } = inject(key)!
 
