@@ -16,7 +16,6 @@
 		"@vuelidate/validators": "^2.0.0-alpha.31",
 		"firebase": "^9.10.0",
 		"pinia": "^2.0.22",
-		"swiper": "^8.4.2",
 		"vue": "^3.2.37",
 		"vue-cropperjs": "^5.0.0",
 		"vue-router": "4",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "cropperjs/dist/cropper.css"
-import { computed, reactive } from "vue"
+import { computed, onMounted, reactive } from "vue"
 //const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
 
 import PostContext from "./context/postContext.vue"
@@ -28,6 +28,13 @@ const isDraggingStyle = computed(() => ({
 		? "visible pointer-events-auto opacity-100 scale-100"
 		: "invisble pointer-events-none opacity-0 scale-125 "
 }))
+onMounted(() => {
+	window.addEventListener("resize", () => {
+		// We execute the same script as before
+		let vh = window.innerHeight * 0.01
+		document.documentElement.style.setProperty("--vh", `${vh}px`)
+	})
+})
 </script>
 
 <template>
