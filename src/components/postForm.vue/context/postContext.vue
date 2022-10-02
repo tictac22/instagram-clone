@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { provide, ref } from "vue"
+import { onUpdated, provide, ref } from "vue"
 
 import { key } from "./key"
 
 const files = ref<string[]>([])
+const croppedFiles = ref<string[]>([])
+const formStep = ref(1)
+const nextFormStep = () => formStep.value++
+const prevFormStep = () => formStep.value--
+
+const saveCropImages = (croppedImages: string[]) => {
+	croppedFiles.value = croppedImages
+}
 const uploadFileToCropper = (file: File) => {
 	const reader = new FileReader()
 	reader.readAsDataURL(file)
@@ -37,7 +45,14 @@ provide(key, {
 	files,
 	uploadFileToCropper,
 	swapFiles,
-	deleteFile
+	deleteFile,
+	formStep,
+	saveCropImages,
+	nextFormStep,
+	prevFormStep
+})
+onUpdated(() => {
+	console.log(croppedFiles.value)
 })
 </script>
 

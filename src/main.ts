@@ -10,6 +10,7 @@ import { createPinia } from "pinia"
 import { router } from "./route"
 
 import {
+	faArrowLeft,
 	faBookmark,
 	faChevronLeft,
 	faChevronRight,
@@ -38,7 +39,8 @@ library.add(
 	faCircleCheck,
 	faXmark,
 	faChevronRight,
-	faChevronLeft
+	faChevronLeft,
+	faArrowLeft
 )
 
 const clickOutside = {

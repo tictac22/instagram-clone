@@ -5,6 +5,7 @@ import { computed, reactive } from "vue"
 
 import PostContext from "./context/postContext.vue"
 import Cropping from "./cropping/cropping.vue"
+import TopNavigation from "./topNavigation.vue"
 
 interface State {
 	open: boolean
@@ -50,14 +51,8 @@ const isDraggingStyle = computed(() => ({
 						class="bg-white scale-100 rounded h-[calc(100vmin-229px)] w-[calc(100vmin-229px)] max-h-[900px] max-w-[900px] flex flex-col"
 						v-click-outside="closePopup"
 					>
-						<div
-							class="flex items-center justify-center py-2 border-b border-[#DBDBDB]"
-						>
-							<h3 class="font-medium">Create new post</h3>
-						</div>
-						<div class="flex-auto relative rounded h-full">
-							<Cropping />
-						</div>
+						<TopNavigation />
+						<Cropping />
 					</div>
 				</div>
 			</div>
