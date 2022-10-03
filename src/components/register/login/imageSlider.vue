@@ -19,6 +19,7 @@ onUnmounted(() => clearInterval(intervalId))
 	>
 		<img
 			v-for="item in [1, 2, 3, 4]"
+			:key="item"
 			:src="`/registration/img${item}.png`"
 			class="absolute h-[538px] w-[250px] right-[18px] bottom-[18px] transition-opacity duration-[1.9s] ease-in"
 			:alt="`example${item}`"

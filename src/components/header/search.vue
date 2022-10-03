@@ -9,7 +9,7 @@ const collapseContainer = () => (state.isExpanded = false)
 </script>
 
 <template>
-	<div class="h-9 relative" v-click-outside="collapseContainer">
+	<div v-click-outside="collapseContainer" class="h-9 relative">
 		<div
 			class="absolute left-2 cursor-pointer text-gray-500 top-1/2 -translate-y-1/2 pointer-events-none"
 		>
@@ -18,12 +18,12 @@ const collapseContainer = () => (state.isExpanded = false)
 		<input
 			placeholder="Search"
 			class="outline-none min-w-[268px] px-3 h-full rounded-lg bg-[#efefef] pl-7"
-			v-on:focus="expandContainer"
+			@focus="expandContainer"
 		/>
 		<div
 			v-if="state.isExpanded"
-			v-on:click="collapseContainer"
 			class="absolute right-2 cursor-pointer text-gray-500 top-1/2 -translate-y-1/2"
+			@click="collapseContainer"
 		>
 			<font-awesome-icon icon="fa-solid fa-circle-xmark" />
 		</div>

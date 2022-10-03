@@ -2,14 +2,6 @@
 import CreatePost from "../postForm.vue/createPost.vue"
 import Dropdown from "./dropdown.vue"
 import Search from "./search.vue"
-
-/** 
- * <font-awesome-icon
-					icon="fa-solid fa-house"
-					class="w-6 h-6 ml-6 "
-				/>
- * 
-*/
 </script>
 
 <template>

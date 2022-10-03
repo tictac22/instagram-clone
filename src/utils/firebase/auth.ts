@@ -25,7 +25,6 @@ export const signInWithFacebook = async () => {
 			userId: result.user.uid
 		})
 	} catch (error) {
-		console.log(error)
 		throw new CustomError(ErrorMessages.email, "email")
 	}
 }
@@ -87,6 +86,7 @@ const isNameTaken = async (username: string) => {
 		if (users.length >= 1) return true
 		return false
 	} catch (error) {
+		//eslint-disable-next-line
 		console.error(error)
 	}
 }

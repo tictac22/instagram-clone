@@ -8,8 +8,8 @@ const collapseMenu = () => (expanded.value = false)
 </script>
 
 <template>
-	<div class="relative ml-6" v-click-outside="collapseMenu">
-		<div class="cursor-pointer" v-on:click="expanded = !expanded">
+	<div v-click-outside="collapseMenu" class="relative ml-6">
+		<div class="cursor-pointer" @click="expanded = !expanded">
 			<img alt="default" src="/default.jpg" class="w-6 h-6" />
 		</div>
 		<div

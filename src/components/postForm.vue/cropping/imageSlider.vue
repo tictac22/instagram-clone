@@ -1,33 +1,16 @@
 <script lang="ts" setup>
-import {
-	computed,
-	inject,
-	onMounted,
-	onUnmounted,
-	onUpdated,
-	reactive,
-	ref
-} from "vue"
+import { computed, inject, onMounted, onUnmounted, onUpdated, ref } from "vue"
 import { key } from "../context/key"
 const { files, swapFiles, deleteFile } = inject(key)!
 
-const state = reactive({
-	currentDrag: null
-})
+const currentDrag = ref<null | number>(null)
 const dragStart = (event: Event, index: number) => {
-	state.currentDrag = index
-	console.log(state.currentDrag)
+	currentDrag.value = index
 }
 
-const dragOver = (event: Event, index: number) => {
-	console.log("dragOver", index)
-}
-const dragEnd = () => {}
 const dragDrop = (event: Event, index: number) => {
-	console.log("currentDrag", state.currentDrag)
-	console.log("drop", index)
-	swapFiles(state.currentDrag!, index)
-	state.currentDrag = null
+	swapFiles(currentDrag.value!, index)
+	currentDrag.value = null
 }
 
 const position = ref(0)
@@ -53,7 +36,6 @@ const btnNext = () => {
 		files.value.length -
 		(Math.abs(position.value) + slidesToShow.value * itemWidth) / itemWidth
 
-	console.log(itemsLeft)
 	position.value -=
 		itemsLeft >= slidesToShow.value ? movePosition : itemsLeft * itemWidth
 	trackRef.value!.style.transform = `translateX(${position.value}px)`
@@ -82,26 +64,24 @@ const showNextButton = computed(
 </script>
 
 <template>
-	<div class="overflow-hidden relative" ref="containter">
+	<div ref="containter" class="overflow-hidden relative">
 		<div
-			class="flex transition-transform ease-[cubic-bezier(0,1.19,.99,1.07)] duration-500"
 			ref="trackRef"
+			class="flex transition-transform ease-[cubic-bezier(0,1.19,.99,1.07)] duration-500"
 		>
 			<div
 				v-for="(image, index) in files"
+				:key="image"
 				:draggable="true"
-				v-on:dragstart="dragStart($event, index)"
-				v-on:dragover.prevent="dragOver($event, index)"
-				v-on:dragleave="dragEnd"
-				v-on:dragend="dragEnd"
-				v-on:mousedown="mouseDown"
-				v-on:drop.prevent="dragDrop($event, index)"
 				class="ml-2 first:ml-0"
+				@dragstart="dragStart($event, index)"
+				@mousedown="mouseDown"
+				@drop.prevent="dragDrop($event, index)"
 			>
 				<div class="w-[94px] h-[94px] relative">
 					<div
-						v-on:click="deleteFile(index)"
 						class="bg-gray-600 rounded-full absolute right-1 top-1 h-5 w-5 flex items-center justify-center"
+						@click="deleteFile(index)"
 					>
 						<font-awesome-icon
 							icon="fa-solid fa-xmark"
@@ -117,9 +97,9 @@ const showNextButton = computed(
 			</div>
 		</div>
 		<div
-			@click="btnNext"
 			v-if="showNextButton"
 			class="w-5 h-5 z-10 -translate-y-1/2 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 right-[10px] flex items-center justify-center"
+			@click="btnNext"
 		>
 			<font-awesome-icon
 				icon="fa-solid fa-chevron-right"
@@ -127,9 +107,9 @@ const showNextButton = computed(
 			/>
 		</div>
 		<div
-			@click="btnPrev"
 			v-if="position !== 0"
 			class="w-5 h-5 -translate-y-1/2 z-10 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 left-[10px] flex items-center justify-center"
+			@click="btnPrev"
 		>
 			<font-awesome-icon
 				class="text-[12px]"

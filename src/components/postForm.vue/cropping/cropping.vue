@@ -12,7 +12,7 @@ const cropperRef = ref<null | typeof VueCropper[]>(null)
 
 watch(formStep, () => {
 	if (formStep.value === 2) {
-		let images = []
+		const images = []
 		cropperRef.value?.map((item) => {
 			new Promise((resolve, reject) => {
 				const canvas = item.getCroppedCanvas().toDataURL()
@@ -38,13 +38,13 @@ watch(formStep, () => {
 				<div class="overflow-hidden h-full relative">
 					<VueCropper
 						v-for="(image, index) in files"
-						ref="cropperRef"
-						:src="image"
 						:key="image"
+						ref="cropperRef"
 						:viewMode="3"
-						:autoCropArea="1"
-						:center="false"
 						class="h-[calc(100vmin-270px)] absolute inset-0 w-full"
+						:autoCropArea="1"
+						:src="image"
+						:center="false"
 						:class="[currentSlider === index ? 'z-[2]' : 'z-0']"
 					/>
 				</div>

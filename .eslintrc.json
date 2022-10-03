@@ -1,0 +1,57 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:vue/vue3-recommended",
+		"@vue/eslint-config-typescript",
+		"plugin:import/recommended",
+		"plugin:import/typescript",
+		"plugin:prettier/recommended"
+	],
+	"parser": "vue-eslint-parser",
+
+	"parserOptions": {
+		"ecmaFeatures": {
+			"parser": "@typescript-eslint/parser",
+			"jsx": false
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"ignorePatterns": [
+		"*.spec.ts",
+		"world.js",
+		"tailwind.config.js",
+		"postcss.config.js"
+	],
+	"plugins": ["@typescript-eslint", "prettier", "import"],
+	"settings": {
+		"import/resolver": {
+			"typescript": {}
+		}
+	},
+	"rules": {
+		"vue/multi-word-component-names": "off",
+		"vue/attribute-hyphenation": "off",
+		"no-empty-function": "warn",
+		"import/no-named-as-default": "off",
+		"@typescript-eslint/no-empty-function": "error",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"no-console": [1],
+		"prefer-const": "warn",
+		"import/no-unresolved": 2,
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto"
+			}
+		],
+		"indent": ["error", "tab"],
+		"linebreak-style": ["error", "windows"],
+		"quotes": ["error", "double"],
+		"semi": ["error", "never"]
+	}
+}

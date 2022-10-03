@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed } from "@vue/reactivity"
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 const props = defineProps<{
 	modelValue: string
@@ -32,6 +31,7 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 <template>
 	<div class="relative my-2">
 		<input
+			:id="props.placeholder"
 			ref="inputRef"
 			:placeholder="props.placeholder"
 			class="py-1 border-b border-solid border-[#dbdbdb] placeholder:text-xs outline-none focus:border-[#a6a4a4] w-full peer placeholder-transparent"
@@ -45,8 +45,7 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 					($event.target as HTMLInputElement).value
 				)
 			"
-			v-on:blur="props.touch"
-			:id="props.placeholder"
+			@blur="props.touch"
 		/>
 		<label
 			:for="props.placeholder"
@@ -62,14 +61,14 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 				class="text-red-500"
 			/>
 			<font-awesome-icon
-				icon="fa-solid fa-circle-check"
 				v-if="!props.invalid"
+				icon="fa-solid fa-circle-check"
 				class="text-green-600"
 			/>
 			<div
 				v-if="isPassword && props.modelValue.length > 1"
-				@click="changeType"
 				class="ml-1 cursor-pointer"
+				@click="changeType"
 			>
 				{{ text }}
 			</div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GetApp from "@/components/register/getapp.vue"
+import GetApp from "@/components/register/getApp.vue"
 import Form from "@/components/register/signup/form.vue"
 import WithFacebook from "@/components/register/withFacebook.vue"
 

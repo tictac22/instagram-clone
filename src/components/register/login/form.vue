@@ -31,7 +31,7 @@ const submit = async () => {
 }
 </script>
 <template>
-	<form v-on:submit.prevent="submit">
+	<form @submit.prevent="submit">
 		<svg
 			aria-label="Instagram"
 			class="cursor-pointer m-auto w-[175px] h-[51px]"
@@ -52,9 +52,10 @@ const submit = async () => {
 		<div class="mt-6 flex flex-col">
 			<FormInput
 				v-for="input in logInInputs"
+				:key="input.name"
+				v-model="form[input.name].$model"
 				:touch="form[input.name].$touch"
 				:placeholder="input.placeholder"
-				v-model="form[input.name].$model"
 				:error="
 					form[input.name].$errors[0]?.$message ||
 					form[input.name].$externalResults[0]?.$message ||

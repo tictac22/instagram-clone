@@ -21,13 +21,11 @@ const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)
 const handleEmojiPicker = () => (state.showEmojiPicker = !state.showEmojiPicker)
 
 const submit = () => {
-	console.log(state.textarea)
 	state.textarea = ""
 }
 //@ts-ignore
 const textareaHandler = (el) => {
 	const target = el.target
-	console.log(target.value.length)
 	if (target.value.length > 38) {
 		target.style.height = "1px"
 		target.style.height = 10 + target.scrollHeight + "px"
@@ -59,7 +57,7 @@ const textParts = computed(() => {
 				class="w-8 h-8 rounded-full"
 			/>
 			<p class="mr-auto ml-2">natgeo</p>
-			<div v-on:click.stop="openPopup">
+			<div @click.stop="openPopup">
 				<svg
 					aria-label="More options"
 					class="_ab6- cursor-pointer"
@@ -85,8 +83,8 @@ const textParts = computed(() => {
 		>
 			<div class="flex items-center justify-center min-h-full">
 				<div
-					class="w-[400px] bg-white rounded"
 					v-click-outside="closePopup"
+					class="w-[400px] bg-white rounded"
 				>
 					<p
 						class="text-center select-none py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
@@ -138,9 +136,9 @@ const textParts = computed(() => {
 			<span class="text-sm inline-block">
 				natgeo {{ textParts.firstPart }}
 				<span
-					class="text-gray-500 cursor-pointer"
-					v-on:click="() => (state.extraText = true)"
 					v-if="state.extraText === false"
+					class="text-gray-500 cursor-pointer"
+					@click="() => (state.extraText = true)"
 					>... more</span
 				>
 				<span v-if="state.extraText === true">{{
@@ -152,21 +150,21 @@ const textParts = computed(() => {
 		</div>
 		<div class="border-t border-solid border-[#DBDBDB]">
 			<form
-				class="relative flex px-3 py-2"
 				v-click-outside="() => (state.showEmojiPicker = false)"
-				v-on:submit.prevent="submit"
+				class="relative flex px-3 py-2"
+				@submit.prevent="submit"
 			>
 				<div class="">
 					<svg
-						aria-label="Emoji"
 						class="_ab6- mr-3 cursor-pointer"
+						aria-label="Emoji"
 						color="#262626"
 						fill="#262626"
 						height="24"
 						role="img"
 						viewBox="0 0 24 24"
 						width="24"
-						v-on:click="handleEmojiPicker"
+						@click="handleEmojiPicker"
 					>
 						<path
 							d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"
@@ -177,13 +175,13 @@ const textParts = computed(() => {
 					v-if="state.showEmojiPicker"
 					class="absolute left-0 bottom-7"
 				>
-					<EmojiPicker @select="setEmoji" :native="true" />
+					<EmojiPicker :native="true" @select="setEmoji" />
 				</div>
 				<textarea
+					v-model="state.textarea"
 					placeholder="Add a comment"
 					class="w-full resize-none outline-none h-[26px]"
 					:onkeyup="textareaHandler"
-					v-model="state.textarea"
 				/>
 				<button class="ml-4 text-blue-500" type="submit">Post</button>
 			</form>

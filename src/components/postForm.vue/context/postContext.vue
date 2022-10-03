@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onUpdated, provide, ref } from "vue"
+import { provide, ref } from "vue"
 
 import { key } from "./key"
 
@@ -16,13 +16,11 @@ const uploadFileToCropper = (file: File) => {
 	const reader = new FileReader()
 	reader.readAsDataURL(file)
 	reader.onload = (event) => {
-		console.log(file)
 		files.value.push(event.target?.result as string)
 	}
 }
 
 const deleteFile = async (index: number) => {
-	console.log(currentSlider.value)
 	files.value.splice(index, 1)
 	if (currentSlider.value > 0) {
 		currentSlider.value--
@@ -50,9 +48,6 @@ provide(key, {
 	saveCropImages,
 	nextFormStep,
 	prevFormStep
-})
-onUpdated(() => {
-	console.log(croppedFiles.value)
 })
 </script>
 

@@ -2,7 +2,7 @@
 import "cropperjs/dist/cropper.css"
 import { inject } from "vue"
 import VueCropper from "vue-cropperjs"
-import { key } from "./context/key"
+import { key } from "../context/key"
 
 const { currentSlider } = inject(key)!
 
@@ -14,14 +14,15 @@ const props = defineProps<{
 <template>
 	<div class="flex overflow-hidden">
 		<VueCropper
-			v-for="(images, index) in props.images"
+			v-for="(image, index) in props.images"
+			v-show="currentSlider === index"
+			:key="image"
 			ref="cropperRef"
-			:src="images"
+			:src="image"
 			:viewMode="3"
 			:autoCropArea="1"
 			:center="false"
 			class="h-full"
-			v-show="currentSlider === index"
 		/>
 	</div>
 </template>

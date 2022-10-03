@@ -12,7 +12,7 @@ const triggerClick = () => inputRef.value?.click()
 	<div
 		class="flex items-center mx-2 p-[13px] justify-center w-[50px] h-[50px] border border-[#DBDBDB] rounded-full cursor-pointer"
 		tabindex="0"
-		v-on:click="triggerClick"
+		@click="triggerClick"
 	>
 		<svg
 			aria-label="Plus icon"
@@ -29,11 +29,11 @@ const triggerClick = () => inputRef.value?.click()
 			></path>
 		</svg>
 		<input
-			type="file"
 			ref="inputRef"
+			type="file"
 			accept=".jpg,.jpeg,.png"
 			class="hidden"
-			v-on:change="props.handleInputFile"
+			@change="props.handleInputFile"
 		/>
 	</div>
 </template>

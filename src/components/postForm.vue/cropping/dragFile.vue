@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Drag from "@/assets/drag.vue"
-import { computed, inject, onMounted, ref } from "vue"
+import { computed, inject, ref } from "vue"
 import { key } from "../context/key"
 
 interface InputFileEvent extends Event {
@@ -37,20 +37,16 @@ const isDraggingStyle = computed(() => ({
 	background: isDragging.value ? "bg-[rgb(250,250,250)]" : "bg-white",
 	textColor: isDragging.value ? "text-blue-500" : "text-black"
 }))
-onMounted(() => {
-	console.log(isDragging)
-})
-console.log(isDragging.value)
 </script>
 
 <template>
 	<div
 		class="w-full h-full items-center justify-center flex"
 		:class="[isDraggingStyle.background]"
-		v-on:dragstart.prevent="dragOverFile"
-		v-on:dragover.prevent="dragOverFile"
-		v-on:dragleave.prevent="dragLeave"
-		v-on:drop.prevent="dropFile"
+		@dragstart.prevent="dragOverFile"
+		@dragover.prevent="dragOverFile"
+		@dragleave.prevent="dragLeave"
+		@drop.prevent="dropFile"
 	>
 		<div
 			class="flex items-center flex-col"
@@ -62,7 +58,7 @@ console.log(isDragging.value)
 			</p>
 			<button
 				class="bg-blue-500 text-white p-1 px-2 rounded mt-3"
-				v-on:click="triggerInputFile"
+				@click="triggerInputFile"
 			>
 				Select from computer
 			</button>
@@ -70,8 +66,8 @@ console.log(isDragging.value)
 				ref="input"
 				type="file"
 				class="hidden"
-				v-on:change="handleInputFile"
 				accept=".jpg,.jpeg,.png"
+				@change="handleInputFile"
 			/>
 		</div>
 	</div>
