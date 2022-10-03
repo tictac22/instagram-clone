@@ -6,6 +6,7 @@
 	"trailingComma": "none",
 	"printWidth": 80,
 	"endOfLine": "crlf",
+	"arrowParens": "avoid",
 	"importOrder": [
 		"^(next/(.*)$)|^(next$)",
 		"^react",

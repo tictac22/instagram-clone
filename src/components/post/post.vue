@@ -24,7 +24,7 @@ const submit = () => {
 	state.textarea = ""
 }
 //@ts-ignore
-const textareaHandler = (el) => {
+const textareaHandler = el => {
 	const target = el.target
 	if (target.value.length > 38) {
 		target.style.height = "1px"

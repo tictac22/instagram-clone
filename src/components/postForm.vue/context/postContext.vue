@@ -15,7 +15,7 @@ const saveCropImages = (croppedImages: string[]) => {
 const uploadFileToCropper = (file: File) => {
 	const reader = new FileReader()
 	reader.readAsDataURL(file)
-	reader.onload = (event) => {
+	reader.onload = event => {
 		files.value.push(event.target?.result as string)
 	}
 }

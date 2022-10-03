@@ -80,7 +80,7 @@ const isNameTaken = async (username: string) => {
 		const querySnapshot = await getDocs(q)
 
 		const users = []
-		querySnapshot.forEach((item) => {
+		querySnapshot.forEach(item => {
 			users.push({ ...item.data(), id: item.id })
 		})
 		if (users.length >= 1) return true

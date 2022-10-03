@@ -13,7 +13,7 @@ const cropperRef = ref<null | typeof VueCropper[]>(null)
 watch(formStep, () => {
 	if (formStep.value === 2) {
 		const images = []
-		cropperRef.value?.map((item) => {
+		cropperRef.value?.map(item => {
 			new Promise((resolve, reject) => {
 				const canvas = item.getCroppedCanvas().toDataURL()
 				const img = new Image()
