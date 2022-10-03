@@ -5,6 +5,7 @@
 	"singleQuote": false,
 	"trailingComma": "none",
 	"printWidth": 80,
+	"endOfLine": "crlf",
 	"importOrder": [
 		"^(next/(.*)$)|^(next$)",
 		"^react",
