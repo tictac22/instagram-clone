@@ -18,8 +18,7 @@ watch(formStep, () => {
 				const canvas = item.getCroppedCanvas().toDataURL()
 				const img = new Image()
 				img.onload = function () {
-					images.push(img.src)
-					resolve()
+					resolve(images.push(img.src))
 				}
 				img.src = canvas
 			})
