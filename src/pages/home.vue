@@ -12,16 +12,16 @@ const Post = defineAsyncComponent(() => import("@/components/post/post.vue"))
 	<LoginHome v-if="user.isAuthenticated === false" />
 	<div v-else>
 		<Header />
-		<div class="max-w-4xl m-auto mt-8 px-3">
+		<div class="m-auto mt-8 max-w-4xl px-3">
 			<div class="flex items-center">
-				<div class="max-w-[470px] w-full mr-8">
+				<div class="mr-8 w-full max-w-[470px]">
 					<Post />
 				</div>
-				<div class="flex items-center self-start mt-4">
+				<div class="mt-4 flex items-center self-start">
 					<img
 						alt="default"
 						src="/default.jpg"
-						class="w-14 h-14 rounded-full mr-3"
+						class="mr-3 h-14 w-14 rounded-full"
 					/>
 					<div>
 						<p class="font-medium">whitemoooo</p>

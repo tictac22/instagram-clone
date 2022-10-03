@@ -64,10 +64,10 @@ const showNextButton = computed(
 </script>
 
 <template>
-	<div ref="containter" class="overflow-hidden relative">
+	<div ref="containter" class="relative overflow-hidden">
 		<div
 			ref="trackRef"
-			class="flex transition-transform ease-[cubic-bezier(0,1.19,.99,1.07)] duration-500"
+			class="flex transition-transform duration-500 ease-[cubic-bezier(0,1.19,.99,1.07)]"
 		>
 			<div
 				v-for="(image, index) in files"
@@ -78,27 +78,27 @@ const showNextButton = computed(
 				@mousedown="mouseDown"
 				@drop.prevent="dragDrop($event, index)"
 			>
-				<div class="w-[94px] h-[94px] relative">
+				<div class="relative h-[94px] w-[94px]">
 					<div
-						class="bg-gray-600 rounded-full absolute right-1 top-1 h-5 w-5 flex items-center justify-center"
+						class="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-600"
 						@click="deleteFile(index)"
 					>
 						<font-awesome-icon
 							icon="fa-solid fa-xmark"
-							class="text-white w-3 h-3"
+							class="h-3 w-3 text-white"
 						/>
 					</div>
 					<img
 						:src="image"
 						alt="test"
-						class="w-full h-full object-cover"
+						class="h-full w-full object-cover"
 					/>
 				</div>
 			</div>
 		</div>
 		<div
 			v-if="showNextButton"
-			class="w-5 h-5 z-10 -translate-y-1/2 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 right-[10px] flex items-center justify-center"
+			class="absolute top-1/2 right-[10px] z-10 flex h-5 w-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-lg text-gray-500"
 			@click="btnNext"
 		>
 			<font-awesome-icon
@@ -108,7 +108,7 @@ const showNextButton = computed(
 		</div>
 		<div
 			v-if="position !== 0"
-			class="w-5 h-5 -translate-y-1/2 z-10 cursor-pointer text-gray-500 text-lg rounded-full bg-white absolute top-1/2 left-[10px] flex items-center justify-center"
+			class="absolute top-1/2 left-[10px] z-10 flex h-5 w-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-lg text-gray-500"
 			@click="btnPrev"
 		>
 			<font-awesome-icon

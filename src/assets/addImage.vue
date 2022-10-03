@@ -10,7 +10,7 @@ const triggerClick = () => inputRef.value?.click()
 </script>
 <template>
 	<div
-		class="flex items-center mx-2 p-[13px] justify-center w-[50px] h-[50px] border border-[#DBDBDB] rounded-full cursor-pointer"
+		class="mx-2 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full border border-[#DBDBDB] p-[13px]"
 		tabindex="0"
 		@click="triggerClick"
 	>

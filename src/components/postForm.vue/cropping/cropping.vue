@@ -29,19 +29,19 @@ watch(formStep, () => {
 })
 </script>
 <template>
-	<div class="flex-auto relative rounded h-full">
-		<div class="flex-auto relative rounded h-full">
+	<div class="relative h-full flex-auto rounded">
+		<div class="relative h-full flex-auto rounded">
 			<DragFile v-if="files.length === 0" />
 			<template v-else>
 				<CropperNavigation />
 				<Navigation />
-				<div class="overflow-hidden h-full relative">
+				<div class="relative h-full overflow-hidden">
 					<VueCropper
 						v-for="(image, index) in files"
 						:key="image"
 						ref="cropperRef"
 						:viewMode="3"
-						class="h-[calc(100vmin-270px)] absolute inset-0 w-full"
+						class="absolute inset-0 h-[calc(100vmin-270px)] w-full"
 						:autoCropArea="1"
 						:src="image"
 						:center="false"

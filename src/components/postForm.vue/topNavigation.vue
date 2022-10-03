@@ -7,7 +7,7 @@ const { nextFormStep } = inject(key)!
 
 <template>
 	<div
-		class="flex items-center justify-between p-2 border-b border-[#DBDBDB]"
+		class="flex items-center justify-between border-b border-[#DBDBDB] p-2"
 	>
 		<font-awesome-icon icon="fa-solid fa-arrow-left" />
 		<h3 class="font-medium">Create new post</h3>

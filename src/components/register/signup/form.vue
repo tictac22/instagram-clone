@@ -60,7 +60,7 @@ const submit = async () => {
 			type="submit"
 			:disabled="form.$invalid || state.isLoading"
 			:class="[form.$invalid ? 'bg-[#0095f64d]' : 'bg-[#0095f6]']"
-			class="bg-[#0095f6] text-white rounded my-3 py-1 w-full cursor-pointer flex items-center justify-center"
+			class="my-3 flex w-full cursor-pointer items-center justify-center rounded bg-[#0095f6] py-1 text-white"
 		>
 			<span v-if="!state.isLoading">Next</span> <Spin v-else />
 		</button>

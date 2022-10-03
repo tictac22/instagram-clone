@@ -16,7 +16,7 @@ const showNextButton = computed(
 <template>
 	<div
 		v-if="showPrevButton"
-		class="w-5 h-5 -translate-y-1/2 z-20 cursor-pointer text-white text-lg rounded-full bg-black absolute top-1/2 left-[10px] flex items-center justify-center"
+		class="absolute top-1/2 left-[10px] z-20 flex h-5 w-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black text-lg text-white"
 		@click="prevSlider"
 	>
 		<font-awesome-icon
@@ -26,7 +26,7 @@ const showNextButton = computed(
 	</div>
 	<div
 		v-if="showNextButton"
-		class="w-5 h-5 -translate-y-1/2 z-20 cursor-pointer text-white text-lg rounded-full bg-black absolute top-1/2 right-[10px] flex items-center justify-center"
+		class="absolute top-1/2 right-[10px] z-20 flex h-5 w-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black text-lg text-white"
 		@click="nextSlider"
 	>
 		<font-awesome-icon
@@ -34,11 +34,11 @@ const showNextButton = computed(
 			icon="fa-solid fa-chevron-right"
 		/>
 	</div>
-	<div class="flex absolute left-1/2 bottom-3 z-30 -translate-x-1/2">
+	<div class="absolute left-1/2 bottom-3 z-30 flex -translate-x-1/2">
 		<div
 			v-for="(item, index) in files"
 			:key="item"
-			class="w-2 h-2 rounded-full mx-1"
+			class="mx-1 h-2 w-2 rounded-full"
 			:class="currentSlider === index ? 'bg-blue-500' : 'bg-gray-500'"
 		></div>
 	</div>

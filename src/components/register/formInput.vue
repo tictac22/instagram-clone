@@ -34,7 +34,7 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 			:id="props.placeholder"
 			ref="inputRef"
 			:placeholder="props.placeholder"
-			class="py-1 border-b border-solid border-[#dbdbdb] placeholder:text-xs outline-none focus:border-[#a6a4a4] w-full peer placeholder-transparent"
+			class="peer w-full border-b border-solid border-[#dbdbdb] py-1 placeholder-transparent outline-none placeholder:text-xs focus:border-[#a6a4a4]"
 			:class="[isPassword ? 'pr-[72px]' : 'pr-[38px]']"
 			:type="props.type"
 			:value="props.modelValue"
@@ -49,11 +49,11 @@ const isPassword = computed(() => (props.type === "password" ? true : false))
 		/>
 		<label
 			:for="props.placeholder"
-			class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+			class="absolute left-0 -top-3.5 text-sm text-gray-600 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"
 			>{{ props.placeholder }}</label
 		>
 		<div
-			class="absolute top-1/2 -translate-y-1/2 text-[#262626] font-medium right-2 flex items-center"
+			class="absolute top-1/2 right-2 flex -translate-y-1/2 items-center font-medium text-[#262626]"
 		>
 			<font-awesome-icon
 				v-if="props.error"

@@ -48,13 +48,13 @@ const textParts = computed(() => {
 </script>
 <template>
 	<div
-		class="w-full border border-solid border-[#DBDBDB] rounded-lg bg-white"
+		class="w-full rounded-lg border border-solid border-[#DBDBDB] bg-white"
 	>
 		<div class="flex items-center px-3 py-2">
 			<img
 				src="/default.jpg"
 				alt="default"
-				class="w-8 h-8 rounded-full"
+				class="h-8 w-8 rounded-full"
 			/>
 			<p class="mr-auto ml-2">natgeo</p>
 			<div @click.stop="openPopup">
@@ -76,38 +76,38 @@ const textParts = computed(() => {
 		</div>
 
 		<div
-			class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 transition-all z-3"
+			class="z-3 fixed top-0 left-0 h-full w-full bg-black bg-opacity-70 transition-all"
 			:class="[
-				state.popup ? 'show opacity-100 scale-100' : 'hide scale-105'
+				state.popup ? 'show scale-100 opacity-100' : 'hide scale-105'
 			]"
 		>
-			<div class="flex items-center justify-center min-h-full">
+			<div class="flex min-h-full items-center justify-center">
 				<div
 					v-click-outside="closePopup"
-					class="w-[400px] bg-white rounded"
+					class="w-[400px] rounded bg-white"
 				>
 					<p
-						class="text-center select-none py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+						class="cursor-pointer select-none border-b border-solid border-[#DBDBDB] py-3 text-center transition-colors hover:bg-slate-300"
 					>
 						Delete
 					</p>
 					<p
-						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+						class="cursor-pointer border-b border-solid border-[#DBDBDB] py-3 text-center transition-colors hover:bg-slate-300"
 					>
 						Unfollow
 					</p>
 					<p
-						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+						class="cursor-pointer border-b border-solid border-[#DBDBDB] py-3 text-center transition-colors hover:bg-slate-300"
 					>
 						Turn off commenting
 					</p>
 					<p
-						class="text-center py-3 border-b border-solid border-[#DBDBDB] hover:bg-slate-300 cursor-pointer transition-colors"
+						class="cursor-pointer border-b border-solid border-[#DBDBDB] py-3 text-center transition-colors hover:bg-slate-300"
 					>
 						Go to post
 					</p>
 					<p
-						class="text-center py-3 hover:bg-slate-300 cursor-pointer transition-colors"
+						class="cursor-pointer py-3 text-center transition-colors hover:bg-slate-300"
 					>
 						Copy link
 					</p>
@@ -117,27 +117,27 @@ const textParts = computed(() => {
 		<div>
 			<div class="h-[470px] w-[470px] bg-slate-600"></div>
 		</div>
-		<div class="px-3 py-2 flex items-center">
+		<div class="flex items-center px-3 py-2">
 			<font-awesome-icon
 				icon="fa-solid fa-heart"
-				class="w-6 h-6 text-white stroke-black stroke-[39px] mr-2"
+				class="mr-2 h-6 w-6 stroke-black stroke-[39px] text-white"
 			/>
 			<font-awesome-icon
 				icon="fa-solid fa-comment"
-				class="w-6 h-6 text-white stroke-black stroke-[39px] mx-2 mr-auto"
+				class="mx-2 mr-auto h-6 w-6 stroke-black stroke-[39px] text-white"
 			/>
 			<font-awesome-icon
 				icon="fa-solid fa-bookmark"
-				class="w-6 h-6 text-white stroke-black stroke-[39px]"
+				class="h-6 w-6 stroke-black stroke-[39px] text-white"
 			/>
 		</div>
-		<div class="px-3 mt-2">
+		<div class="mt-2 px-3">
 			<p class="font-medium">70,473 likes</p>
-			<span class="text-sm inline-block">
+			<span class="inline-block text-sm">
 				natgeo {{ textParts.firstPart }}
 				<span
 					v-if="state.extraText === false"
-					class="text-gray-500 cursor-pointer"
+					class="cursor-pointer text-gray-500"
 					@click="() => (state.extraText = true)"
 					>... more</span
 				>
@@ -145,8 +145,8 @@ const textParts = computed(() => {
 					textParts.secondPart
 				}}</span>
 			</span>
-			<p class="text-gray-400 mt-2">View all 322 comments</p>
-			<p class="text-gray-400 text-xs my-2">50 MINUTES AGO</p>
+			<p class="mt-2 text-gray-400">View all 322 comments</p>
+			<p class="my-2 text-xs text-gray-400">50 MINUTES AGO</p>
 		</div>
 		<div class="border-t border-solid border-[#DBDBDB]">
 			<form
@@ -180,7 +180,7 @@ const textParts = computed(() => {
 				<textarea
 					v-model="state.textarea"
 					placeholder="Add a comment"
-					class="w-full resize-none outline-none h-[26px]"
+					class="h-[26px] w-full resize-none outline-none"
 					:onkeyup="textareaHandler"
 				/>
 				<button class="ml-4 text-blue-500" type="submit">Post</button>

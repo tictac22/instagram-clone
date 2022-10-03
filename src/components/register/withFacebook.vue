@@ -17,16 +17,16 @@ const signWithFacebook = async () => {
 
 <template>
 	<div class="my-4">
-		<p v-if="alreadyInUse" class="text-xs text-red-500 mb-1">
+		<p v-if="alreadyInUse" class="mb-1 text-xs text-red-500">
 			Email already in use
 		</p>
 		<button
-			class="text-white bg-[#0095f6] flex items-center w-full justify-center rounded p-2 cursor-pointer"
+			class="flex w-full cursor-pointer items-center justify-center rounded bg-[#0095f6] p-2 text-white"
 			:class="[alreadyInUse ? 'bg-red-500' : 'bg-[#0095f6]']"
 			@click="signWithFacebook"
 		>
-			<div class="bg-white p-1 rounded-sm">
-				<img src="/facebook-white.svg" alt="facebook" class="w-4 h-4" />
+			<div class="rounded-sm bg-white p-1">
+				<img src="/facebook-white.svg" alt="facebook" class="h-4 w-4" />
 			</div>
 			<span class="ml-2">Log in with Facebook</span>
 		</button>

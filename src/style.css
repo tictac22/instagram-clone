@@ -4,13 +4,13 @@
 
 @layer components {
 	.triangle {
-		@apply w-0 h-0 border-solid border-l-[11px] border-l-[transparent] border-r-[11px] border-r-[transparent] border-b-[17px] border-b-white content-[""] absolute;
+		@apply absolute h-0 w-0 border-l-[11px] border-r-[11px] border-b-[17px] border-solid border-l-[transparent] border-r-[transparent] border-b-white content-[""];
 	}
 	.hide {
-		@apply opacity-0 invisible pointer-events-none;
+		@apply pointer-events-none invisible opacity-0;
 	}
 	.show {
-		@apply opacity-25 visible pointer-events-auto;
+		@apply pointer-events-auto visible opacity-25;
 	}
 }
 @layer utilities {

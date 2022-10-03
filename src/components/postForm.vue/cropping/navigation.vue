@@ -19,14 +19,14 @@ const handleInputFile = (event: Event) => {
 }
 </script>
 <template>
-	<div class="absolute right-0 bottom-0 w-full z-10">
+	<div class="absolute right-0 bottom-0 z-10 w-full">
 		<div class="flex flex-col items-end p-4">
 			<button
-				class="bg-black mt-3 rounded-full order-1 flex w-8 h-8 items-center justify-center hover:opacity-70 cursor-pointer transition-opacity"
+				class="order-1 mt-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black transition-opacity hover:opacity-70"
 			>
 				<OpenGallery />
 			</button>
-			<div class="p-2 max-w-full flex bg-[#2c3733] rounded">
+			<div class="flex max-w-full rounded bg-[#2c3733] p-2">
 				<ImageSlider />
 				<AddImage :handleInputFile="handleInputFile" />
 			</div>

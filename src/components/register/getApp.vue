@@ -1,6 +1,6 @@
 <template>
-	<p class="text-center mt-2">Get the app.</p>
-	<div class="flex items-center justify-center mt-2">
+	<p class="mt-2 text-center">Get the app.</p>
+	<div class="mt-2 flex items-center justify-center">
 		<a
 			href="https://apps.apple.com/app/instagram/id389801252?vt=lo"
 			target="_blank"

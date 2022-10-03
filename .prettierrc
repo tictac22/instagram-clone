@@ -4,5 +4,25 @@
 	"semi": false,
 	"singleQuote": false,
 	"trailingComma": "none",
-	"printWidth": 80
+	"printWidth": 80,
+	"importOrder": [
+		"^(next/(.*)$)|^(next$)",
+		"^react",
+		"<THIRD_PARTY_MODULES>",
+		"next-seo.config",
+		"^components/(.*)$",
+		"^utils/(.*)$",
+		"^assets/(.*)$",
+		"^@/public",
+		"^@fontsource/(.*)$",
+		"^[./]"
+	],
+	"plugins": [
+		"@trivago/prettier-plugin-sort-imports",
+		"prettier-plugin-tailwindcss"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true,
+	"tailwindConfig": "./tailwind.config.cjs",
+	"importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
 }

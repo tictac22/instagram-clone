@@ -34,7 +34,7 @@ const submit = async () => {
 	<form @submit.prevent="submit">
 		<svg
 			aria-label="Instagram"
-			class="cursor-pointer m-auto w-[175px] h-[51px]"
+			class="m-auto h-[51px] w-[175px] cursor-pointer"
 			color="#262626"
 			fill="#262626"
 			height="29"
@@ -67,7 +67,7 @@ const submit = async () => {
 			/>
 			<button
 				type="submit"
-				class="text-white rounded my-3 py-1 flex items-center justify-center"
+				class="my-3 flex items-center justify-center rounded py-1 text-white"
 				:disabled="form.$invalid || state.isLoading"
 				:class="[form.$invalid ? 'bg-[#0095f64d]' : 'bg-[#0095f6]']"
 			>
@@ -76,15 +76,15 @@ const submit = async () => {
 			</button>
 			<p
 				v-if="state.isError"
-				class="text-center my-1 text-red-500 max-w-[230px] m-auto"
+				class="m-auto my-1 max-w-[230px] text-center text-red-500"
 			>
 				Sorry, your password or email was incorrect. Please double-check
 				form values
 			</p>
 			<div class="flex items-center">
-				<span class="bg-[#dbdbdb] h-[1px] w-1/2"></span>
-				<span class="text-gray-500 px-2">OR</span>
-				<span class="bg-[#dbdbdb] h-[1px] w-1/2"></span>
+				<span class="h-[1px] w-1/2 bg-[#dbdbdb]"></span>
+				<span class="px-2 text-gray-500">OR</span>
+				<span class="h-[1px] w-1/2 bg-[#dbdbdb]"></span>
 			</div>
 		</div>
 	</form>

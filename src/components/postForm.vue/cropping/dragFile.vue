@@ -41,7 +41,7 @@ const isDraggingStyle = computed(() => ({
 
 <template>
 	<div
-		class="w-full h-full items-center justify-center flex"
+		class="flex h-full w-full items-center justify-center"
 		:class="[isDraggingStyle.background]"
 		@dragstart.prevent="dragOverFile"
 		@dragover.prevent="dragOverFile"
@@ -49,7 +49,7 @@ const isDraggingStyle = computed(() => ({
 		@drop.prevent="dropFile"
 	>
 		<div
-			class="flex items-center flex-col"
+			class="flex flex-col items-center"
 			:class="[isDraggingStyle.pointerEvent]"
 		>
 			<Drag :class="[isDraggingStyle.textColor]" />
@@ -57,7 +57,7 @@ const isDraggingStyle = computed(() => ({
 				Drag photos and videos here
 			</p>
 			<button
-				class="bg-blue-500 text-white p-1 px-2 rounded mt-3"
+				class="mt-3 rounded bg-blue-500 p-1 px-2 text-white"
 				@click="triggerInputFile"
 			>
 				Select from computer

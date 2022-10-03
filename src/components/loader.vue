@@ -1,5 +1,5 @@
 <template>
-	<div class="h-screen relative">
+	<div class="relative h-screen">
 		<img
 			src="/instagram/icon.png"
 			alt="instagram"
@@ -8,7 +8,7 @@
 		<img
 			src="/meta.png"
 			alt="meta"
-			class="absolute bottom-8 left-1/2 -translate-x-1/2 w-[72px] h-[37px]"
+			class="absolute bottom-8 left-1/2 h-[37px] w-[72px] -translate-x-1/2"
 		/>
 	</div>
 </template>
