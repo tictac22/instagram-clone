@@ -4,23 +4,18 @@ import { inject, ref, watch } from "vue"
 import VueCropper from "vue-cropperjs"
 import { key } from "../context/key"
 import CropperNavigation from "./cropperNavigation.vue"
-import DragFile from "./dragFile.vue"
 import Navigation from "./navigation.vue"
 
 const { files, formStep, currentSlider, saveCropImages } = inject(key)!
-const cropperRef = ref<null | typeof VueCropper[]>(null)
-
-watch(formStep, () => {
-	if (formStep.value === 2) {
-		const images = []
-		cropperRef.value?.map(item => {
-			new Promise((resolve, reject) => {
-				const canvas = item.getCroppedCanvas().toDataURL()
-				const img = new Image()
-				img.onload = function () {
-					resolve(images.push(img.src))
-				}
-				img.src = canvas
+const cropperRefs = ref<null | typeof VueCropper[]>([])
+watch(formStep, value => {
+	if (value === 2) {
+		const images: string[] = []
+		cropperRefs.value?.map(item => {
+			new Promise(resolve => {
+				const canvas = item.getCroppedCanvas().toDataURL() as string
+				images.push(canvas)
+				resolve("")
 			})
 		})
 		saveCropImages(images)
@@ -30,24 +25,21 @@ watch(formStep, () => {
 <template>
 	<div class="relative h-full flex-auto rounded">
 		<div class="relative h-full flex-auto rounded">
-			<DragFile v-if="files.length === 0" />
-			<template v-else>
-				<CropperNavigation />
-				<Navigation />
-				<div class="relative h-full overflow-hidden">
-					<VueCropper
-						v-for="(image, index) in files"
-						:key="image"
-						ref="cropperRef"
-						:viewMode="3"
-						class="absolute inset-0 h-[calc(100vmin-270px)] w-full"
-						:autoCropArea="1"
-						:src="image"
-						:center="false"
-						:class="[currentSlider === index ? 'z-[2]' : 'z-0']"
-					/>
-				</div>
-			</template>
+			<CropperNavigation />
+			<Navigation />
+			<div class="relative h-full overflow-hidden">
+				<VueCropper
+					v-for="(image, index) in files"
+					:key="image"
+					ref="cropperRefs"
+					:viewMode="3"
+					class="absolute inset-0 h-[calc(100vmin-270px)] w-full"
+					:autoCropArea="1"
+					:src="image"
+					:center="false"
+					:class="[currentSlider === index ? 'z-[2]' : 'z-0']"
+				/>
+			</div>
 		</div>
 	</div>
 </template>

@@ -8,12 +8,13 @@
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
 		"prettier": "npx prettier --write .",
-		"eslint": "eslint . --fix --max-warnings=3 && git add .",
+		"eslint": "eslint . --fix --max-warnings=3",
+		"eslint:staged": "eslint . --fix --max-warnings=3 && git add .",
 		"prepare": "husky install"
 	},
 	"lint-staged": {
 		"**/*.{vue,ts,js}": [
-			"yarn eslint"
+			"yarn eslint:staged"
 		]
 	},
 	"dependencies": {

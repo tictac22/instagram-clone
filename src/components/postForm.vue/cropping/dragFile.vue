@@ -9,7 +9,7 @@ interface InputFileEvent extends Event {
 const triggerInputFile = () => input.value!.click()
 const input = ref<HTMLInputElement | null>(null)
 
-const { uploadFileToCropper } = inject(key)!
+const { uploadFileToCropper, nextFormStep } = inject(key)!
 
 const isDragging = ref<null | boolean>(null)
 
@@ -21,12 +21,14 @@ const dropFile = (event: Event) => {
 	const target = (event as InputFileEvent).target
 	isDragging.value = false
 	uploadFileToCropper(event.dataTransfer.files[0])
+	nextFormStep()
 	target.value = ""
 }
 const handleInputFile = (event: Event) => {
 	const target = (event as InputFileEvent).target
 	const file = target.files![0]
 	uploadFileToCropper(file)
+	nextFormStep()
 	target.value = ""
 }
 const isDraggingStyle = computed(() => ({

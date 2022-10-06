@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CreatePost from "../postForm.vue/createPost.vue"
+import CreatePost from "../postForm.vue/context/postContext.vue"
 import Dropdown from "./dropdown.vue"
 import Search from "./search.vue"
 </script>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { provide, ref } from "vue"
 
+import CreatePost from "../createPost.vue"
 import { key } from "./key"
 
 const files = ref<string[]>([])
+
 const croppedFiles = ref<string[]>([])
-const formStep = ref(1)
+const formStep = ref(0)
 const nextFormStep = () => formStep.value++
 const prevFormStep = () => formStep.value--
 
@@ -41,6 +43,7 @@ provide(key, {
 	prevSlider,
 	setSlider,
 	files,
+	croppedFiles,
 	uploadFileToCropper,
 	swapFiles,
 	deleteFile,
@@ -52,5 +55,5 @@ provide(key, {
 </script>
 
 <template>
-	<slot></slot>
+	<CreatePost />
 </template>
