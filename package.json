@@ -12,7 +12,6 @@
 		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*": "yarn prettier",
 		"**/*.{vue,ts,js}": [
 			"yarn eslint"
 		]
