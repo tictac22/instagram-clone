@@ -4,16 +4,11 @@ import { provide, ref } from "vue"
 import CreatePost from "../createPost.vue"
 import { key } from "./key"
 
-const files = ref<string[]>([])
-
-const croppedFiles = ref<string[]>([])
 const formStep = ref(0)
 const nextFormStep = () => formStep.value++
 const prevFormStep = () => formStep.value--
 
-const saveCropImages = (croppedImages: string[]) => {
-	croppedFiles.value = croppedImages
-}
+const files = ref<string[]>([])
 const uploadFileToCropper = (file: File) => {
 	const reader = new FileReader()
 	reader.readAsDataURL(file)
@@ -24,24 +19,22 @@ const uploadFileToCropper = (file: File) => {
 
 const deleteFile = async (index: number) => {
 	files.value.splice(index, 1)
-	if (currentSlider.value > 0) {
-		currentSlider.value--
+	if (files.value.length === 0) {
+		formStep.value = 0
 	}
 }
 const swapFiles = (from: number, to: number) => {
-	setSlider(to)
 	files.value.splice(from, 1, files.value.splice(to, 1, files.value[from])[0])
 }
-const currentSlider = ref(0)
-const nextSlider = () => currentSlider.value++
-const prevSlider = () => currentSlider.value--
-const setSlider = (index: number) => (currentSlider.value = index)
 
+const croppedFiles = ref<string[]>([])
+
+const saveCropImages = (croppedImages: string[]) => {
+	croppedFiles.value = croppedImages
+}
+const blobedFiles = ref<string[]>([])
+const saveBlobedFiles = (files: string[]) => (blobedFiles.value = files)
 provide(key, {
-	currentSlider,
-	nextSlider,
-	prevSlider,
-	setSlider,
 	files,
 	croppedFiles,
 	uploadFileToCropper,
@@ -50,7 +43,8 @@ provide(key, {
 	formStep,
 	saveCropImages,
 	nextFormStep,
-	prevFormStep
+	prevFormStep,
+	saveBlobedFiles
 })
 </script>
 

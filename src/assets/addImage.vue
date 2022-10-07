@@ -1,9 +1,17 @@
 <script lang="ts" setup>
-import { ref } from "vue"
+import { key } from "@/components/postForm.vue/context/key"
+import { inject, ref } from "vue"
+interface InputFileEvent extends Event {
+	target: HTMLInputElement
+}
+const { uploadFileToCropper } = inject(key)!
 
-const props = defineProps<{
-	handleInputFile: (event: Event) => void
-}>()
+const handleInputFile = (event: Event) => {
+	const target = (event as InputFileEvent).target
+	const file = target.files![0]
+	uploadFileToCropper(file)
+	target.value = ""
+}
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const triggerClick = () => inputRef.value?.click()
@@ -33,7 +41,7 @@ const triggerClick = () => inputRef.value?.click()
 			type="file"
 			accept=".jpg,.jpeg,.png"
 			class="hidden"
-			@change="props.handleInputFile"
+			@change="handleInputFile"
 		/>
 	</div>
 </template>

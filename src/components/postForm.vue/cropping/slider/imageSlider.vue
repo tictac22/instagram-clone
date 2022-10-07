@@ -1,24 +1,31 @@
 <script lang="ts" setup>
 import { computed, inject, onMounted, onUnmounted, onUpdated, ref } from "vue"
-import { key } from "../context/key"
-const { files, swapFiles, deleteFile } = inject(key)!
+import { key } from "../../context/key"
+import { key as keyC } from "../key"
+const { files, swapFiles, deleteFile: deleteContextFile } = inject(key)!
 
+const { setCurrentImage, prevCurrentImage, currentImage } = inject(keyC)!
 const currentDrag = ref<null | number>(null)
 const dragStart = (event: Event, index: number) => {
 	currentDrag.value = index
 }
 
+const deleteFile = (index: number) => {
+	deleteContextFile(index)
+	if (currentImage.value !== 0) {
+		prevCurrentImage()
+	}
+}
 const dragDrop = (event: Event, index: number) => {
 	swapFiles(currentDrag.value!, index)
 	currentDrag.value = null
+	setCurrentImage(currentDrag.value!)
 }
 
 const position = ref(0)
 const slidesToShow = ref(0)
 const containter = ref<HTMLDivElement | null>(null)
-const mouseDown = () => {
-	return false
-}
+
 const trackRef = ref<HTMLDivElement | null>(null)
 const btnPrev = () => {
 	const movePosition = 2 * (94 + 8)
@@ -75,7 +82,9 @@ const showNextButton = computed(
 				:draggable="true"
 				class="ml-2 first:ml-0"
 				@dragstart="dragStart($event, index)"
-				@mousedown="mouseDown"
+				@dragleave="() => {}"
+				@dragend="() => {}"
+				@dragover.prevent="() => {}"
 				@drop.prevent="dragDrop($event, index)"
 			>
 				<div class="relative h-[94px] w-[94px]">

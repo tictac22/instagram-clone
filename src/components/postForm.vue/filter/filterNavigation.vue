@@ -39,7 +39,10 @@ const showNextButton = computed(
 				icon="fa-solid fa-chevron-right"
 			/>
 		</div>
-		<div class="absolute left-1/2 bottom-3 z-30 flex -translate-x-1/2">
+		<div
+			v-if="croppedFiles.length > 1"
+			class="absolute left-1/2 bottom-3 z-30 flex -translate-x-1/2"
+		>
 			<div
 				v-for="(item, index) in croppedFiles"
 				:key="item"

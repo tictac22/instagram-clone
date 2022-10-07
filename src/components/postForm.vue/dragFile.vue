@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Drag from "@/assets/drag.vue"
 import { computed, inject, ref } from "vue"
-import { key } from "../context/key"
+import { key } from "./context/key"
 
 interface InputFileEvent extends Event {
 	target: HTMLInputElement

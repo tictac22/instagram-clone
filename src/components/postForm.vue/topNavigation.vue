@@ -2,7 +2,7 @@
 import { computed, inject } from "vue"
 import { key } from "./context/key"
 
-const { nextFormStep, prevFormStep, formStep } = inject(key)!
+const { nextFormStep, prevFormStep, formStep, files } = inject(key)!
 
 const titleText = computed(() =>
 	formStep.value === 2
@@ -22,8 +22,12 @@ const titleText = computed(() =>
 			icon="fa-solid fa-arrow-left"
 			@click="prevFormStep"
 		/>
-		<h3 class="font-medium">{{ titleText }}</h3>
-		<div class="cursor-pointer text-blue-500" @click="nextFormStep">
+		<h3 class="m-auto font-medium">{{ titleText }}</h3>
+		<div
+			v-if="files.length > 0"
+			class="cursor-pointer text-blue-500"
+			@click="nextFormStep"
+		>
 			Next
 		</div>
 	</div>

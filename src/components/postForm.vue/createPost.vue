@@ -7,7 +7,7 @@ import { key } from "./context/key"
 import PostLogic from "./postLogic.vue"
 import TopNavigation from "./topNavigation.vue"
 
-const { formStep } = inject(key)
+const { formStep } = inject(key)!
 
 interface State {
 	open: boolean
@@ -43,7 +43,7 @@ const isDraggingStyle = computed(() => ({
 			:class="[isDraggingStyle.open]"
 			class="fixed top-0 left-0 h-full w-full bg-black bg-opacity-70 transition-all"
 		>
-			<div class="flex min-h-full items-center justify-center p-5">
+			<div class="flex min-h-full items-center justify-center p-20">
 				<font-awesome-icon
 					icon="fa-solid fa-xmark"
 					class="absolute top-2 right-2 h-5 w-5 text-white"
@@ -51,11 +51,7 @@ const isDraggingStyle = computed(() => ({
 				<div
 					v-click-outside="closePopup"
 					class="flex h-[calc(100vmin-229px)] max-h-[900px] scale-100 flex-col rounded bg-white"
-					:class="
-						formStep === 2
-							? 'w-full min-w-[calc(100vw-477px)]'
-							: 'w-[calc(100vmin-229px)]'
-					"
+					:class="formStep === 2 ? '' : 'w-[calc(100vmin-229px)]'"
 				>
 					<TopNavigation />
 					<PostLogic />
