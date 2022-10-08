@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { RoutePaths } from "@/utils/paths"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 
@@ -8,7 +9,7 @@ const signWithFacebook = async () => {
 	try {
 		const { signInWithFacebook } = await import("@/utils/firebase")
 		await signInWithFacebook()
-		router.push("/")
+		router.push(RoutePaths.SIGNUP)
 	} catch (error) {
 		alreadyInUse.value = true
 	}

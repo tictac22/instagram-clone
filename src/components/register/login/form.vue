@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import { useUserStore } from "@/utils/pinia"
 import useVuelidate from "@vuelidate/core"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
 import Spin from "../spin.vue"
 import { logInInputs, logInRules } from "./validation"
-
 const router = useRouter()
 const state = reactive({
 	email: "",
@@ -14,18 +14,20 @@ const state = reactive({
 	isError: false
 })
 const form = useVuelidate(logInRules, state)
-
+const { setUser } = useUserStore()
 const submit = async () => {
 	state.isLoading = false
 	state.isLoading = true
 	try {
 		const { logIn } = await import("@/utils/firebase")
-		await logIn({
+		const user = await logIn({
 			...state
 		})
+		setUser(true, user)
 		router.push("/")
 	} catch (error) {
 		state.isError = true
+	} finally {
 		state.isLoading = false
 	}
 }
