@@ -33,18 +33,29 @@ const saveCropImages = (croppedImages: string[]) => {
 	croppedFiles.value = croppedImages
 }
 const blobedFiles = ref<string[]>([])
+interface Filter {
+	[key: number]: string
+}
+const selectedFilter = ref<Filter>({})
+const saveSelectedFilters = (index: number, filter: string) => {
+	selectedFilter.value = { ...selectedFilter.value, [index]: filter }
+}
 const saveBlobedFiles = (files: string[]) => (blobedFiles.value = files)
+
 provide(key, {
 	files,
 	croppedFiles,
 	uploadFileToCropper,
+	blobedFiles,
 	swapFiles,
 	deleteFile,
 	formStep,
 	saveCropImages,
 	nextFormStep,
 	prevFormStep,
-	saveBlobedFiles
+	saveBlobedFiles,
+	selectedFilter,
+	saveSelectedFilters
 })
 </script>
 

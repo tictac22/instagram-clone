@@ -20,13 +20,13 @@ const imageFilters: { [key: string]: string } = {
 	slumber: "contrast(150%) brightness(100%) saturate(110%)"
 }
 
-const { croppedFiles, formStep, saveBlobedFiles } = inject(key)!
+const { croppedFiles, saveBlobedFiles, selectedFilter, saveSelectedFilters } =
+	inject(key)!
 
 const { currentImage } = inject(keyF)!
 
 const canvas = ref<HTMLCanvasElement[] | null>(null)
 const htmlImages = ref<HtmlImage>({})
-const selectedFilter = ref<Filter>({})
 const renderCanvas = (
 	index: number,
 	image: HTMLImageElement,
@@ -40,51 +40,45 @@ const renderCanvas = (
 	ctx.drawImage(image, 0, 0)
 	htmlImages.value![index] = image
 }
-interface Filter {
-	[key: number]: string
-}
+
 interface HtmlImage {
 	[key: number]: HTMLImageElement
 }
 
 const setFilter = (filter: string, index: number) => {
-	selectedFilter.value = { ...selectedFilter.value, [index]: filter }
+	saveSelectedFilters(index, filter)
 	renderCanvas(index, htmlImages.value![index], imageFilters[filter])
 }
-watch(formStep, value => {
-	if (value !== 3) return
-	const images: string[] = []
-	canvas.value?.map(item => {
-		return new Promise(resolve => {
-			return item.toBlob(blob => {
-				const image = new Image()
+
+watch(
+	() => selectedFilter,
+	() => {
+		const images: string[] = []
+
+		canvas.value!.map((item, index, array) => {
+			item.toBlob(blob => {
 				const url = URL.createObjectURL(blob!)
-
-				image.onload = () => {
-					// no longer need to read the blob so it's revoked
-					console.log("workss")
-					images.push(image.src)
-					resolve("")
+				images.push(url)
+				if (array.length === index + 1) {
+					saveBlobedFiles(images)
 				}
-
-				image.src = url
 			})
 		})
-	})
-	saveBlobedFiles(images)
-})
+	},
+	{ deep: true }
+)
 onMounted(() => {
-	canvas.value!.forEach((item, index) => {
+	canvas.value!?.forEach((item, index) => {
 		new Promise(resolve => {
 			const image = new Image()
 
 			image.onload = function () {
-				renderCanvas(index, image, selectedFilter.value[index])
+				renderCanvas(
+					index,
+					image,
+					imageFilters[selectedFilter.value[index]]
+				)
 
-				selectedFilter.value = {
-					...selectedFilter,
-					[index]: "original"
-				}
 				resolve("")
 			}
 			image.src = croppedFiles.value[index]
@@ -114,14 +108,9 @@ const capitalizeFirstLetter = (string: string) =>
 		<div class="relative z-50 h-full w-[340px] bg-white">
 			<div class="flex items-center justify-center">
 				<p
-					class="flex-[50%] cursor-pointer border-b border-solid border-black py-4 text-center"
+					class="flex-[100%] cursor-pointer border-b border-solid border-black py-4 text-center"
 				>
 					Filters
-				</p>
-				<p
-					class="flex-[50%] cursor-pointer border-b border-solid border-[rgb(38,38,38)] py-4 text-center opacity-[0.3]"
-				>
-					Adjustments
 				</p>
 			</div>
 			<div

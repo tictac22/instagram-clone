@@ -3,12 +3,14 @@ import GetApp from "@/components/register/getApp.vue"
 import Form from "@/components/register/signup/form.vue"
 import WithFacebook from "@/components/register/withFacebook.vue"
 
-import Facebookform from "@/components/register/facebook/Facebookform.vue"
 import { RoutePaths } from "@/utils/paths"
 import { useUserStore } from "@/utils/pinia"
+import { defineAsyncComponent } from "vue"
 
+const AsyncFacebookform = defineAsyncComponent(
+	() => import("@/components/register/facebook/Facebookform.vue")
+)
 const { user } = useUserStore()
-console.log(user.data)
 </script>
 
 <template>
@@ -31,7 +33,7 @@ console.log(user.data)
 				</div>
 				<Form />
 			</template>
-			<Facebookform v-else />
+			<AsyncFacebookform v-else />
 		</div>
 		<p
 			v-if="!user.data"
