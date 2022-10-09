@@ -25,7 +25,8 @@ const submit = async () => {
 		const { setSignUpFacebookData } = await import("@/utils/firebase")
 		await setSignUpFacebookData({
 			...state,
-			uid: user.data.uid
+			uid: user.data.uid,
+			photoUrl: user.data.photoURL
 		})
 		await authenficate()
 		router.push("/")

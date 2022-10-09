@@ -25,6 +25,7 @@
 		"@vuelidate/validators": "^2.0.0-alpha.31",
 		"firebase": "^9.10.0",
 		"pinia": "^2.0.22",
+		"uuid": "^9.0.0",
 		"vue": "^3.2.37",
 		"vue-cropperjs": "^5.0.0",
 		"vue-router": "4",
@@ -33,6 +34,7 @@
 	"devDependencies": {
 		"@trivago/prettier-plugin-sort-imports": "^3.3.0",
 		"@types/node": "^18.7.18",
+		"@types/uuid": "^8.3.4",
 		"@types/vue-cropperjs": "^4.1.2",
 		"@typescript-eslint/eslint-plugin": "^5.38.1",
 		"@typescript-eslint/parser": "^5.38.1",

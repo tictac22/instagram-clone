@@ -4,6 +4,7 @@ const fromStep = ref(0)
 const files = ref<string[]>([])
 const croppedFiles = ref<string[]>([])
 const blobedFiles = ref<string[]>([])
+const filterErrors = ref(false)
 
 interface Filter {
 	[key: number]: string
@@ -22,5 +23,6 @@ export const key = Symbol() as InjectionKey<{
 	saveCropImages: (images: string[]) => void
 	saveBlobedFiles: (files: string[]) => string[]
 	selectedFilter: typeof selectedFilter
+	filterErrors: typeof filterErrors
 	saveSelectedFilters: (index: number, filter: string) => void
 }>

@@ -20,8 +20,13 @@ const imageFilters: { [key: string]: string } = {
 	slumber: "contrast(150%) brightness(100%) saturate(110%)"
 }
 
-const { croppedFiles, saveBlobedFiles, selectedFilter, saveSelectedFilters } =
-	inject(key)!
+const {
+	croppedFiles,
+	saveBlobedFiles,
+	selectedFilter,
+	saveSelectedFilters,
+	filterErrors
+} = inject(key)!
 
 const { currentImage } = inject(keyF)!
 
@@ -148,6 +153,9 @@ const capitalizeFirstLetter = (string: string) =>
 					</p>
 				</div>
 			</div>
+			<p v-if="filterErrors" class="ml-4 font-medium text-red-500">
+				Please select filters for your images
+			</p>
 		</div>
 	</div>
 </template>

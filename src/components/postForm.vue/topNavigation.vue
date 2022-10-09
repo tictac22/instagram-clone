@@ -24,7 +24,7 @@ const titleText = computed(() =>
 		/>
 		<h3 class="m-auto font-medium">{{ titleText }}</h3>
 		<div
-			v-if="files.length > 0"
+			v-if="files.length > 0 && formStep < 3"
 			class="cursor-pointer text-blue-500"
 			@click="nextFormStep"
 		>

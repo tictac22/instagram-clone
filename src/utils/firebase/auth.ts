@@ -27,11 +27,13 @@ export const signInWithFacebook = async () => {
 export const setSignUpFacebookData = async ({
 	uid,
 	fullName,
-	userName
+	userName,
+	photoUrl
 }: {
 	uid: string
 	fullName: string
 	userName: string
+	photoUrl: string
 }) => {
 	const isTaken = await isNameTaken(userName)
 	if (isTaken) {
@@ -41,7 +43,8 @@ export const setSignUpFacebookData = async ({
 
 	const user = await setDoc(usersCollectionRef, {
 		fullName,
-		userName
+		userName,
+		photoUrl
 	})
 	return user
 }

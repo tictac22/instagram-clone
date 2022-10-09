@@ -3,7 +3,6 @@ import { ref } from "vue"
 
 const expanded = ref(false)
 
-const expandMenu = () => (expanded.value = true)
 const collapseMenu = () => (expanded.value = false)
 </script>
 

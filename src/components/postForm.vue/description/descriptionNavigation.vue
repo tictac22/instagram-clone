@@ -3,15 +3,15 @@ import { computed, inject } from "vue"
 import { key } from "../context/key"
 import { key as keyF } from "./key"
 
-const { croppedFiles } = inject(key)!
+const { blobedFiles } = inject(key)!
 
 const { nextCurrentImage, prevCurrentImage, currentImage } = inject(keyF)!
 
 const showPrevButton = computed(
-	() => currentImage.value > 0 && croppedFiles.value.length > 0
+	() => currentImage.value > 0 && blobedFiles.value.length > 0
 )
 const showNextButton = computed(
-	() => currentImage.value !== croppedFiles.value.length - 1 && croppedFiles
+	() => currentImage.value !== blobedFiles.value.length - 1 && blobedFiles
 )
 </script>
 
@@ -40,11 +40,11 @@ const showNextButton = computed(
 			/>
 		</div>
 		<div
-			v-if="croppedFiles.length > 1"
+			v-if="blobedFiles.length > 1"
 			class="absolute left-1/2 bottom-3 z-30 flex -translate-x-1/2"
 		>
 			<div
-				v-for="(item, index) in croppedFiles"
+				v-for="(item, index) in blobedFiles"
 				:key="item"
 				class="mx-1 h-2 w-2 rounded-full"
 				:class="currentImage === index ? 'bg-blue-500' : 'bg-gray-500'"

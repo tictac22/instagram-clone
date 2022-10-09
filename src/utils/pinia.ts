@@ -5,6 +5,7 @@ type User = {
 	userName: string
 	fullName: string
 	uid: string
+	photoUrl: string
 }
 export const useUserStore = defineStore("counter", () => {
 	const user = reactive<{ isAuthenticated: null | boolean; data: User }>({
@@ -29,10 +30,12 @@ export const useUserStore = defineStore("counter", () => {
 			if (!firebaseUser) return (user.isAuthenticated = false)
 			if (firebaseUser?.providerData[0].providerId === "facebook.com") {
 				const userData = await getUser(firebaseUser!.uid)!
+				console.log(firebaseUser)
 				if (!userData) {
 					user.data = {
 						uid: firebaseUser!.uid,
-						fullName: firebaseUser!.displayName
+						fullName: firebaseUser!.displayName,
+						photoUrl: firebaseUser!.photoURL ?? ""
 					}
 					return (user.isAuthenticated = false)
 				}

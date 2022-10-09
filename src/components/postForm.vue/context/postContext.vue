@@ -5,7 +5,16 @@ import CreatePost from "../createPost.vue"
 import { key } from "./key"
 
 const formStep = ref(0)
-const nextFormStep = () => formStep.value++
+const nextFormStep = () => {
+	if (
+		formStep.value === 2 &&
+		Object.keys(selectedFilter.value).length === 0
+	) {
+		filterErrors.value = true
+		return
+	}
+	formStep.value++
+}
 const prevFormStep = () => formStep.value--
 
 const files = ref<string[]>([])
@@ -37,10 +46,12 @@ interface Filter {
 	[key: number]: string
 }
 const selectedFilter = ref<Filter>({})
+const filterErrors = ref(false)
 const saveSelectedFilters = (index: number, filter: string) => {
 	selectedFilter.value = { ...selectedFilter.value, [index]: filter }
+	filterErrors.value = false
 }
-const saveBlobedFiles = (files: string[]) => (blobedFiles.value = files)
+const saveBlobedFiles = (files: string[]) => (blobedFiles.value = [...files])
 
 provide(key, {
 	files,
@@ -55,6 +66,7 @@ provide(key, {
 	prevFormStep,
 	saveBlobedFiles,
 	selectedFilter,
+	filterErrors,
 	saveSelectedFilters
 })
 </script>
