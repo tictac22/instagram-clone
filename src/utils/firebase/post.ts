@@ -11,6 +11,5 @@ export const createPost = async (postData: ICreatePost) => {
 	const data = await addDoc(collections, {
 		...postData
 	})
-	console.log("createpost", data)
 	return data
 }

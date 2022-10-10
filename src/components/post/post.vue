@@ -13,7 +13,7 @@ const state = reactive({
 const text =
 	" Video by @acacia.johnson | A horned puffin surveys the sea outside its nest on Round Island, Alaska. Like many seabirds, puffins are climate change indicator species—meaning that monitoring their population can give researchers insight into what’s going on in the broader marine ecosystem. They’re also simply beautiful to glimpse in the wild! Follow me at @acacia.johnson for more from Alaska and beyond. #puffin #alaska #roundisland #seabirds #wildlife"
 const closePopup = () => (state.popup = false)
-
+// /@\S+/gm
 const openPopup = () => (state.popup = true)
 
 const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)

@@ -40,6 +40,7 @@
 		"import/no-named-as-default": "off",
 		"@typescript-eslint/no-empty-function": "error",
 		"@typescript-eslint/no-non-null-assertion": "off",
+		"prefer-rest-params": "off",
 		"no-console": [1],
 		"prefer-const": "warn",
 		"import/no-unresolved": 2,

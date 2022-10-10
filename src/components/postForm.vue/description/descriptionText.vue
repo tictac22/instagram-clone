@@ -1,16 +1,52 @@
 <script setup lang="ts">
 import Spin from "@/components/register/spin.vue"
+//import { suggestUser } from "@/utils/firebase"
+import { debounce } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
-import { computed, defineAsyncComponent, inject, reactive } from "vue"
+import {
+	computed,
+	defineAsyncComponent,
+	inject,
+	reactive,
+	ref,
+	watch
+} from "vue"
+import { useRouter } from "vue-router"
 import { key } from "../context/key"
-
 const { blobedFiles } = inject(key)!
+const router = useRouter()
 const { user } = useUserStore()
 const state = reactive({
 	textarea: "",
+	debouncedTextArea: "",
+	showUserPicker: false,
 	showEmojiPicker: false,
 	isLoading: false
 })
+const textAreaRef = ref<HTMLTextAreaElement | null>(null)
+watch(
+	() => state.textarea,
+	//@ts-ignore
+	debounce(value => {
+		state.debouncedTextArea = value
+	}, 500)
+)
+watch(
+	() => state.debouncedTextArea,
+	async value => {
+		const lastWord = value.replace(/\s+/g, " ").split(" ").pop()!
+
+		if (!lastWord.match(/^@./)) return (state.showUserPicker = false)
+		state.showUserPicker = true
+		//const suggestedUsers = await suggestUser(lastWord)
+	}
+)
+const setUser = (user: string) => {
+	const lastWord = state.textarea.split(" ").pop()!
+	state.textarea = state.textarea.replace(lastWord, "@" + user + " ")
+	state.showUserPicker = false
+	textAreaRef.value!.focus()
+}
 const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)
 const handleEmojiPicker = () => (state.showEmojiPicker = !state.showEmojiPicker)
 
@@ -36,13 +72,15 @@ const createPost = async () => {
 		text: state.textarea,
 		uid: user.data.uid
 	})
-	//router.push(`/p/${data.id}`)
+	router.push(`/p/${data.id}`)
 	state.isLoading = false
 }
 </script>
 
 <template>
-	<div class="flex h-full w-[339px] flex-auto flex-col justify-start p-4">
+	<div
+		class="relative flex h-full w-[339px] flex-auto flex-col justify-start p-4"
+	>
 		<div class="flex items-center">
 			<img
 				v-if="user.data.photoUrl"
@@ -52,11 +90,13 @@ const createPost = async () => {
 			<p class="ml-4 font-bold">{{ user.data.userName }}</p>
 		</div>
 		<textarea
+			ref="textAreaRef"
 			v-model="state.textarea"
 			class="min-h-[100px] focus:outline-none"
 			placeholder="Write a caption..."
 		>
 		</textarea>
+
 		<div
 			v-click-outside="() => (state.showEmojiPicker = false)"
 			class="relative mt-2 flex items-center justify-between"
@@ -84,7 +124,30 @@ const createPost = async () => {
 				<AsyncEmojiPicker :set-emoji="setEmoji" />
 			</div>
 		</div>
+		<div
+			v-if="state.showUserPicker"
+			class="mt-2 max-h-[205px] overflow-y-scroll shadow-md"
+		>
+			<div
+				v-for="n in 10"
+				:key="n"
+				class="flex items-center border-b border-solid border-gray-400 p-2 pl-4"
+				tabindex="0"
+				@keydown.enter="setUser('markeloff222')"
+				@click="setUser('markeloff222')"
+			>
+				<img
+					src="https://graph.facebook.com/3344101705869690/picture"
+					class="h-[30px] w-[30px] rounded-full"
+				/>
+				<div class="ml-2">
+					<p class="text-xs font-bold">markeloff222</p>
+					<p class="text-xs">Артём Фомин</p>
+				</div>
+			</div>
+		</div>
 		<button
+			v-else
 			class="mt-3 flex h-[39px] items-center justify-center rounded bg-blue-600 p-2 text-center text-white"
 			:disabled="disabledButton || state.isLoading"
 			:class="[disabledButton ? 'opacity-50' : 'opacity-100']"
