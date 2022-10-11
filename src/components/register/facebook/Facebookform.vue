@@ -1,10 +1,10 @@
 <script lang="ts" setup>
+import Spin from "@/components/tools/spin.vue"
 import { useUserStore } from "@/utils/pinia"
 import useVuelidate from "@vuelidate/core"
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
-import Spin from "../spin.vue"
 import { instagramInputs, instagramRules } from "./validation"
 const router = useRouter()
 const { user, authenficate } = useUserStore()
@@ -26,7 +26,7 @@ const submit = async () => {
 		await setSignUpFacebookData({
 			...state,
 			uid: user.data.uid,
-			photoUrl: user.data.photoURL
+			photoUrl: user.data.photoUrl
 		})
 		await authenficate()
 		router.push("/")

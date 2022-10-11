@@ -1,10 +1,10 @@
 <script lang="ts" setup>
+import Spin from "@/components/tools/spin.vue"
 import { useUserStore } from "@/utils/pinia"
 import useVuelidate from "@vuelidate/core"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
-import Spin from "../spin.vue"
 import { logInInputs, logInRules } from "./validation"
 const router = useRouter()
 const state = reactive({

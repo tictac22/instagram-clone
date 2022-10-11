@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import Spin from "@/components/register/spin.vue"
 //import { suggestUser } from "@/utils/firebase"
+import Spin from "@/components/tools/spin.vue"
+import { suggestUser } from "@/utils/firebase"
 import { debounce } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
+
 import {
 	computed,
 	defineAsyncComponent,
@@ -13,39 +15,59 @@ import {
 } from "vue"
 import { useRouter } from "vue-router"
 import { key } from "../context/key"
+
+type suggestedUser = {
+	userName: string
+	photoUrl: string
+	fullName: string
+}
 const { blobedFiles } = inject(key)!
 const router = useRouter()
 const { user } = useUserStore()
 const state = reactive({
 	textarea: "",
-	debouncedTextArea: "",
 	showUserPicker: false,
+	userPickLoading: false,
 	showEmojiPicker: false,
-	isLoading: false
+	isLoading: false,
+	suggestedUsers: [] as suggestedUser[]
 })
 const textAreaRef = ref<HTMLTextAreaElement | null>(null)
 watch(
 	() => state.textarea,
 	//@ts-ignore
-	debounce(value => {
-		state.debouncedTextArea = value
-	}, 500)
-)
-watch(
-	() => state.debouncedTextArea,
-	async value => {
+	debounce(async value => {
 		const lastWord = value.replace(/\s+/g, " ").split(" ").pop()!
 
 		if (!lastWord.match(/^@./)) return (state.showUserPicker = false)
 		state.showUserPicker = true
-		//const suggestedUsers = await suggestUser(lastWord)
-	}
+		const suggestedUsers = await suggestUser(lastWord)
+		if (suggestedUsers.length === 0) {
+			state.userPickLoading = false
+			state.showUserPicker = false
+			return
+		}
+		//@ts-ignore
+		state.suggestedUsers = suggestedUsers
+	}, 500)
 )
 const setUser = (user: string) => {
-	const lastWord = state.textarea.split(" ").pop()!
-	state.textarea = state.textarea.replace(lastWord, "@" + user + " ")
-	state.showUserPicker = false
+	const splittedText = state.textarea.split(" ")
+
+	splittedText[splittedText.length - 1] = "@" + user
+	state.textarea = splittedText.join(" ") + " "
+
 	textAreaRef.value!.focus()
+	state.showUserPicker = false
+	state.userPickLoading = false
+}
+const textAreaInput = (e: Event) => {
+	const target = e.target as HTMLInputElement
+	state.textarea = target.value
+
+	const lastWord = state.textarea.replace(/\s+/g, " ").split(" ").pop()!
+	if (!lastWord.match(/^@./)) return (state.userPickLoading = false)
+	state.userPickLoading = true
 }
 const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)
 const handleEmojiPicker = () => (state.showEmojiPicker = !state.showEmojiPicker)
@@ -70,7 +92,7 @@ const createPost = async () => {
 	const data = await createFirebasePost({
 		images,
 		text: state.textarea,
-		uid: user.data.uid
+		creatorUid: user.data.uid
 	})
 	router.push(`/p/${data.id}`)
 	state.isLoading = false
@@ -91,9 +113,10 @@ const createPost = async () => {
 		</div>
 		<textarea
 			ref="textAreaRef"
-			v-model="state.textarea"
 			class="min-h-[100px] focus:outline-none"
 			placeholder="Write a caption..."
+			:value="state.textarea"
+			@input="textAreaInput"
 		>
 		</textarea>
 
@@ -125,26 +148,34 @@ const createPost = async () => {
 			</div>
 		</div>
 		<div
-			v-if="state.showUserPicker"
+			v-if="state.userPickLoading"
 			class="mt-2 max-h-[205px] overflow-y-scroll shadow-md"
 		>
 			<div
-				v-for="n in 10"
-				:key="n"
-				class="flex items-center border-b border-solid border-gray-400 p-2 pl-4"
-				tabindex="0"
-				@keydown.enter="setUser('markeloff222')"
-				@click="setUser('markeloff222')"
+				v-if="!state.showUserPicker"
+				class="flex items-center justify-center py-3 text-center"
 			>
-				<img
-					src="https://graph.facebook.com/3344101705869690/picture"
-					class="h-[30px] w-[30px] rounded-full"
-				/>
-				<div class="ml-2">
-					<p class="text-xs font-bold">markeloff222</p>
-					<p class="text-xs">Артём Фомин</p>
-				</div>
+				<Spin class="text-blue-500" />
 			</div>
+			<template v-else>
+				<div
+					v-for="item in state.suggestedUsers"
+					:key="item.userName"
+					class="flex cursor-pointer items-center border-b border-solid border-gray-400 p-2 pl-4"
+					tabindex="0"
+					@keydown.enter="setUser(item.userName)"
+					@click="setUser(item.userName)"
+				>
+					<img
+						:src="item.photoUrl"
+						class="h-[30px] w-[30px] rounded-full"
+					/>
+					<div class="ml-2">
+						<p class="text-xs font-bold">{{ item.userName }}</p>
+						<p class="text-xs">{{ item.fullName }}</p>
+					</div>
+				</div>
+			</template>
 		</div>
 		<button
 			v-else

@@ -17,7 +17,7 @@ export const suggestUser = async (username: string) => {
 	const users = await getDocs(q)
 	const data: DocumentData[] = []
 	users.forEach(doc => {
-		data.push(doc.data())
+		data.push({ uid: doc.id, ...doc.data() })
 	})
 	return data
 }

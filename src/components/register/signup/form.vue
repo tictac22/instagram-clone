@@ -3,9 +3,9 @@ import useVuelidate from "@vuelidate/core"
 import { reactive, ref } from "vue"
 import Agreement from "./agreement.vue"
 
+import Spin from "@/components/tools/spin.vue"
 import { useRouter } from "vue-router"
 import FormInput from "../formInput.vue"
-import Spin from "../spin.vue"
 import { signUpInputs, signUpRules } from "./validation"
 
 const router = useRouter()
