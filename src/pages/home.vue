@@ -5,7 +5,9 @@ import { useUserStore } from "@/utils/pinia"
 import { defineAsyncComponent } from "vue"
 const { user } = useUserStore()
 
-const Post = defineAsyncComponent(() => import("@/components/post/post.vue"))
+const PostWrapper = defineAsyncComponent(
+	() => import("@/components/post/postWrapper.vue")
+)
 </script>
 
 <template>
@@ -15,7 +17,10 @@ const Post = defineAsyncComponent(() => import("@/components/post/post.vue"))
 		<div class="m-auto mt-8 max-w-4xl px-3">
 			<div class="flex items-center">
 				<div class="mr-8 w-full max-w-[470px]">
-					<Post />
+					<Suspense>
+						<PostWrapper v-if="user" />
+						<template #fallback> ...loading </template>
+					</Suspense>
 				</div>
 				<div class="mt-4 flex items-center self-start">
 					<img
