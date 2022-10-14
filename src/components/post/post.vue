@@ -85,7 +85,11 @@ if (props.text.split("").length > 40) {
 					state.secondPart
 				}}</span>
 			</span>
-			<p class="mt-2 text-gray-400">View all 322 comments</p>
+			<p class="mt-2 text-gray-400">
+				<router-link :to="`/p/${props.id}`">
+					View all ... comments
+				</router-link>
+			</p>
 			<p class="my-2 text-xs text-gray-400">
 				{{ timeAgo(props.createdAt.seconds) }}
 			</p>

@@ -31,3 +31,30 @@ export const timeAgo = (input: number) => {
 		}
 	}
 }
+
+export const getScrollbarWidth = () =>
+	window.innerWidth - document.documentElement.clientWidth
+
+const enum status {
+	hide = "hide",
+	show = "show"
+}
+
+export const handlePadingToWindow = (scrollStatus: "hide" | "show") => {
+	const body = document.body
+	const padding = getScrollbarWidth()
+
+	if (scrollStatus === status.hide) {
+		body.classList.add("overflow-y-hidden")
+		body.style.paddingRight = `${padding}px`
+	} else {
+		body.classList.remove("overflow-y-hidden")
+		body.style.paddingRight = "0px"
+	}
+}
+
+export const closeEscModal = (cb: () => void) => {
+	if (e.keyCode === 27) {
+		cb()
+	}
+}

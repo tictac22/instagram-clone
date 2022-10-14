@@ -3,6 +3,7 @@ import Header from "@/components/header/header.vue"
 import LoginHome from "@/components/register/login/loginHome.vue"
 import { useUserStore } from "@/utils/pinia"
 import { defineAsyncComponent } from "vue"
+import ModalHome from "../components/post/modal/modalHome.vue"
 const { user } = useUserStore()
 
 const PostWrapper = defineAsyncComponent(
@@ -14,6 +15,7 @@ const PostWrapper = defineAsyncComponent(
 	<LoginHome v-if="user.isAuthenticated === false" />
 	<div v-else>
 		<Header />
+		<ModalHome />
 		<div class="m-auto mt-8 max-w-4xl px-3">
 			<div class="flex items-center">
 				<div class="mr-8 w-full max-w-[470px]">

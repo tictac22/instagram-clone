@@ -1,7 +1,9 @@
 import {
 	addDoc,
 	collection,
+	doc,
 	documentId,
+	getDoc,
 	getDocs,
 	orderBy,
 	query,
@@ -58,4 +60,21 @@ export const getUserHomePosts = async (subscribedIds: string[]) => {
 	)
 
 	return posts
+}
+
+export const getPost = async (id: string) => {
+	const postRef = doc(db, "posts", id)
+
+	const postRequest = await getDoc(postRef)
+	const post = postRequest.data()
+
+	const userRef = doc(db, "users", post.uid)
+
+	const userRequest = await getDoc(userRef)
+	const user = userRequest.data()
+
+	return {
+		post,
+		user
+	}
 }
