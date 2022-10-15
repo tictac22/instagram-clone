@@ -1,5 +1,3 @@
-<script></script>
-
 <template>
 	<RouterView v-slot="{ Component }">
 		<Suspense timeout="0">

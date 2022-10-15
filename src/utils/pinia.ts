@@ -7,6 +7,7 @@ type User = {
 	uid: string
 	photoUrl: string
 	subscribed: string[]
+	likes: string[]
 }
 export const useUserStore = defineStore("counter", () => {
 	const user = reactive<{ isAuthenticated: null | boolean; data: User }>({
@@ -16,9 +17,22 @@ export const useUserStore = defineStore("counter", () => {
 			fullName: "",
 			uid: "",
 			photoUrl: "",
-			subscribed: []
+			subscribed: [],
+			likes: []
 		}
 	})
+
+	const handleLike = async (id: string) => {
+		const isLiked = user.data.likes.find(item => item === id)
+		if (isLiked) {
+			const index = user.data.likes.indexOf(isLiked)
+			user.data.likes.splice(index, 1)
+		} else {
+			user.data.likes.push(id)
+		}
+		const { likePost } = await import("@/utils/firebase")
+		likePost(user.data.uid, user.data.likes)
+	}
 
 	const setUser = (isAuthenticated: boolean, userData: User) => {
 		user.isAuthenticated = isAuthenticated
@@ -54,7 +68,7 @@ export const useUserStore = defineStore("counter", () => {
 			user.isAuthenticated = true
 		})
 	}
-	return { user, authenficate, setUser }
+	return { user, authenficate, setUser, handleLike }
 })
 
 const delay = (time: number) =>

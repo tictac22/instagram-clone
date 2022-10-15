@@ -58,7 +58,7 @@ const showNextButton = computed(
 			<div
 				v-for="image in props.images"
 				:key="image"
-				class="relative block w-full shrink-0 overflow-hidden pb-[125%]"
+				class="relative block w-full shrink-0 select-none overflow-hidden pb-[125%]"
 			>
 				<img
 					:src="image"

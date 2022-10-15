@@ -8,6 +8,7 @@ import {
 	orderBy,
 	query,
 	Timestamp,
+	updateDoc,
 	where
 } from "firebase/firestore"
 import { Author, Post } from "../types"
@@ -77,4 +78,11 @@ export const getPost = async (id: string) => {
 		post,
 		user
 	}
+}
+
+export const likePost = async (id: string, likes: string[]) => {
+	const userRef = doc(db, "users", id)
+	updateDoc(userRef, {
+		likes: [...likes]
+	})
 }

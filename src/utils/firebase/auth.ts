@@ -44,7 +44,8 @@ export const setSignUpFacebookData = async ({
 	const user = await setDoc(usersCollectionRef, {
 		fullName,
 		userName,
-		photoUrl
+		photoUrl,
+		likes: []
 	})
 	return user
 }
@@ -69,7 +70,8 @@ export const signUp = async ({
 		await setDoc(usersCollectionRef, {
 			userId: registration.user.uid,
 			username,
-			fullName
+			fullName,
+			likes: []
 		})
 	} catch (error) {
 		if (error instanceof CustomError) {
