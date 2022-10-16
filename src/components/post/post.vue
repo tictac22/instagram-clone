@@ -1,5 +1,6 @@
 <script setup lang="ts">
 //@ts-ignore
+import { ref } from "vue"
 import ImageSlider from "./imageSlider.vue"
 import Animation from "./postParts/like/animation.vue"
 import LikeButton from "./postParts/like/likeButton.vue"
@@ -23,6 +24,12 @@ const props = defineProps<{
 }>()
 
 // /@\S+/gm
+
+const animation = ref<HTMLDivElement | null>(null)
+const handleAnimation = () => {
+	//@ts-ignore
+	animation.value.handleLike()
+}
 </script>
 <template>
 	<div
@@ -36,20 +43,18 @@ const props = defineProps<{
 			/>
 			<p class="mr-auto ml-2">{{ props.author.fullName }}</p>
 		</div>
-		<div class="relative">
-			<ImageSlider v-once :images="props.images" />
-			<Animation :id="props.id" />
+		<div class="relative" @dblclick="handleAnimation">
+			<ImageSlider v-once :images="props.images" :item-width="468" />
+			<Animation :id="props.id" ref="animation" />
 		</div>
 		<div class="flex items-center px-3 py-2">
 			<LikeButton :id="props.id" />
-			<font-awesome-icon
-				icon="fa-solid fa-comment"
-				class="mx-2 mr-auto h-6 w-6 cursor-pointer stroke-black stroke-[39px] text-white transition-opacity hover:opacity-60"
-			/>
-			<font-awesome-icon
-				icon="fa-solid fa-bookmark"
-				class="h-6 w-6 stroke-black stroke-[39px] text-white"
-			/>
+			<RouterLink :to="`/p/${props.id}`">
+				<font-awesome-icon
+					icon="fa-solid fa-comment"
+					class="mx-2 mr-auto h-6 w-6 cursor-pointer stroke-black stroke-[39px] text-white transition-opacity hover:opacity-60"
+				/>
+			</RouterLink>
 		</div>
 		<PostBottom
 			v-once

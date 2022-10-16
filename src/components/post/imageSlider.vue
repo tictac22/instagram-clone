@@ -3,8 +3,10 @@ import { computed, onMounted, onUnmounted, onUpdated, reactive, ref } from "vue"
 
 const props = defineProps<{
 	images: string[]
+	itemWidth: number
 }>()
-const itemWidth = 468
+//eslint-disable-next-line
+const itemWidth = props.itemWidth
 const container = ref<HTMLDivElement | null>(null)
 const trackRef = ref<HTMLDivElement | null>(null)
 const state = reactive({
@@ -53,7 +55,7 @@ const showNextButton = computed(
 </script>
 
 <template>
-	<div ref="container" class="relative overflow-hidden">
+	<div ref="container" class="relative z-[2] w-full overflow-hidden">
 		<div ref="trackRef" class="flex transition-transform duration-500">
 			<div
 				v-for="image in props.images"

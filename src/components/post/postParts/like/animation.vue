@@ -13,6 +13,7 @@ const isLiked = computed(
 )
 
 const handleLike = () => {
+	console.log("work")
 	!isLiked.value ? (animate.value = true) : ""
 	handleStoreLike(props.id)
 
@@ -20,12 +21,17 @@ const handleLike = () => {
 		animate.value = false
 	}, 1000)
 }
+
+defineExpose({
+	handleLike
+})
 </script>
 
 <template>
 	<div
-		class="absolute top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+		class="absolute top-1/2 left-1/2 z-[3] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
 		@dblclick="handleLike"
+		@mousedown.prevent="() => {}"
 	>
 		<font-awesome-icon
 			icon="fa-solid fa-heart"

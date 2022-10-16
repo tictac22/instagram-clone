@@ -1,7 +1,9 @@
 export interface EventWithValue extends Event {
 	value: string
 }
-
+export interface EventWithKeycode extends Event {
+	keyCode: number
+}
 export type Author = {
 	uid: string
 	fullName: string

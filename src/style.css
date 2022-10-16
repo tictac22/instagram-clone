@@ -54,3 +54,7 @@ body {
 	width: 94px !important;
 	height: 94px !important;
 }
+
+.scroll::-webkit-scrollbar {
+	display: none;
+}
