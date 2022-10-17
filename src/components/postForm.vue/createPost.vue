@@ -49,14 +49,16 @@ const isDraggingStyle = computed(() => ({
 
 <template>
 	<font-awesome-icon
+		tabindex="0"
 		icon="fa-solid fa-square-plus"
-		class="ml-6 h-6 w-6 stroke-black stroke-[30px] text-white"
+		class="ml-6 h-6 w-6 cursor-pointer stroke-black stroke-[30px] text-white"
 		@click.stop="openPopup"
+		@keydown.enter="openPopup"
 	/>
 	<Teleport to="#modal">
 		<div
 			:class="[isDraggingStyle.open]"
-			class="fixed top-0 left-0 h-full w-full bg-black bg-opacity-70 transition-all"
+			class="fixed top-0 left-0 z-10 h-full w-full bg-black bg-opacity-70 transition-all"
 		>
 			<div class="flex min-h-full items-center justify-center p-20">
 				<font-awesome-icon
@@ -81,7 +83,7 @@ const isDraggingStyle = computed(() => ({
 	<Teleport to="body">
 		<div
 			:class="[isDraggingStyle.confirm]"
-			class="fixed top-0 left-0 h-full w-full bg-black bg-opacity-70 transition-all"
+			class="fixed top-0 left-0 z-[11] h-full w-full bg-black bg-opacity-70 transition-all"
 		>
 			<div class="flex min-h-full items-center justify-center p-20">
 				<div class="w-full max-w-[500px] rounded bg-white text-center">

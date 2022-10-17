@@ -10,7 +10,7 @@ export const signUpRules = {
 		required,
 		minLength: minLength(5)
 	},
-	username: {
+	userName: {
 		required,
 		minLength: minLength(5)
 	},
@@ -33,8 +33,8 @@ export const signUpInputs = {
 		type: "text",
 		autocomplete: "off"
 	},
-	username: {
-		name: "username",
+	userName: {
+		name: "userName",
 		placeholder: "Username",
 		type: "text",
 		autocomplete: "off"

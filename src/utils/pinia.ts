@@ -43,8 +43,8 @@ export const useUserStore = defineStore("counter", () => {
 		const { onAuthStateChanged } = await import("firebase/auth")
 
 		onAuthStateChanged(auth, async firebaseUser => {
-			await delay(200)
 			if (!firebaseUser) return (user.isAuthenticated = false)
+
 			if (firebaseUser?.providerData[0].providerId === "facebook.com") {
 				const userData = await getUser(firebaseUser!.uid)!
 				if (!userData) {
@@ -68,10 +68,11 @@ export const useUserStore = defineStore("counter", () => {
 			user.isAuthenticated = true
 		})
 	}
-	return { user, authenficate, setUser, handleLike }
+	const logOut = async () => {
+		const { logOut: firestoreLogOut } = await import("./firebase")
+		await firestoreLogOut()
+		user.data = {} as User
+		user.isAuthenticated = false
+	}
+	return { user, authenficate, setUser, handleLike, logOut }
 })
-
-const delay = (time: number) =>
-	new Promise(resolve => {
-		setTimeout(resolve, time)
-	})

@@ -71,6 +71,8 @@ const showNextButton = computed(
 		<div
 			v-if="state.position !== 0"
 			class="absolute left-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white opacity-80"
+			tabindex="0"
+			@keydown.enter="prevSlide"
 			@click="prevSlide"
 		>
 			<font-awesome-icon
@@ -81,7 +83,9 @@ const showNextButton = computed(
 		<div
 			v-if="showNextButton"
 			class="absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white opacity-80"
+			tabindex="0"
 			@click="nextSlide"
+			@keydown.enter="nextSlide"
 		>
 			<font-awesome-icon
 				icon="fa-solid fa-chevron-right"

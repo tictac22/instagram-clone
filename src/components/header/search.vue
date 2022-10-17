@@ -29,7 +29,7 @@ const collapseContainer = () => (state.isExpanded = false)
 		</div>
 
 		<div
-			class="absolute top-[50px] h-[375px] w-[375px] -translate-x-12 rounded-lg bg-white drop-shadow transition-all"
+			class="absolute top-[50px] z-10 h-[375px] w-[375px] -translate-x-12 rounded-lg bg-white drop-shadow transition-all"
 			:class="[
 				state.isExpanded
 					? 'opacity-1 pointer-events-auto visible translate-y-0'

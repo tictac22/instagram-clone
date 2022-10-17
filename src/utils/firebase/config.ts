@@ -39,8 +39,9 @@ export const enum ErrorMessages {
 export type SignUp = {
 	email: string
 	password: string
-	username: string
+	userName: string
 	fullName: string
+	photoUrl: string
 }
 
 export type Login = {

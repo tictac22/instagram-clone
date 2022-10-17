@@ -14,6 +14,7 @@ const route = useRoute()
 
 const data = await getPost(route.params.id as string)
 const comments = await getPostComments(route.params.id as string)
+
 const closePopup = (e: Event) => {
 	if ((e as EventWithKeycode).keyCode === 27) {
 		router.back()

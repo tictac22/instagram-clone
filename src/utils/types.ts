@@ -4,6 +4,9 @@ export interface EventWithValue extends Event {
 export interface EventWithKeycode extends Event {
 	keyCode: number
 }
+export interface EventWithTarget extends Event {
+	target: HTMLInputElement
+}
 export type Author = {
 	uid: string
 	fullName: string

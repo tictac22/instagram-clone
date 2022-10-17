@@ -3,7 +3,8 @@ import {
 	deleteUser,
 	FacebookAuthProvider,
 	signInWithEmailAndPassword,
-	signInWithPopup
+	signInWithPopup,
+	signOut
 } from "firebase/auth"
 import {
 	collection,
@@ -15,6 +16,11 @@ import {
 	where
 } from "firebase/firestore"
 import { auth, CustomError, db, ErrorMessages, Login, SignUp } from "./config"
+import { savePhotoUrl } from "./storage"
+
+export const logOut = async () => {
+	return await signOut(auth)
+}
 
 export const signInWithFacebook = async () => {
 	try {
@@ -52,8 +58,9 @@ export const setSignUpFacebookData = async ({
 export const signUp = async ({
 	email,
 	password,
-	username,
-	fullName
+	userName,
+	fullName,
+	photoUrl = ""
 }: SignUp) => {
 	try {
 		const registration = await createUserWithEmailAndPassword(
@@ -61,17 +68,21 @@ export const signUp = async ({
 			email,
 			password
 		)
-		const isTaken = await isNameTaken(username)
+		const isTaken = await isNameTaken(userName)
 		if (isTaken) {
 			await deleteUser(registration.user)
 			throw new CustomError(ErrorMessages.username, "username")
 		}
 		const usersCollectionRef = doc(db, "users", registration.user.uid)
+		const image = photoUrl.includes("blob")
+			? await savePhotoUrl(photoUrl)
+			: ""
 		await setDoc(usersCollectionRef, {
 			userId: registration.user.uid,
-			username,
+			userName,
 			fullName,
-			likes: []
+			likes: [],
+			photoUrl: image
 		})
 	} catch (error) {
 		if (error instanceof CustomError) {

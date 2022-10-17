@@ -24,11 +24,13 @@ const animationLeave = () => {
 	<font-awesome-icon
 		icon="fa-solid fa-heart"
 		class="mr-2 h-6 w-6 cursor-pointer stroke-black stroke-[39px] transition-opacity hover:opacity-60"
+		tabindex="0"
 		:class="[
 			isLiked ? 'stroke-red-500 text-red-500' : 'text-white',
 			animate ? 'animate-[likeButton_500ms_ease-out]' : ''
 		]"
 		@mouseleave.prevent="animationLeave"
 		@click="handleLike(props.id)"
+		@keydown.enter="handleLike(props.id)"
 	/>
 </template>

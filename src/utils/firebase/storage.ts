@@ -6,6 +6,14 @@ import { app } from "./config"
 const storage = getStorage(app)
 const metadata = { contentType: "image/jpeg" }
 
+export const savePhotoUrl = async (img: string) => {
+	const imageRef = ref(storage, "photoUrl/" + uuidv4())
+	const file = await blobToFile(img)
+	await uploadBytes(imageRef, file, metadata)
+
+	const path = await getDownloadURL(imageRef)
+	return path
+}
 export const saveFiles = async (imgUrl: Blob[]) => {
 	const images: string[] = []
 
@@ -22,7 +30,7 @@ export const saveFiles = async (imgUrl: Blob[]) => {
 	return images
 }
 
-const blobToFile = async (image: Blob) => {
+const blobToFile = async (image: Blob | string) => {
 	//@ts-ignore
 	const result = await fetch(image)
 	const blobFile = await result.blob()

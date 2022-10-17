@@ -47,7 +47,7 @@
 		"prettier/prettier": [
 			"error",
 			{
-				"endOfLine": "auto"
+				"endOfLine": "crlf"
 			}
 		],
 		"linebreak-style": ["error", "windows"],

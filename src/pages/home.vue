@@ -9,6 +9,7 @@ const { user } = useUserStore()
 const PostWrapper = defineAsyncComponent(
 	() => import("@/components/post/postWrapper.vue")
 )
+console.log(user)
 </script>
 
 <template>
@@ -27,12 +28,16 @@ const PostWrapper = defineAsyncComponent(
 				<div class="mt-4 flex items-center self-start">
 					<img
 						alt="default"
-						src="/default.jpg"
+						:src="
+							user.data.photoUrl
+								? user.data.photoUrl
+								: '/default.jpg'
+						"
 						class="mr-3 h-14 w-14 rounded-full"
 					/>
 					<div>
-						<p class="font-medium">whitemoooo</p>
-						<p class="text-gray-400">artemida</p>
+						<p class="font-medium">{{ user.data.userName }}</p>
+						<p class="text-gray-400">{{ user.data.fullName }}</p>
 					</div>
 				</div>
 			</div>
