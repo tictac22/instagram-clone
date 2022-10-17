@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { timeAgo } from "@/utils/helperFunctions"
-import { reactive } from "vue"
+import { useUserStore } from "@/utils/pinia"
+import { computed, reactive, ref } from "vue"
 
 const state = reactive({
 	firstPart: "",
@@ -13,6 +14,7 @@ const props = defineProps<{
 	createdAt: number
 	id: string
 	fullName: string
+	likes: number
 }>()
 let firstPart: null | string = null
 let secondPart = null
@@ -27,11 +29,31 @@ if (props.text.split("").length > 40) {
 } else {
 	state.extraText = null
 }
+
+const { user } = useUserStore()
+const isLiked = computed(
+	() => user && user.data.likes.find(item => item === props.id)
+)
+const likeText = ref<HTMLDivElement | null>(null)
+const updateLikeText = () => {
+	const text = parseInt(likeText.value!.innerHTML)
+	if (isLiked.value) {
+		likeText.value!.innerHTML = `${text - 1}`
+		return
+	}
+	likeText.value!.innerHTML = `${text + 1}`
+}
+defineExpose({
+	updateLikeText
+})
 </script>
 
 <template>
 	<div class="mt-2 px-3">
-		<p class="font-medium">70,473 likes</p>
+		<div class="">
+			<p ref="likeText" class="inline font-medium">{{ props.likes }}</p>
+			<span class="ml-1 font-medium">likes</span>
+		</div>
 		<span class="inline-block text-sm">
 			{{ props.fullName }} {{ state.firstPart || props.text }}
 			<span

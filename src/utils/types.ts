@@ -22,4 +22,5 @@ export type Post = {
 	createdAt: {
 		seconds: number
 	}
+	likes: number
 }

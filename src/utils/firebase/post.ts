@@ -5,6 +5,7 @@ import {
 	documentId,
 	getDoc,
 	getDocs,
+	increment,
 	limit,
 	orderBy,
 	query,
@@ -94,11 +95,27 @@ export const createPost = async (postData: ICreatePost) => {
 	const collections = collection(db, "posts")
 	const data = await addDoc(collections, {
 		...postData,
-		createdAt: Timestamp.fromDate(new Date())
+		createdAt: Timestamp.fromDate(new Date()),
+		likes: 0
 	})
 	return data
 }
-export const likePost = async (id: string, likes: string[]) => {
+export const likePost = async (
+	id: string,
+	postId: string,
+	likes: string[],
+	liked: boolean
+) => {
+	const post = doc(db, "posts", postId)
+	if (liked) {
+		await updateDoc(post, {
+			likes: increment(-1)
+		})
+	} else {
+		await updateDoc(post, {
+			likes: increment(1)
+		})
+	}
 	const userRef = doc(db, "users", id)
 	updateDoc(userRef, {
 		likes: [...likes]

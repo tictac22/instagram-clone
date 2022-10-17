@@ -2,11 +2,13 @@
 import { useUserStore } from "@/utils/pinia"
 import { computed, ref } from "vue"
 
-const { user, handleLike } = useUserStore()
+const { user } = useUserStore()
 const props = defineProps<{
 	id: string
 }>()
-
+defineEmits<{
+	(e: "handleLike"): void
+}>()
 const isLiked = computed(
 	() => user && user.data.likes.find(item => item === props.id)
 )
@@ -30,7 +32,7 @@ const animationLeave = () => {
 			animate ? 'animate-[likeButton_500ms_ease-out]' : ''
 		]"
 		@mouseleave.prevent="animationLeave"
-		@click="handleLike(props.id)"
-		@keydown.enter="handleLike(props.id)"
+		@click="$emit('handleLike')"
+		@keydown.enter="$emit('handleLike')"
 	/>
 </template>

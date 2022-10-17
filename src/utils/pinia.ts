@@ -23,15 +23,17 @@ export const useUserStore = defineStore("counter", () => {
 	})
 
 	const handleLike = async (id: string) => {
+		const { likePost } = await import("@/utils/firebase")
+
 		const isLiked = user.data.likes.find(item => item === id)
 		if (isLiked) {
 			const index = user.data.likes.indexOf(isLiked)
 			user.data.likes.splice(index, 1)
+			likePost(user.data.uid, id, user.data.likes, true)
 		} else {
 			user.data.likes.push(id)
+			likePost(user.data.uid, id, user.data.likes, false)
 		}
-		const { likePost } = await import("@/utils/firebase")
-		likePost(user.data.uid, user.data.likes)
 	}
 
 	const setUser = (isAuthenticated: boolean, userData: User) => {

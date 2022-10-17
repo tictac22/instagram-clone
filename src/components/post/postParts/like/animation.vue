@@ -13,7 +13,6 @@ const isLiked = computed(
 )
 
 const handleLike = () => {
-	console.log("work")
 	!isLiked.value ? (animate.value = true) : ""
 	handleStoreLike(props.id)
 

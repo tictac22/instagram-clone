@@ -1,5 +1,6 @@
 <script setup lang="ts">
 //@ts-ignore
+import { useUserStore } from "@/utils/pinia"
 import { ref } from "vue"
 import ImageSlider from "./imageSlider.vue"
 import Animation from "./postParts/like/animation.vue"
@@ -18,6 +19,7 @@ const props = defineProps<{
 	uid: string
 	images: string[]
 	author: Author
+	likes: number
 	createdAt: {
 		seconds: number
 	}
@@ -27,8 +29,15 @@ const props = defineProps<{
 
 const animation = ref<HTMLDivElement | null>(null)
 const handleAnimation = () => {
+	postBottomRef.value!.updateLikeText()
 	//@ts-ignore
 	animation.value.handleLike()
+}
+const postBottomRef = ref<InstanceType<typeof PostBottom> | null>(null)
+const { handleLike: handleStoreLike } = useUserStore()
+const handleLike = () => {
+	postBottomRef.value!.updateLikeText()
+	handleStoreLike(props.id)
 }
 </script>
 <template>
@@ -48,7 +57,7 @@ const handleAnimation = () => {
 			<Animation :id="props.id" ref="animation" />
 		</div>
 		<div class="flex items-center px-3 py-2">
-			<LikeButton :id="props.id" />
+			<LikeButton :id="props.id" @handle-like="handleLike" />
 			<RouterLink :to="`/p/${props.id}`">
 				<font-awesome-icon
 					icon="fa-solid fa-comment"
@@ -59,9 +68,11 @@ const handleAnimation = () => {
 		<PostBottom
 			v-once
 			:id="props.id"
+			ref="postBottomRef"
 			:full-name="props.author.fullName"
 			:created-at="props.createdAt.seconds"
 			:text="props.text"
+			:likes="props.likes"
 		/>
 	</div>
 </template>
