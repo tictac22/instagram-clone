@@ -96,7 +96,8 @@ export const createPost = async (postData: ICreatePost) => {
 	const data = await addDoc(collections, {
 		...postData,
 		createdAt: Timestamp.fromDate(new Date()),
-		likes: 0
+		likes: 0,
+		comments: 0
 	})
 	return data
 }
@@ -120,13 +121,4 @@ export const likePost = async (
 	updateDoc(userRef, {
 		likes: [...likes]
 	})
-}
-
-export const createCommentPost = async (id: string) => {
-	const collections = collection(db, "posts", id, "comments")
-	const data = await addDoc(collections, {
-		text: "hello",
-		createdAt: Timestamp.fromDate(new Date())
-	})
-	return data
 }

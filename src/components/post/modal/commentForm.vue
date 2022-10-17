@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { useUserStore } from "@/utils/pinia"
 import { defineAsyncComponent, reactive, ref } from "vue"
+import { UserComment } from "./type"
+
 const AsyncEmojiPicker = defineAsyncComponent(
 	() => import("@/components/tools/emojiPicker.vue")
 )
-
+const props = defineProps<{
+	id: string
+	addcreatedPost: (data: UserComment) => void
+}>()
 const textAreaRef = ref<HTMLTextAreaElement | null>(null)
 const state = reactive({
 	textarea: "",
@@ -11,7 +17,21 @@ const state = reactive({
 })
 const setEmoji = (emoji: { i: string }) => (state.textarea += emoji.i)
 const handleEmojiPicker = () => (state.showEmojiPicker = !state.showEmojiPicker)
-const submit = () => {
+
+const { user } = useUserStore()
+const submit = async () => {
+	const { createCommentPost } = await import("@/utils/firebase")
+
+	await createCommentPost({
+		id: props.id,
+		text: state.textarea,
+		...user.data
+	})
+	props.addcreatedPost({
+		...user.data,
+		userId: user.data.uid,
+		text: state.textarea
+	})
 	state.textarea = ""
 }
 //@ts-ignore

@@ -15,6 +15,7 @@ const props = defineProps<{
 	id: string
 	fullName: string
 	likes: number
+	comments: number
 }>()
 let firstPart: null | string = null
 let secondPart = null
@@ -65,8 +66,10 @@ defineExpose({
 			<span v-if="state.extraText === true">{{ state.secondPart }}</span>
 		</span>
 		<p class="mt-2 text-gray-400">
-			<router-link :to="`/p/${props.id}`">
-				View all ... comments
+			<router-link
+				:to="{ name: 'PostChildren', params: { id: props.id } }"
+			>
+				View all {{ props.comments }} comments
 			</router-link>
 		</p>
 		<p class="my-2 text-xs text-gray-400">

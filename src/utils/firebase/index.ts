@@ -1,4 +1,5 @@
 export * from "./auth"
+export * from "./comment"
 export * from "./config"
 export * from "./post"
 export * from "./storage"

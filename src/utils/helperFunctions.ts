@@ -11,8 +11,8 @@ export function debounce(fn: () => void, delay: number) {
 	}
 }
 
-export const timeAgo = (input: number) => {
-	const date = new Date(input * 1000)
+export const timeAgo = (input: number | string) => {
+	const date = new Date(typeof input === "number" ? input * 1000 : input)
 	const formatter = new Intl.RelativeTimeFormat("en")
 	const ranges = {
 		years: 3600 * 24 * 365,

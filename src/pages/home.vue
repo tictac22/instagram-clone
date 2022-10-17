@@ -9,7 +9,6 @@ const { user } = useUserStore()
 const PostWrapper = defineAsyncComponent(
 	() => import("@/components/post/postWrapper.vue")
 )
-console.log(user)
 </script>
 
 <template>

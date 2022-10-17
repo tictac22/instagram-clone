@@ -23,6 +23,7 @@ const props = defineProps<{
 	createdAt: {
 		seconds: number
 	}
+	comments: number
 }>()
 
 // /@\S+/gm
@@ -58,7 +59,9 @@ const handleLike = () => {
 		</div>
 		<div class="flex items-center px-3 py-2">
 			<LikeButton :id="props.id" @handle-like="handleLike" />
-			<RouterLink :to="`/p/${props.id}`">
+			<RouterLink
+				:to="{ name: 'PostChildren', params: { id: props.id } }"
+			>
 				<font-awesome-icon
 					icon="fa-solid fa-comment"
 					class="mx-2 mr-auto h-6 w-6 cursor-pointer stroke-black stroke-[39px] text-white transition-opacity hover:opacity-60"
@@ -73,6 +76,7 @@ const handleLike = () => {
 			:created-at="props.createdAt.seconds"
 			:text="props.text"
 			:likes="props.likes"
+			:comments="props.comments"
 		/>
 	</div>
 </template>

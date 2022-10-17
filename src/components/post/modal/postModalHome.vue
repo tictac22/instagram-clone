@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { createCommentPost, getPost, getPostComments } from "@/utils/firebase"
+import { getPost, getPostComments } from "@/utils/firebase"
 import { handlePadingToWindow, timeAgo } from "@/utils/helperFunctions"
 import { EventWithKeycode } from "@/utils/types"
-import { onMounted, onUnmounted } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import ImageSlider from "../imageSlider.vue"
 import Animation from "../postParts/like/animation.vue"
 import LikeButton from "../postParts/like/likeButton.vue"
 import CommentForm from "./commentForm.vue"
-
+import CreatedComments from "./comments/createdComments.vue"
+import { UserComment } from "./type"
 const router = useRouter()
 const route = useRoute()
 
@@ -28,6 +29,14 @@ onUnmounted(() => {
 	handlePadingToWindow("show")
 	window.removeEventListener("keydown", closePopup)
 })
+const usersCreatedPosts = ref<UserComment[]>([])
+const addcreatedPost = (data: UserComment) => {
+	usersCreatedPosts.value.push({
+		...data,
+		photoUrl: data.photoUrl ?? "",
+		createdAt: "Now"
+	})
+}
 </script>
 
 <template>
@@ -80,16 +89,14 @@ onUnmounted(() => {
 									{{ data.user.userName }}
 								</RouterLink>
 
-								<p class="inline">
-									Lorem ipsum dolor sit amet, consectetur
-									adipisicing elit. Itaque inventore nisi
-									obcaecati sequi facere id fuga, enim ipsum
-									mollitia fugit rerum aut labore iste ullam
-									est animi cum eius dolore.
+								<p class="ml-1 inline">
+									{{ data.post.text }}
 								</p>
 							</div>
 						</div>
-						<div @click="createCommentPost(data.post.id)">test</div>
+						<CreatedComments
+							:users-created-posts="usersCreatedPosts"
+						/>
 					</div>
 					<div class="border-t border-solid border-gray-500 p-4">
 						<div class="flex items-center py-2">
@@ -101,11 +108,15 @@ onUnmounted(() => {
 								/>
 							</RouterLink>
 						</div>
+						<p class="font-medium">{{ data.post.likes }} likes</p>
 						<p class="text-xs">
 							{{ timeAgo(data.post.createdAt.seconds) }}
 						</p>
 					</div>
-					<CommentForm />
+					<CommentForm
+						:id="data.post.id"
+						:addcreated-post="addcreatedPost"
+					/>
 				</div>
 			</div>
 		</div>

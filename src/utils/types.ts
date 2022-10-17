@@ -23,4 +23,5 @@ export type Post = {
 		seconds: number
 	}
 	likes: number
+	comments: number
 }
