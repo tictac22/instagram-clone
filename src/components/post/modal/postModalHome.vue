@@ -8,6 +8,7 @@ import ImageSlider from "../imageSlider.vue"
 import Animation from "../postParts/like/animation.vue"
 import LikeButton from "../postParts/like/likeButton.vue"
 import CommentForm from "./commentForm.vue"
+import Comment from "./comments/comment.vue"
 import CreatedComments from "./comments/createdComments.vue"
 import { UserComment } from "./type"
 const router = useRouter()
@@ -15,7 +16,7 @@ const route = useRoute()
 
 const data = await getPost(route.params.id as string)
 const comments = await getPostComments(route.params.id as string)
-
+console.log(comments)
 const closePopup = (e: Event) => {
 	if ((e as EventWithKeycode).keyCode === 27) {
 		router.back()
@@ -96,6 +97,11 @@ const addcreatedPost = (data: UserComment) => {
 						</div>
 						<CreatedComments
 							:users-created-posts="usersCreatedPosts"
+						/>
+						<Comment
+							v-for="comment in comments"
+							:key="comment.id"
+							v-bind="comment"
 						/>
 					</div>
 					<div class="border-t border-solid border-gray-500 p-4">

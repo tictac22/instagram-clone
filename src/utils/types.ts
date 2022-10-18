@@ -25,3 +25,14 @@ export type Post = {
 	likes: number
 	comments: number
 }
+
+export type Comment = {
+	createdAt: {
+		seconds: number
+	}
+	photoUrl: string
+	text: string
+	userName: string
+	id: string
+	userId: string
+}

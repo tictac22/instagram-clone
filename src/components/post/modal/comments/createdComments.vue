@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UserComment } from "../type"
+import Comment from "./comment.vue"
 
 const props = defineProps<{
 	usersCreatedPosts: UserComment[]
@@ -8,27 +9,11 @@ const props = defineProps<{
 
 <template>
 	<div>
-		<div
+		<Comment
 			v-for="comment in props.usersCreatedPosts"
 			:key="comment.text"
-			class="mt-3 flex"
+			v-bind="comment"
 		>
-			<img
-				class="h-[32px] w-[32px] rounded-full"
-				:src="comment.photoUrl ?? '/default.jpg'"
-			/>
-			<div class="ml-5 inline">
-				<div>
-					<p class="inline font-medium">
-						{{ comment.userName }}
-					</p>
-					<p class="ml-1 inline break-all">
-						dasssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-						adssssssssssssssssssssssssssssssssssss
-					</p>
-					<p class="text-xs text-gray-200">{{ comment.createdAt }}</p>
-				</div>
-			</div>
-		</div>
+		</Comment>
 	</div>
 </template>

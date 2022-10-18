@@ -30,7 +30,8 @@ const submit = async () => {
 	props.addcreatedPost({
 		...user.data,
 		userId: user.data.uid,
-		text: state.textarea
+		text: state.textarea,
+		createdAt: "Now"
 	})
 	state.textarea = ""
 }

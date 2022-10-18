@@ -45,7 +45,7 @@
 		"prefer-const": "warn",
 		"import/no-unresolved": 2,
 		"prettier/prettier": [
-			"error",
+			"off",
 			{
 				"endOfLine": "crlf"
 			}

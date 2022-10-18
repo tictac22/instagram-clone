@@ -6,7 +6,6 @@ import {
 	getDoc,
 	getDocs,
 	increment,
-	limit,
 	orderBy,
 	query,
 	Timestamp,
@@ -72,19 +71,7 @@ export const getPost = async (id: string) => {
 		}
 	}
 }
-export const getPostComments = async (id: string) => {
-	if (!id) return
-	const commentRef = collection(db, "posts", id, "comments")
-	const q = query(commentRef, limit(20), orderBy("createdAt", "desc"))
-	const querySnapshot = await getDocs(q)
 
-	const comments = []
-	querySnapshot.forEach(doc => {
-		// doc.data() is never undefined for query doc snapshots
-		comments.push(doc.data())
-	})
-	return comments
-}
 interface ICreatePost {
 	images: string[]
 	creatorUid: string
