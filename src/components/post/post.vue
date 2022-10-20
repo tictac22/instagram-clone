@@ -46,12 +46,18 @@ const handleLike = () => {
 		class="mb-4 w-full rounded-lg border border-solid border-[#DBDBDB] bg-white"
 	>
 		<div class="flex items-center px-3 py-2">
-			<img
-				:src="props.author.photoUrl"
-				alt="default"
-				class="h-8 w-8 rounded-full"
-			/>
-			<p class="mr-auto ml-2">{{ props.author.fullName }}</p>
+			<RouterLink :to="`/${props.uid}`">
+				<img
+					:src="props.author.photoUrl"
+					alt="default"
+					class="h-8 w-8 rounded-full"
+				/>
+			</RouterLink>
+			<RouterLink
+				:to="`/${props.uid}`"
+				class="mr-auto ml-2 hover:underline"
+				>{{ props.author.fullName }}</RouterLink
+			>
 		</div>
 		<div class="relative" @dblclick="handleAnimation">
 			<ImageSlider v-once :images="props.images" :item-width="468" />

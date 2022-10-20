@@ -76,9 +76,15 @@ interface ICreatePost {
 	images: string[]
 	creatorUid: string
 	text: string
+	authorUserName: string
 }
 
 export const createPost = async (postData: ICreatePost) => {
+	const userRef = doc(db, "users", postData.creatorUid)
+	await updateDoc(userRef, {
+		postsNumber: increment(1)
+	})
+
 	const collections = collection(db, "posts")
 	const data = await addDoc(collections, {
 		...postData,

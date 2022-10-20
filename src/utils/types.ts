@@ -12,6 +12,8 @@ export type Author = {
 	fullName: string
 	photoUrl: string
 	userName: string
+	postsNumber: number
+	followers: number
 }
 export type Post = {
 	text: string

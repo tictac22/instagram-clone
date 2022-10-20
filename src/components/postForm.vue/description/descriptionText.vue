@@ -80,7 +80,6 @@ const disabledButton = computed(
 	() => state.textarea.length === 0 || state.textarea.length > 200
 )
 
-//const router = useRouter()
 const createPost = async () => {
 	state.isLoading = true
 	const { createPost: createFirebasePost, saveFiles } = await import(
@@ -92,7 +91,8 @@ const createPost = async () => {
 	const data = await createFirebasePost({
 		images,
 		text: state.textarea,
-		creatorUid: user.data.uid
+		creatorUid: user.data.uid,
+		authorUserName: user.data.userName
 	})
 	router.push(`/p/${data.id}`)
 	state.isLoading = false

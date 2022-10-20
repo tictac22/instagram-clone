@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Header from "@/components/header/header.vue"
 import LoginHome from "@/components/register/login/loginHome.vue"
+import PageWrapper from "@/components/tools/pageWrapper.vue"
 import { useUserStore } from "@/utils/pinia"
 import { defineAsyncComponent } from "vue"
 import ModalHome from "../components/post/modal/modalHome.vue"
@@ -13,33 +13,28 @@ const PostWrapper = defineAsyncComponent(
 
 <template>
 	<LoginHome v-if="user.isAuthenticated === false" />
-	<div v-else>
-		<Header />
+	<PageWrapper v-else>
 		<ModalHome />
-		<div class="m-auto mt-8 max-w-4xl px-3">
-			<div class="flex items-center">
-				<div class="mr-8 w-full max-w-[470px]">
-					<Suspense>
-						<PostWrapper v-if="user" />
-						<template #fallback> ...loading </template>
-					</Suspense>
-				</div>
-				<div class="mt-4 flex items-center self-start">
-					<img
-						alt="default"
-						:src="
-							user.data.photoUrl
-								? user.data.photoUrl
-								: '/default.jpg'
-						"
-						class="mr-3 h-14 w-14 rounded-full"
-					/>
-					<div>
-						<p class="font-medium">{{ user.data.userName }}</p>
-						<p class="text-gray-400">{{ user.data.fullName }}</p>
-					</div>
+		<div class="flex items-center">
+			<div class="mr-8 w-full max-w-[470px]">
+				<Suspense>
+					<PostWrapper v-if="user" />
+					<template #fallback> ...loading </template>
+				</Suspense>
+			</div>
+			<div class="mt-4 flex items-center self-start">
+				<img
+					alt="default"
+					:src="
+						user.data.photoUrl ? user.data.photoUrl : '/default.jpg'
+					"
+					class="mr-3 h-14 w-14 rounded-full"
+				/>
+				<div>
+					<p class="font-medium">{{ user.data.userName }}</p>
+					<p class="text-gray-400">{{ user.data.fullName }}</p>
 				</div>
 			</div>
 		</div>
-	</div>
+	</PageWrapper>
 </template>

@@ -5,19 +5,12 @@ const SignUp = () => import("@/pages/register/signup.vue")
 const Login = () => import("@/pages/register/login.vue")
 const PostModalHome = () => import("@/components/post/modal/postModalHome.vue")
 const PostPage = () => import("@/pages/post.vue")
-const Test = () => import("@/pages/test.vue")
+const UserPage = () => import("@/pages/user.vue")
 const routes = [
 	{
 		path: RoutePaths.POST,
 		component: PostPage,
-		name: "Post",
-		children: [
-			{
-				path: "/buzova",
-				component: Test,
-				name: "Test"
-			}
-		]
+		name: "Post"
 	},
 	{
 		path: RoutePaths.HOME,
@@ -28,6 +21,17 @@ const routes = [
 				path: RoutePaths.POST,
 				component: PostModalHome,
 				name: "PostChildren"
+			}
+		]
+	},
+	{
+		path: RoutePaths.USER,
+		component: UserPage,
+		children: [
+			{
+				path: RoutePaths.POST,
+				component: PostModalHome,
+				name: "UserPost"
 			}
 		]
 	},
