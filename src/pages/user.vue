@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ModalHome from "@/components/post/modal/modalHome.vue"
 import PageWrapper from "@/components/tools/pageWrapper.vue"
 import { getUserPage, getUserPosts } from "@/utils/firebase"
 import { nFormatter } from "@/utils/helperFunctions"
@@ -12,8 +13,8 @@ const data = reactive<{ user: Author; posts: Post[] }>({
 	posts: {} as Post[]
 })
 onMounted(async () => {
-	const user = await getUserPage(route.params.username as string)
-	const posts = await getUserPosts(route.params.username as string)
+	const user = await getUserPage(route.params.id as string)
+	const posts = await getUserPosts(route.params.id as string)
 	Object.assign(data, {
 		user,
 		posts
@@ -23,7 +24,7 @@ onMounted(async () => {
 
 <template>
 	<PageWrapper>
-		<RouterView />
+		<ModalHome />
 		<div v-if="Object.keys(data.user).length > 0">
 			<div class="flex">
 				<div class="mr-[30px] grow">
@@ -72,30 +73,34 @@ onMounted(async () => {
 						:key="post.id"
 						class="group relative h-[293px] cursor-pointer"
 					>
-						<div
-							class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60 text-white opacity-0 group-hover:opacity-100"
+						<RouterLink
+							:to="{ name: 'UserPost', params: { id: post.id } }"
 						>
-							<p class="">
-								<font-awesome-icon
-									icon="fa-solid fa-heart "
-									class="mr-2"
-								/>{{ nFormatter(post.likes) }}
-							</p>
-							<p class="ml-2">
-								<font-awesome-icon
-									class="mr-2"
-									icon="fa-solid fa-comment"
-								/>{{ nFormatter(post.comments) }}
-							</p>
-						</div>
-						<Carousel
-							v-if="post.images.length > 1"
-							class="absolute right-2 top-2"
-						/>
-						<img
-							:src="post.images[0]"
-							class="h-full w-full object-cover"
-						/>
+							<div
+								class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60 text-white opacity-0 group-hover:opacity-100"
+							>
+								<p class="">
+									<font-awesome-icon
+										icon="fa-solid fa-heart "
+										class="mr-2"
+									/>{{ nFormatter(post.likes) }}
+								</p>
+								<p class="ml-2">
+									<font-awesome-icon
+										class="mr-2"
+										icon="fa-solid fa-comment"
+									/>{{ nFormatter(post.comments) }}
+								</p>
+							</div>
+							<Carousel
+								v-if="post.images.length > 1"
+								class="absolute right-2 top-2"
+							/>
+							<img
+								:src="post.images[0]"
+								class="h-full w-full object-cover"
+							/>
+						</RouterLink>
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useRoute } from "vue-router"
 import CreatePost from "../postForm.vue/context/postContext.vue"
 import Dropdown from "./dropdown.vue"
 import Search from "./search.vue"
+const route = useRoute()
 </script>
 
 <template>
@@ -35,7 +37,10 @@ import Search from "./search.vue"
 				<RouterLink to="/">
 					<font-awesome-icon
 						icon="fa-solid fa-house"
-						class="ml-6 h-6 w-6 stroke-black stroke-[30px] text-white"
+						class="ml-6 h-6 w-6 stroke-black stroke-[30px]"
+						:class="[
+							route.path === '/' ? 'text-black' : 'text-white'
+						]"
 					/>
 				</RouterLink>
 				<CreatePost />

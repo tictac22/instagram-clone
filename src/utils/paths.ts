@@ -3,5 +3,5 @@ export const enum RoutePaths {
 	LOGIN = "/register/login",
 	SIGNUP = "/register/signup",
 	POST = "/p/:id",
-	USER = "/:username"
+	USER = "/:id"
 }
