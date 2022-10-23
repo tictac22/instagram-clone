@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from "@/utils/pinia"
 import { ref } from "vue"
+import { useRoute } from "vue-router"
 
 const expanded = ref(false)
 
@@ -8,16 +9,21 @@ const collapseMenu = () => (expanded.value = false)
 const openMenu = () => (expanded.value = true)
 
 const { logOut, user } = useUserStore()
+const route = useRoute()
 </script>
 
 <template>
 	<div v-click-outside="collapseMenu" class="relative ml-6">
 		<div
-			class="cursor-pointer"
+			class="relative flex cursor-pointer items-center justify-center rounded-full"
 			tabindex="0"
 			@click="openMenu"
 			@keydown.enter="openMenu"
 		>
+			<div
+				v-if="route.params.id === user.data.uid"
+				class="absolute h-[28px] w-[28px] rounded-full border border-solid border-black"
+			/>
 			<img
 				alt="default"
 				:src="user.data.photoUrl ? user.data.photoUrl : '/default.jpg'"
@@ -33,12 +39,13 @@ const { logOut, user } = useUserStore()
 			]"
 		>
 			<div class="triangle -top-[13px] right-[11px]" />
-			<p
-				class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
+			<RouterLink
+				:to="`/${user.data.uid}`"
+				class="block cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
 				tabindex="0"
 			>
 				Profile
-			</p>
+			</RouterLink>
 			<p
 				class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
 				tabindex="0"

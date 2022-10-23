@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ModalHome from "@/components/post/modal/modalHome.vue"
-import PageWrapper from "@/components/tools/pageWrapper.vue"
+import PageWrapper from "@/layouts/pageWrapper.vue"
 import { getUserPage, getUserPosts } from "@/utils/firebase"
 import { nFormatter } from "@/utils/helperFunctions"
+import { useUserStore } from "@/utils/pinia"
 import { Author, Post } from "@/utils/types"
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
@@ -20,11 +20,13 @@ onMounted(async () => {
 		posts
 	})
 })
+const {
+	user: { data: userData }
+} = useUserStore()
 </script>
 
 <template>
 	<PageWrapper>
-		<ModalHome />
 		<div v-if="Object.keys(data.user).length > 0">
 			<div class="flex">
 				<div class="mr-[30px] grow">
@@ -39,6 +41,7 @@ onMounted(async () => {
 							{{ data.user.userName }}
 						</h2>
 						<button
+							v-if="userData.uid !== route.params.id"
 							class="ml-6 rounded bg-blue-500 py-1 px-6 text-white"
 						>
 							Follow

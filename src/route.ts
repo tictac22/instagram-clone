@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router"
 const Home = () => import("@/pages/home.vue")
 const SignUp = () => import("@/pages/register/signup.vue")
 const Login = () => import("@/pages/register/login.vue")
-const PostModalHome = () => import("@/components/post/modal/postModalHome.vue")
+const PostModalHome = () => import("@/components/post/modal/modalPost.vue")
 const PostPage = () => import("@/pages/post.vue")
 const UserPage = () => import("@/pages/user.vue")
 const routes = [

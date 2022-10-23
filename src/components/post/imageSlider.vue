@@ -1,46 +1,49 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, onUpdated, reactive, ref } from "vue"
+import { computed, onMounted, onUnmounted, reactive, ref } from "vue"
 
 const props = defineProps<{
 	images: string[]
 	itemWidth: number
 }>()
 //eslint-disable-next-line
-const itemWidth = props.itemWidth
 const container = ref<HTMLDivElement | null>(null)
 const trackRef = ref<HTMLDivElement | null>(null)
+const imageItem = ref<HTMLDivElement[] | null>(null)
 const state = reactive({
-	slidesToShow: 0,
-	position: 0
+	slidesToShow: 1,
+	position: 0,
+	itemWidth: 0
 })
-const currentImage = computed(() => Math.abs(state.position) / itemWidth)
+const currentImage = computed(() => Math.abs(state.position) / state.itemWidth)
 const prevSlide = () => {
-	const movePosition = 1 * itemWidth
+	const movePosition = 1 * state.itemWidth
 
-	const itemsLeft = Math.abs(state.position) / itemWidth
+	const itemsLeft = Math.abs(state.position) / state.itemWidth
 
 	state.position +=
-		itemsLeft >= state.slidesToShow ? movePosition : itemsLeft * itemWidth
+		itemsLeft >= state.slidesToShow
+			? movePosition
+			: itemsLeft * state.itemWidth
 	trackRef.value!.style.transform = `translateX(${state.position}px)`
 }
 const nextSlide = () => {
-	const movePosition = 1 * itemWidth
+	const movePosition = 1 * state.itemWidth
 	const itemsLeft =
 		props.images.length -
-		(Math.abs(state.position) + state.slidesToShow * itemWidth) / itemWidth
+		(Math.abs(state.position) + state.slidesToShow * state.itemWidth) /
+			state.itemWidth
 
 	state.position -=
-		itemsLeft >= state.slidesToShow ? movePosition : itemsLeft * itemWidth
+		itemsLeft >= state.slidesToShow
+			? movePosition
+			: itemsLeft * state.itemWidth
 	trackRef.value!.style.transform = `translateX(${state.position}px)`
 }
 const recounedSlidesToShow = () => {
-	const width = container.value?.clientWidth!
-	state.slidesToShow = Math.round(width / itemWidth)
+	state.itemWidth = container.value!.clientWidth
 }
-onUpdated(() => {
-	recounedSlidesToShow()
-})
 onMounted(() => {
+	recounedSlidesToShow()
 	window.addEventListener("resize", recounedSlidesToShow)
 })
 onUnmounted(() => {
@@ -49,7 +52,7 @@ onUnmounted(() => {
 const showNextButton = computed(
 	() =>
 		state.position >
-			-(props.images.length - state.slidesToShow) * itemWidth &&
+			-(props.images.length - state.slidesToShow) * state.itemWidth &&
 		props.images.length > 1
 )
 </script>
@@ -60,6 +63,7 @@ const showNextButton = computed(
 			<div
 				v-for="image in props.images"
 				:key="image"
+				ref="imageItem"
 				class="relative block w-full shrink-0 select-none overflow-hidden pb-[125%]"
 			>
 				<img
