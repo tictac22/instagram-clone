@@ -2,7 +2,6 @@
 import { useUserStore } from "@/utils/pinia"
 import { onMounted } from "vue"
 import Loader from "./components/loader.vue"
-
 const { user, authenficate } = useUserStore()
 onMounted(() => {
 	authenficate()

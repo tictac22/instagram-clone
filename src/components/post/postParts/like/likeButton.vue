@@ -12,6 +12,7 @@ defineEmits<{
 const isLiked = computed(
 	() => user && user.data.likes.find(item => item === props.id)
 )
+
 const animate = ref(false)
 const animationLeave = () => {
 	if (!isLiked.value) animate.value = true

@@ -6,6 +6,7 @@ import {
 	getDoc,
 	getDocs,
 	increment,
+	limit,
 	orderBy,
 	query,
 	Timestamp,
@@ -49,7 +50,7 @@ export const getUserHomePosts = async (subscribedIds: string[]) => {
 	return posts
 }
 
-export const getPost = async (id: string) => {
+export const getPost = async (id: string, isMorePosts?: boolean) => {
 	const postRef = doc(db, "posts", id)
 
 	const postRequest = await getDoc(postRef)
@@ -60,6 +61,21 @@ export const getPost = async (id: string) => {
 	const userRequest = await getDoc(userRef)
 	const user = userRequest.data() as Author
 
+	const morePosts = [] as Post[]
+	if (isMorePosts) {
+		const collectionPosts = collection(db, "posts")
+		const q = query(
+			collectionPosts,
+			where(documentId(), "!=", postRequest.id),
+			where("uid", "==", userRequest.id),
+			limit(6)
+		)
+		const morePostsResponse = await getDocs(q)
+		morePostsResponse.forEach(post =>
+			//@ts-ignore
+			morePosts.push({ ...post.data(), id: post.id })
+		)
+	}
 	return {
 		post: {
 			...post,
@@ -68,7 +84,8 @@ export const getPost = async (id: string) => {
 		user: {
 			...user,
 			uid: userRequest.id
-		}
+		},
+		morePosts
 	}
 }
 

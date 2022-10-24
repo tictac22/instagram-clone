@@ -21,6 +21,7 @@ export type Post = {
 	uid: string
 	images: string[]
 	author: Author
+	authorUserName: string
 	createdAt: {
 		seconds: number
 	}

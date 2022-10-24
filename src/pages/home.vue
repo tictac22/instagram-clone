@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import LoginHome from "@/components/register/login/loginHome.vue"
 import PageWrapper from "@/layouts/pageWrapper.vue"
+import ModalPostLoader from "@/shared/modalPostLoader.vue"
 import { useUserStore } from "@/utils/pinia"
 import { defineAsyncComponent } from "vue"
+
 const { user } = useUserStore()
 
 const PostWrapper = defineAsyncComponent(
@@ -13,6 +15,7 @@ const PostWrapper = defineAsyncComponent(
 <template>
 	<LoginHome v-if="user.isAuthenticated === false" />
 	<PageWrapper v-else>
+		<ModalPostLoader />
 		<div class="flex items-center">
 			<div class="mr-8 w-full max-w-[470px]">
 				<Suspense>
