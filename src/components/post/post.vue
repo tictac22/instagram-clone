@@ -34,6 +34,7 @@ const handleAnimation = () => {
 	//@ts-ignore
 	animation.value.handleLike()
 }
+
 const postBottomRef = ref<InstanceType<typeof PostBottom> | null>(null)
 const { handleLike: handleStoreLike } = useUserStore()
 const handleLike = () => {

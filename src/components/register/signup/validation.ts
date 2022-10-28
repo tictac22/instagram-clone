@@ -12,7 +12,7 @@ export const signUpRules = {
 	},
 	userName: {
 		required,
-		minLength: minLength(5)
+		minLength: minLength(2)
 	},
 	password: {
 		required,

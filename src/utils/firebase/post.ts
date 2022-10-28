@@ -50,17 +50,25 @@ export const getUserHomePosts = async (subscribedIds: string[]) => {
 	return posts
 }
 
+export const getExplorePosts = async () => {
+	const postCollection = collection(db, "posts")
+	const q = query(postCollection, orderBy("createdAt", "desc"))
+	const querySnapshot = await getDocs(q)
+	const posts: Post[] = []
+	//@ts-ignore
+	querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }))
+	return posts
+}
+
 export const getPost = async (id: string, isMorePosts?: boolean) => {
 	const postRef = doc(db, "posts", id)
 
 	const postRequest = await getDoc(postRef)
 	const post = postRequest.data() as Post
-
 	const userRef = doc(db, "users", post.uid)
 
 	const userRequest = await getDoc(userRef)
 	const user = userRequest.data() as Author
-
 	const morePosts = [] as Post[]
 	if (isMorePosts) {
 		const collectionPosts = collection(db, "posts")
@@ -91,13 +99,13 @@ export const getPost = async (id: string, isMorePosts?: boolean) => {
 
 interface ICreatePost {
 	images: string[]
-	creatorUid: string
+	uid: string
 	text: string
 	authorUserName: string
 }
 
 export const createPost = async (postData: ICreatePost) => {
-	const userRef = doc(db, "users", postData.creatorUid)
+	const userRef = doc(db, "users", postData.uid)
 	await updateDoc(userRef, {
 		postsNumber: increment(1)
 	})

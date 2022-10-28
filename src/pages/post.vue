@@ -33,7 +33,6 @@ watch(
 		window.scrollTo(0, 0)
 	}
 )
-
 onMounted(() => {
 	getData()
 })
@@ -47,7 +46,7 @@ onMounted(() => {
 			:comments="state.comments"
 			:user="state.data.user"
 		/>
-		<template v-if="!state.loading">
+		<template v-if="state.data?.morePosts">
 			<div class="mt-7 h-[1px] w-full bg-gray-200" />
 			<p class="mt-5 font-bold text-gray-300">
 				More post from

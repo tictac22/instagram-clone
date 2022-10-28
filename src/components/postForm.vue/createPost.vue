@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import "cropperjs/dist/cropper.css"
-import { computed, inject, reactive } from "vue"
+import { computed, inject, reactive, watch } from "vue"
+import { useRoute } from "vue-router"
 import { key } from "./context/key"
 //const VueCropper = defineAsyncComponent(() => import("vue-cropperjs"))
 
 import PostLogic from "./postLogic.vue"
 import TopNavigation from "./topNavigation.vue"
-
+const route = useRoute()
 const { formStep } = inject(key)!
-
 interface State {
 	open: boolean
 	isDragging: boolean | null
@@ -44,6 +44,12 @@ const isDraggingStyle = computed(() => ({
 		? "visible pointer-events-auto opacity-100 scale-100"
 		: "invisble pointer-events-none opacity-0 scale-125 z-0 "
 }))
+watch(
+	() => route.params.id,
+	() => {
+		state.open = false
+	}
+)
 //min-w-[calc(100vw-30px)]
 </script>
 

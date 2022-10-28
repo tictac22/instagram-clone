@@ -63,8 +63,8 @@ const clickOutside = {
 }
 
 createApp(App)
-	.use(router)
 	.use(createPinia())
+	.use(router)
 	.component("font-awesome-icon", FontAwesomeIcon)
 	.directive("click-outside", clickOutside)
 	.mount("#app")

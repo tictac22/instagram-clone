@@ -5,7 +5,7 @@ import { Post } from "@/utils/types"
 //eslint-disable-next-line
 const { post, to } = defineProps<{
 	post: Post
-	to: "Post" | "UserPost"
+	to: string
 }>()
 </script>
 

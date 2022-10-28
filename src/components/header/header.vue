@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router"
 import CreatePost from "../postForm.vue/context/postContext.vue"
 import Dropdown from "./dropdown.vue"
+import LoadingBar from "./loadingBar.vue"
 import Search from "./search.vue"
 const route = useRoute()
 </script>
@@ -44,13 +45,20 @@ const route = useRoute()
 					/>
 				</RouterLink>
 				<CreatePost />
-				<font-awesome-icon
-					icon="fa-solid fa-compass"
-					class="ml-6 h-6 w-6 cursor-pointer stroke-black stroke-[30px] text-white"
-					tabindex="0"
-				/>
+				<RouterLink to="/explore" class="ml-6">
+					<font-awesome-icon
+						icon="fa-solid fa-compass"
+						class="h-6 w-6 cursor-pointer stroke-black stroke-[30px]"
+						:class="[
+							route.path === '/explore'
+								? 'text-black'
+								: 'text-white'
+						]"
+					/>
+				</RouterLink>
 				<Dropdown />
 			</div>
 		</div>
 	</header>
+	<LoadingBar />
 </template>

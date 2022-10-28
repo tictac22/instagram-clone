@@ -136,7 +136,7 @@ const capitalizeFirstLetter = (string: string) =>
 						@click="setFilter(image, currentImage)"
 					>
 						<img
-							:src="`./filters/${image}.jpg`"
+							:src="`/filters/${image}.jpg`"
 							alt="image"
 							class="h-[99px] w-[99px] rounded-md object-cover"
 						/>

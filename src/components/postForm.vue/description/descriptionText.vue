@@ -91,7 +91,7 @@ const createPost = async () => {
 	const data = await createFirebasePost({
 		images,
 		text: state.textarea,
-		creatorUid: user.data.uid,
+		uid: user.data.uid,
 		authorUserName: user.data.userName
 	})
 	router.push(`/p/${data.id}`)

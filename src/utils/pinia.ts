@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 
 type User = {
 	userName: string
@@ -77,4 +77,15 @@ export const useUserStore = defineStore("counter", () => {
 		user.isAuthenticated = false
 	}
 	return { user, authenficate, setUser, handleLike, logOut }
+})
+
+export const useLoadingBar = defineStore("loadingbar", () => {
+	const loading = ref(false)
+
+	const setLoading = (loadingValue: boolean) => (loading.value = loadingValue)
+
+	return {
+		loading,
+		setLoading
+	}
 })

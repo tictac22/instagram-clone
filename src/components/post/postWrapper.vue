@@ -4,6 +4,7 @@ import { useUserStore } from "@/utils/pinia"
 import Post from "./post.vue"
 const { user } = useUserStore()
 const posts = await getUserHomePosts(user.data.subscribed)
+console.log(posts?.length)
 </script>
 
 <template>

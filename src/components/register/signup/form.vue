@@ -11,10 +11,10 @@ import FormInput from "../formInput.vue"
 import { signUpInputs, signUpRules } from "./validation"
 const router = useRouter()
 const state = reactive({
-	email: "test@test9.com",
-	fullName: "Marica",
-	userName: "maricarmenmelita52",
-	password: "123456",
+	email: "",
+	fullName: "",
+	userName: "",
+	password: "",
 	isLoading: false,
 	file: ""
 })
