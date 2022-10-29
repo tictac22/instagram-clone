@@ -2,6 +2,7 @@ import {
 	addDoc,
 	collection,
 	doc,
+	DocumentData,
 	documentId,
 	getDoc,
 	getDocs,
@@ -9,6 +10,8 @@ import {
 	limit,
 	orderBy,
 	query,
+	QueryDocumentSnapshot,
+	startAfter,
 	Timestamp,
 	updateDoc,
 	where
@@ -16,38 +19,57 @@ import {
 import { Author, Post } from "../types"
 import { db } from "./config"
 
-export const getUserHomePosts = async (subscribedIds: string[]) => {
+export const getUserHomePosts = async (
+	subscribedIds: string[],
+	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | "" = ""
+) => {
 	if (!subscribedIds || subscribedIds.length < 0) return
 	const postCollection = collection(db, "posts")
-	const q = query(
-		postCollection,
-		orderBy("createdAt", "desc"),
-		where("uid", "in", subscribedIds)
-	)
-
+	let q = null
+	if (lastVisibleDoc) {
+		q = query(
+			postCollection,
+			orderBy("createdAt", "desc"),
+			where("uid", "in", subscribedIds),
+			limit(10),
+			startAfter(lastVisibleDoc)
+		)
+	} else {
+		q = query(
+			postCollection,
+			orderBy("createdAt", "desc"),
+			where("uid", "in", subscribedIds),
+			limit(10)
+		)
+	}
 	const querySnapshot = await getDocs(q)
 	const posts: Post[] = []
+	const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
 	//@ts-ignore
 	querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }))
+	if (posts.length > 0) {
+		const userCollection = collection(db, "users")
+		const notRepeatedUserUids = [...new Set(posts.map(item => item.uid))]
+		const q2 = query(
+			userCollection,
+			where(documentId(), "in", notRepeatedUserUids)
+		)
+		const userSnapShot = await getDocs(q2)
+		const users: Author[] = []
 
-	const userCollection = collection(db, "users")
-	const notRepeatedUserUids = [...new Set(posts.map(item => item.uid))]
-	const q2 = query(
-		userCollection,
-		where(documentId(), "in", notRepeatedUserUids)
-	)
-	const userSnapShot = await getDocs(q2)
-	const users: Author[] = []
-
-	//@ts-ignore
-	userSnapShot.forEach(doc => users.push({ id: doc.id, ...doc.data() }))
-
-	posts.forEach(
 		//@ts-ignore
-		item => (item.author = users.find(user => user.id === item.uid))
-	)
+		userSnapShot.forEach(doc => users.push({ id: doc.id, ...doc.data() }))
 
-	return posts
+		posts.forEach(
+			//@ts-ignore
+			item => (item.author = users.find(user => user.id === item.uid))
+		)
+	}
+
+	return {
+		posts: posts ?? [],
+		lastVisible: lastVisible ?? null
+	}
 }
 
 export const getExplorePosts = async () => {

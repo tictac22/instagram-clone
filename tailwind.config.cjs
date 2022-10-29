@@ -44,13 +44,12 @@ module.exports = {
 						transform: "scale(1)"
 					}
 				},
-				 loadingBar: {
+				loadingBar: {
+					"0%": { backgroundPosition: "10% 0%" },
 
-    "0%":{backgroundPosition:"10% 0%"},
-
-    "50%":{backgroundPosition:"91% 100%"},
-    "100%":{backgroundPosition:"10% 0%"}
-}
+					"50%": { backgroundPosition: "91% 100%" },
+					"100%": { backgroundPosition: "10% 0%" }
+				}
 			}
 		},
 		backgroundPosition: {
