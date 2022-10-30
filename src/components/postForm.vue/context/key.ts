@@ -25,4 +25,5 @@ export const key = Symbol() as InjectionKey<{
 	selectedFilter: typeof selectedFilter
 	filterErrors: typeof filterErrors
 	saveSelectedFilters: (index: number, filter: string) => void
+	clearContext: () => void
 }>

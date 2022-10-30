@@ -21,7 +21,7 @@ type suggestedUser = {
 	photoUrl: string
 	fullName: string
 }
-const { blobedFiles } = inject(key)!
+const { blobedFiles, clearContext } = inject(key)!
 const router = useRouter()
 const { user } = useUserStore()
 const state = reactive({
@@ -96,6 +96,7 @@ const createPost = async () => {
 	})
 	router.push(`/p/${data.id}`)
 	state.isLoading = false
+	clearContext()
 }
 </script>
 

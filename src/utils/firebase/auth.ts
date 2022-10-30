@@ -51,7 +51,9 @@ export const setSignUpFacebookData = async ({
 		fullName,
 		userName,
 		photoUrl,
-		likes: []
+		likes: [],
+		subscribed: [],
+		followers: 0
 	})
 	return user
 }
@@ -82,7 +84,9 @@ export const signUp = async ({
 			userName,
 			fullName,
 			likes: [],
-			photoUrl: image
+			photoUrl: image,
+			subscribed: [],
+			followers: 0
 		})
 	} catch (error) {
 		if (error instanceof CustomError) {

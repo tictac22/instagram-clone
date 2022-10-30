@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from "@/utils/pinia"
 import { ref } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 
 const expanded = ref(false)
 
@@ -10,6 +10,11 @@ const openMenu = () => (expanded.value = true)
 
 const { logOut, user } = useUserStore()
 const route = useRoute()
+const router = useRouter()
+const logOutHandler = async () => {
+	await logOut()
+	router.push("/")
+}
 </script>
 
 <template>
@@ -31,7 +36,7 @@ const route = useRoute()
 			/>
 		</div>
 		<div
-			class="absolute -right-[10px] top-[40px] w-[192px] rounded bg-white p-2 drop-shadow transition-all"
+			class="absolute -right-[10px] top-[40px] z-[1] w-[192px] rounded bg-white p-2 drop-shadow transition-all"
 			:class="[
 				expanded
 					? 'opacity-1 pointer-events-auto visible translate-y-0'
@@ -49,8 +54,8 @@ const route = useRoute()
 			<p
 				class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
 				tabindex="0"
-				@click="logOut"
-				@keydown.enter="logOut"
+				@click="logOutHandler"
+				@keydown.enter="logOutHandler"
 			>
 				Log Out
 			</p>

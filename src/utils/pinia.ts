@@ -21,7 +21,28 @@ export const useUserStore = defineStore("counter", () => {
 			likes: []
 		}
 	})
-
+	const handleSubscribe = async (id: string) => {
+		const { subscribe } = await import("@/utils/firebase")
+		const isSubscribed = user.data.subscribed.find(item => item === id)
+		if (isSubscribed) {
+			const index = user.data.likes.indexOf(isSubscribed)
+			user.data.subscribed.splice(index, 1)
+			subscribe({
+				isSubscribed: true,
+				userId: user.data.uid,
+				subscribedId: id,
+				usersSubscribes: user.data.subscribed
+			})
+		} else {
+			user.data.subscribed.push(id)
+			subscribe({
+				isSubscribed: false,
+				userId: user.data.uid,
+				subscribedId: id,
+				usersSubscribes: user.data.subscribed
+			})
+		}
+	}
 	const handleLike = async (id: string) => {
 		const { likePost } = await import("@/utils/firebase")
 
@@ -76,7 +97,7 @@ export const useUserStore = defineStore("counter", () => {
 		user.data = {} as User
 		user.isAuthenticated = false
 	}
-	return { user, authenficate, setUser, handleLike, logOut }
+	return { user, authenficate, setUser, handleLike, logOut, handleSubscribe }
 })
 
 export const useLoadingBar = defineStore("loadingbar", () => {

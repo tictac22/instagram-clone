@@ -53,6 +53,13 @@ const saveSelectedFilters = (index: number, filter: string) => {
 }
 const saveBlobedFiles = (files: string[]) => (blobedFiles.value = [...files])
 
+const clearContext = () => {
+	formStep.value = 0
+	files.value = []
+	croppedFiles.value = []
+	blobedFiles.value = []
+	selectedFilter.value = []
+}
 provide(key, {
 	files,
 	croppedFiles,
@@ -67,7 +74,8 @@ provide(key, {
 	saveBlobedFiles,
 	selectedFilter,
 	filterErrors,
-	saveSelectedFilters
+	saveSelectedFilters,
+	clearContext
 })
 </script>
 

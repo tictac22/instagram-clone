@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import Follow from "@/components/follow.vue"
 import PageWrapper from "@/layouts/pageWrapper.vue"
 import ModalPostLoader from "@/shared/modalPostLoader.vue"
 import SquarePost from "@/shared/squarePost.vue"
 import { getUserPage, getUserPosts } from "@/utils/firebase"
 import { nFormatter } from "@/utils/helperFunctions"
-import { useUserStore } from "@/utils/pinia"
 import { Author, Post } from "@/utils/types"
-import { onMounted, reactive, watch } from "vue"
+import { onMounted, reactive, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
@@ -31,9 +31,16 @@ watch(
 onMounted(async () => {
 	getData()
 })
-const {
-	user: { data: userData }
-} = useUserStore()
+
+const subscribeCount = ref<HTMLDivElement | null>(null)
+const updateSubscribeValue = (subscribe: boolean) => {
+	const text = parseInt(subscribeCount.value!.innerHTML)
+	if (subscribe) {
+		subscribeCount.value!.innerHTML = `${text + 1}`
+		return
+	}
+	subscribeCount.value!.innerHTML = `${text - 1}`
+}
 </script>
 
 <template>
@@ -52,12 +59,11 @@ const {
 						<h2 class="text-lg">
 							{{ data.user.userName }}
 						</h2>
-						<button
-							v-if="userData.uid !== route.params.id"
-							class="ml-6 rounded bg-blue-500 py-1 px-6 text-white"
-						>
-							Follow
-						</button>
+						<Follow
+							v-if="data.user"
+							:id="data.user.uid"
+							@update-count="updateSubscribeValue"
+						/>
 					</div>
 					<div class="my-[20px] flex items-center">
 						<p>
@@ -67,7 +73,7 @@ const {
 							Posts
 						</p>
 						<p class="ml-[40px]">
-							<span class="font-medium">{{
+							<span ref="subscribeCount" class="font-medium">{{
 								nFormatter(data.user.followers)
 							}}</span>
 							followers
@@ -82,7 +88,7 @@ const {
 				<div
 					class="my-5 h-[1px] w-full rounded border border-solid border-gray-100"
 				/>
-				<div class="grid w-[935px] grid-cols-3 gap-[28px]">
+				<div class="mb-10 grid w-[935px] grid-cols-3 gap-[28px]">
 					<SquarePost
 						v-for="post in data.posts"
 						:key="post.id"

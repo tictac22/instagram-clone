@@ -21,9 +21,10 @@ import { db } from "./config"
 
 export const getUserHomePosts = async (
 	subscribedIds: string[],
-	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | "" = ""
+	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null = null
 ) => {
-	if (!subscribedIds || subscribedIds.length < 0) return
+	if (!subscribedIds || subscribedIds.length <= 0)
+		return { posts: [] as Post[], lastVisible: null }
 	const postCollection = collection(db, "posts")
 	let q = null
 	if (lastVisibleDoc) {
@@ -31,7 +32,7 @@ export const getUserHomePosts = async (
 			postCollection,
 			orderBy("createdAt", "desc"),
 			where("uid", "in", subscribedIds),
-			limit(10),
+			limit(5),
 			startAfter(lastVisibleDoc)
 		)
 	} else {
@@ -39,7 +40,7 @@ export const getUserHomePosts = async (
 			postCollection,
 			orderBy("createdAt", "desc"),
 			where("uid", "in", subscribedIds),
-			limit(10)
+			limit(5)
 		)
 	}
 	const querySnapshot = await getDocs(q)

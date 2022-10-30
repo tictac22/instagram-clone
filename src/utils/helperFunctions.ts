@@ -1,5 +1,5 @@
 // @ts-nocheck
-export function debounce(fn: () => void, delay: number) {
+export function debounce(fn: (value: string) => void, delay: number) {
 	let timeoutID = null
 	return function () {
 		clearTimeout(timeoutID)
@@ -80,3 +80,8 @@ export const closeEscModal = (cb: () => void) => {
 		cb()
 	}
 }
+
+export const parsedSuggestedUsersFromLC = () =>
+	(JSON.parse(
+		window.localStorage.getItem("searchedUsers") as string
+	) as Author[]) ?? []
