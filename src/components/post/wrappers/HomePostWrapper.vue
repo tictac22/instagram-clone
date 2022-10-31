@@ -2,8 +2,8 @@
 import { getUserHomePosts } from "@/utils/firebase"
 import { useUserStore } from "@/utils/pinia"
 import { onMounted, ref } from "vue"
-import Spinner from "../loaders/spinner.vue"
-import Post from "./post.vue"
+import Spinner from "../../loaders/spinner.vue"
+import Post from "../post.vue"
 const { user } = useUserStore()
 const data = ref(await getUserHomePosts(user.data.subscribed))
 const observerRef = ref<HTMLDivElement | null>(null)

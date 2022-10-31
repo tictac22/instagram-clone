@@ -9,8 +9,8 @@ import { defineAsyncComponent } from "vue"
 
 const { user } = useUserStore()
 
-const PostWrapper = defineAsyncComponent(
-	() => import("@/components/post/postWrapper.vue")
+const HomePostWrapper = defineAsyncComponent(
+	() => import("@/components/post/wrappers/HomePostWrapper.vue")
 )
 </script>
 
@@ -21,7 +21,7 @@ const PostWrapper = defineAsyncComponent(
 		<div class="flex items-center">
 			<div class="mr-8 w-full max-w-[470px]">
 				<div
-					v-if="user?.data.subscribed.length === 0"
+					v-if="user && user.data.subscribed.length === 0"
 					class="text-center"
 				>
 					<p>Currently you have 0 subscriptions</p>
@@ -36,7 +36,7 @@ const PostWrapper = defineAsyncComponent(
 					</span>
 				</div>
 				<Suspense>
-					<PostWrapper v-if="user" />
+					<HomePostWrapper v-if="user" />
 					<template #fallback> <Spinner /> </template>
 				</Suspense>
 			</div>

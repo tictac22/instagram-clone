@@ -85,3 +85,12 @@ export const parsedSuggestedUsersFromLC = () =>
 	(JSON.parse(
 		window.localStorage.getItem("searchedUsers") as string
 	) as Author[]) ?? []
+
+export const hashtag = (text: string) => {
+	const repl = text.replace(
+		/@(\w+)|#(\w+)/g,
+		"<a href=\"#\" class='blue' >@$1</a>"
+	)
+	//repl = text.replace(/#(\w+)/g, `<a href="#" class='blue' >#$1</a>`)
+	return repl
+}

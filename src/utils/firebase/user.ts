@@ -5,8 +5,11 @@ import {
 	getDoc,
 	getDocs,
 	increment,
+	limit,
 	orderBy,
 	query,
+	QueryDocumentSnapshot,
+	startAfter,
 	updateDoc,
 	where
 } from "firebase/firestore"
@@ -37,23 +40,47 @@ export const getUserPage = async (userId: string) => {
 	return {
 		uid: user.id,
 		...user.data()
-	}
+	} as Author
 }
 
-export const getUserPosts = async (userId: string) => {
-	if (!userId) return
+export const getUserPosts = async (
+	userId: string,
+
+	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null = null
+) => {
+	if (!userId)
+		return {
+			posts: [] as Post[],
+			lastVisible: null
+		}
 	const postCollection = collection(db, "posts")
-	const q = query(
-		postCollection,
-		orderBy("createdAt", "desc"),
-		where("uid", "==", userId)
-	)
+	let q = null
+	if (lastVisibleDoc) {
+		q = query(
+			postCollection,
+			orderBy("createdAt", "desc"),
+			where("uid", "==", userId),
+			startAfter(lastVisibleDoc),
+			limit(9)
+		)
+	} else {
+		q = query(
+			postCollection,
+			orderBy("createdAt", "desc"),
+			where("uid", "==", userId),
+			limit(9)
+		)
+	}
 	const querySnapshot = await getDocs(q)
 	const posts: Post[] = []
 
+	const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
 	//@ts-ignore
 	querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }))
-	return posts
+	return {
+		posts,
+		lastVisible: lastVisible ?? null
+	}
 }
 
 type HandleSubscribe = {

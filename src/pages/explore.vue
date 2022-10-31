@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import ExplorepostWrapper from "@/components/post/explorepostWrapper.vue"
+import Spinner from "@/components/loaders/spinner.vue"
+import ExplorepostWrapper from "@/components/post/wrappers/explorepostWrapper.vue"
 import PageWrapper from "@/layouts/pageWrapper.vue"
 import ModalPostLoader from "@/shared/modalPostLoader.vue"
 </script>
@@ -9,7 +10,7 @@ import ModalPostLoader from "@/shared/modalPostLoader.vue"
 		<ModalPostLoader />
 		<Suspense>
 			<ExplorepostWrapper />
-			<template #fallback> ...loading i</template>
+			<template #fallback> <Spinner /> </template>
 		</Suspense>
 	</PageWrapper>
 </template>

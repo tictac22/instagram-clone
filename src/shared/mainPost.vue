@@ -7,7 +7,7 @@ import CreatedComments from "@/components/post/modal/comments/createdComments.vu
 import { UserComment } from "@/components/post/modal/type"
 import Animation from "@/components/post/postParts/like/animation.vue"
 import LikeButton from "@/components/post/postParts/like/likeButton.vue"
-import { timeAgo } from "@/utils/helperFunctions"
+import { hashtag, timeAgo } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
 import { Author, Comment as IComment, Post } from "@/utils/types"
 import { ref } from "vue"
@@ -84,9 +84,10 @@ const handleLike = () => {
 							{{ props.user.userName }}
 						</RouterLink>
 
-						<p class="ml-1 inline">
-							{{ props.post.text }}
-						</p>
+						<p
+							class="ml-1 inline"
+							v-html="hashtag(props.post.text)"
+						></p>
 					</div>
 				</div>
 				<CreatedComments :users-created-posts="usersCreatedPosts" />

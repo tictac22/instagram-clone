@@ -58,3 +58,10 @@ body {
 .scroll::-webkit-scrollbar {
 	display: none;
 }
+
+.blue {
+	color: rgb(26, 26, 195);
+}
+.blue:hover {
+	text-decoration: underline;
+}

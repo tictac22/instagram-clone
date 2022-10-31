@@ -42,6 +42,7 @@ const routes = [
 	{
 		path: RoutePaths.USER,
 		component: UserPage,
+		name: "User",
 		children: [
 			{
 				path: RoutePaths.POST,

@@ -73,17 +73,31 @@ export const getUserHomePosts = async (
 	}
 }
 
-export const getExplorePosts = async () => {
+export const getExplorePosts = async (
+	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null = null
+) => {
 	const postCollection = collection(db, "posts")
-	const q = query(postCollection, orderBy("createdAt", "desc"))
+	let q = null
+	if (lastVisibleDoc) {
+		q = query(
+			postCollection,
+			orderBy("createdAt", "desc"),
+			startAfter(lastVisibleDoc),
+			limit(9)
+		)
+	} else {
+		q = query(postCollection, orderBy("createdAt", "desc"), limit(9))
+	}
 	const querySnapshot = await getDocs(q)
 	const posts: Post[] = []
+	const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
 	//@ts-ignore
 	querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }))
-	return posts
+	return { posts, lastVisible: lastVisible ?? null }
 }
 
 export const getPost = async (id: string, isMorePosts?: boolean) => {
+	if (!id) return
 	const postRef = doc(db, "posts", id)
 
 	const postRequest = await getDoc(postRef)
