@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+docker-compose.yml
+.git
+.gitignore
+.husky
+.vscode
+dist
+node_modules
+yarn-error.log
