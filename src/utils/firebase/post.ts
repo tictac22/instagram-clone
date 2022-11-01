@@ -74,6 +74,7 @@ export const getUserHomePosts = async (
 }
 
 export const getExplorePosts = async (
+	userId: string,
 	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null = null
 ) => {
 	const postCollection = collection(db, "posts")
@@ -92,7 +93,11 @@ export const getExplorePosts = async (
 	const posts: Post[] = []
 	const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
 	//@ts-ignore
-	querySnapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() }))
+	querySnapshot.forEach(
+		doc =>
+			doc.data().uid !== userId &&
+			posts.push({ id: doc.id, ...doc.data() })
+	)
 	return { posts, lastVisible: lastVisible ?? null }
 }
 

@@ -12,7 +12,6 @@ useHead({
 	title: "Instagram"
 })
 const { user } = useUserStore()
-
 const HomePostWrapper = defineAsyncComponent(
 	() => import("@/components/post/wrappers/HomePostWrapper.vue")
 )
@@ -40,7 +39,9 @@ const HomePostWrapper = defineAsyncComponent(
 					</span>
 				</div>
 				<Suspense>
-					<HomePostWrapper v-if="user" />
+					<HomePostWrapper
+						v-if="user && user.data.subscribed.length > 0"
+					/>
 					<template #fallback> <Spinner /> </template>
 				</Suspense>
 			</div>

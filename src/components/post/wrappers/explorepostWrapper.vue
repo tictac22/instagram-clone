@@ -2,14 +2,20 @@
 import Spinner from "@/components/loaders/spinner.vue"
 import SquarePost from "@/shared/squarePost.vue"
 import { getExplorePosts } from "@/utils/firebase"
+import { useUserStore } from "@/utils/pinia"
 import { onMounted, ref } from "vue"
-const data = ref(await getExplorePosts())
+
+const { user } = useUserStore()
+const data = ref(await getExplorePosts(user.data.uid))
 
 const observerRef = ref<HTMLDivElement | null>(null)
 onMounted(() => {
 	const observer = new IntersectionObserver(async (entities, observer) => {
 		if (entities[0].isIntersecting) {
-			const responseData = await getExplorePosts(data.value.lastVisible)
+			const responseData = await getExplorePosts(
+				user.data.uid,
+				data.value.lastVisible
+			)
 			if (responseData?.lastVisible === null) {
 				observer.unobserve(entities[0].target)
 			}

@@ -14,16 +14,16 @@ const state = reactive({
 	isError: false
 })
 const form = useVuelidate(logInRules, state)
-const { setUser } = useUserStore()
+const { authenficate } = useUserStore()
 const submit = async () => {
 	state.isLoading = false
 	state.isLoading = true
 	try {
 		const { logIn } = await import("@/utils/firebase")
-		const user = await logIn({
+		await logIn({
 			...state
 		})
-		setUser(true, user)
+		await authenficate()
 		router.push("/")
 	} catch (error) {
 		state.isError = true
