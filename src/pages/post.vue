@@ -12,7 +12,6 @@ const state = reactive({
 	data: {} as { post: Post; user: Author; morePosts: Post[] },
 	comments: [] as IComment[]
 })
-
 const route = useRoute()
 
 const getData = async () => {

@@ -10,6 +10,7 @@ import LikeButton from "@/components/post/postParts/like/likeButton.vue"
 import { hashtag, timeAgo } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
 import { Author, Comment as IComment, Post } from "@/utils/types"
+import { useHead } from "@vueuse/head"
 import { ref } from "vue"
 
 const props = defineProps<{
@@ -17,6 +18,11 @@ const props = defineProps<{
 	user: Author
 	comments: IComment[]
 }>()
+
+useHead({
+	title: `${props.user.userName} on Instagram: "${props.post.text}"`
+})
+
 const usersCreatedPosts = ref<UserComment[]>([])
 const addcreatedPost = (data: UserComment) => {
 	usersCreatedPosts.value.push({

@@ -5,8 +5,12 @@ import PageWrapper from "@/layouts/pageWrapper.vue"
 import ModalPostLoader from "@/shared/modalPostLoader.vue"
 import { RoutePaths } from "@/utils/paths"
 import { useUserStore } from "@/utils/pinia"
+import { useHead } from "@vueuse/head"
 import { defineAsyncComponent } from "vue"
 
+useHead({
+	title: "Instagram"
+})
 const { user } = useUserStore()
 
 const HomePostWrapper = defineAsyncComponent(

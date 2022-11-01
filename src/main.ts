@@ -25,6 +25,7 @@ import {
 	faSquarePlus,
 	faXmark
 } from "@fortawesome/free-solid-svg-icons"
+import { createHead } from "@vueuse/head"
 
 library.add(
 	faHouse,
@@ -61,10 +62,12 @@ const clickOutside = {
 		document.removeEventListener("pointerdown", el.clickOutsideEvent)
 	}
 }
+const head = createHead()
 
 createApp(App)
 	.use(createPinia())
 	.use(router)
+	.use(head)
 	.component("font-awesome-icon", FontAwesomeIcon)
 	.directive("click-outside", clickOutside)
 	.mount("#app")

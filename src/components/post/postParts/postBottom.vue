@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { timeAgo } from "@/utils/helperFunctions"
+import { hashtag, timeAgo } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
 import { computed, reactive, ref } from "vue"
 
@@ -25,8 +25,8 @@ if (props.text.split("").length > 40) {
 	firstPart = splitedText.slice(0, 20).join(" ")
 	secondPart = splitedText.slice(20, splitedText.length).join(" ")
 	if (!secondPart || secondPart.length === 0) state.extraText = null
-	state.firstPart = firstPart
-	state.secondPart = secondPart
+	state.firstPart = hashtag(firstPart)
+	state.secondPart = hashtag(secondPart)
 } else {
 	state.extraText = null
 }
@@ -56,14 +56,18 @@ defineExpose({
 			<span class="ml-1 font-medium">likes</span>
 		</div>
 		<span class="inline-block text-sm">
-			{{ props.fullName }} {{ state.firstPart || props.text }}
+			{{ props.fullName }}
+			<span v-html="state.firstPart || props.text"></span>
 			<span
 				v-if="state.extraText === false"
 				class="cursor-pointer text-gray-500"
 				@click="() => (state.extraText = true)"
 				>... more</span
 			>
-			<span v-if="state.extraText === true">{{ state.secondPart }}</span>
+			<span
+				v-if="state.extraText === true"
+				v-html="state.secondPart"
+			></span>
 		</span>
 		<p class="mt-2 text-gray-400">
 			<router-link

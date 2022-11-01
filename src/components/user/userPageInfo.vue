@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getUserPage } from "@/utils/firebase"
 import { nFormatter } from "@/utils/helperFunctions"
+import { useHead } from "@vueuse/head"
 import { ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import Follow from "../follow.vue"
@@ -10,6 +11,10 @@ const route = useRoute()
 
 const user = ref(await getUserPage(route.params.id as string))
 const loading = ref(false)
+
+useHead({
+	title: user.value.fullName + " " + `@${user.value.userName}`
+})
 watch(
 	() => route.path,
 	async (value, prev) => {
