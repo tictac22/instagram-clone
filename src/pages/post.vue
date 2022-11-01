@@ -2,7 +2,7 @@
 import PageWrapper from "@/layouts/pageWrapper.vue"
 import MainPost from "@/shared/mainPost.vue"
 import SquarePost from "@/shared/squarePost.vue"
-import { getPost, getPostComments } from "@/utils/firebase"
+import { getPost } from "@/utils/firebase"
 import { Author, Comment as IComment, Post } from "@/utils/types"
 import { onMounted, reactive, watch } from "vue"
 import { useRoute } from "vue-router"
@@ -15,13 +15,9 @@ const state = reactive({
 const route = useRoute()
 
 const getData = async () => {
-	const [data, comments] = await Promise.all([
-		getPost(route.params.id as string, true),
-		getPostComments(route.params.id as string)
-	])
+	const data = await getPost(route.params.id as string, true)
 	Object.assign(state, {
 		data,
-		comments,
 		loading: false
 	})
 }
@@ -42,7 +38,6 @@ onMounted(() => {
 		<MainPost
 			v-if="!state.loading"
 			:post="state.data.post"
-			:comments="state.comments"
 			:user="state.data.user"
 		/>
 		<template v-if="state.data?.morePosts">

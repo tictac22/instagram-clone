@@ -34,7 +34,9 @@ export const useUserStore = defineStore("counter", () => {
 				usersSubscribes: user.data.subscribed
 			})
 		} else {
-			user.data.subscribed.push(id)
+			user.data.subscribed.length === 10
+				? (user.data.subscribed[user.data.subscribed.length - 1] = id)
+				: user.data.subscribed.push(id)
 			subscribe({
 				isSubscribed: false,
 				userId: user.data.uid,
@@ -67,7 +69,6 @@ export const useUserStore = defineStore("counter", () => {
 
 		onAuthStateChanged(auth, async firebaseUser => {
 			if (!firebaseUser) return (user.isAuthenticated = false)
-
 			if (firebaseUser?.providerData[0].providerId === "facebook.com") {
 				const userData = await getUser(firebaseUser!.uid)!
 				if (!userData) {
@@ -83,7 +84,9 @@ export const useUserStore = defineStore("counter", () => {
 				}
 				return (user.isAuthenticated = true)
 			}
+			console.log(firebaseUser)
 			const userData = await getUser(firebaseUser!.uid)!
+			console.log(userData)
 			user.data = {
 				uid: firebaseUser!.uid,
 				...userData

@@ -14,7 +14,7 @@ const emits = defineEmits<{
 const { user, handleSubscribe } = useUserStore()
 
 const isSubscribed = computed(
-	() => user && user.data.subscribed.find(item => item === props.id)
+	() => user && user.data?.subscribed.find(item => item === props.id)
 )
 const subscribe = () => {
 	emits("updateCount", !isSubscribed.value)

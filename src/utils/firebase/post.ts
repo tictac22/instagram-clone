@@ -102,7 +102,7 @@ export const getExplorePosts = async (
 }
 
 export const getPost = async (id: string, isMorePosts?: boolean) => {
-	if (!id) return
+	if (!id) return { post: {} as Post, user: {} as Author }
 	const postRef = doc(db, "posts", id)
 
 	const postRequest = await getDoc(postRef)

@@ -1,22 +1,22 @@
 <script setup lang="ts">
+import Spinner from "@/components/loaders/spinner.vue"
 import ImageSlider from "@/components/post/imageSlider.vue"
 import MainPostLikeCount from "@/components/post/mainPostLikeCount.vue"
 import CommentForm from "@/components/post/modal/commentForm.vue"
-import Comment from "@/components/post/modal/comments/comment.vue"
+import CommentWrapper from "@/components/post/modal/comments/commentWrapper.vue"
 import CreatedComments from "@/components/post/modal/comments/createdComments.vue"
 import { UserComment } from "@/components/post/modal/type"
 import Animation from "@/components/post/postParts/like/animation.vue"
 import LikeButton from "@/components/post/postParts/like/likeButton.vue"
 import { hashtag, timeAgo } from "@/utils/helperFunctions"
 import { useUserStore } from "@/utils/pinia"
-import { Author, Comment as IComment, Post } from "@/utils/types"
+import { Author, Post } from "@/utils/types"
 import { useHead } from "@vueuse/head"
 import { ref } from "vue"
 
 const props = defineProps<{
 	post: Post
 	user: Author
-	comments: IComment[]
 }>()
 
 useHead({
@@ -25,7 +25,7 @@ useHead({
 
 const usersCreatedPosts = ref<UserComment[]>([])
 const addcreatedPost = (data: UserComment) => {
-	usersCreatedPosts.value.push({
+	usersCreatedPosts.value.unshift({
 		...data,
 		photoUrl: data.photoUrl ?? "",
 		createdAt: "Now"
@@ -76,7 +76,7 @@ const handleLike = () => {
 					</p>
 				</RouterLink>
 			</div>
-			<div class="flex-1 p-4">
+			<div class="scrollbar-hide flex-1 overflow-y-scroll p-4">
 				<div class="flex items-start">
 					<img
 						class="h-8 w-8 rounded-full"
@@ -97,11 +97,10 @@ const handleLike = () => {
 					</div>
 				</div>
 				<CreatedComments :users-created-posts="usersCreatedPosts" />
-				<Comment
-					v-for="comment in props.comments"
-					:key="comment.id"
-					v-bind="comment"
-				/>
+				<Suspense>
+					<CommentWrapper />
+					<template #fallback> <Spinner /></template>
+				</Suspense>
 			</div>
 			<div class="border-t border-solid border-gray-500 p-4">
 				<div class="flex items-center py-2">

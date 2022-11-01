@@ -2,11 +2,14 @@ import {
 	addDoc,
 	collection,
 	doc,
+	DocumentData,
 	getDocs,
 	increment,
 	limit,
 	orderBy,
 	query,
+	QueryDocumentSnapshot,
+	startAfter,
 	Timestamp,
 	updateDoc
 } from "firebase/firestore"
@@ -36,16 +39,34 @@ export const createCommentPost = async (data: CommentData) => {
 	return response
 }
 
-export const getPostComments = async (id: string) => {
-	if (!id) return
+export const getPostComments = async (
+	id: string,
+	lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null = null
+) => {
+	if (!id) return { comments: [] as Comment[], lastVisible: null }
 	const commentRef = collection(db, "posts", id, "comments")
-	const q = query(commentRef, limit(20), orderBy("createdAt", "desc"))
+
+	let q = null
+	if (lastVisibleDoc) {
+		q = query(
+			commentRef,
+			limit(20),
+			orderBy("createdAt", "desc"),
+			startAfter(lastVisibleDoc),
+			limit(15)
+		)
+	} else {
+		q = query(commentRef, limit(15), orderBy("createdAt", "desc"))
+	}
 	const querySnapshot = await getDocs(q)
+
+	const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
 
 	const comments: Comment[] = []
 	querySnapshot.forEach(doc => {
 		// doc.data() is never undefined for query doc snapshots
 		comments.push({ id: doc.id, ...doc.data() })
 	})
-	return comments
+
+	return { comments, lastVisible: lastVisible ?? null }
 }

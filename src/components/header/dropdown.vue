@@ -32,7 +32,7 @@ const logOutHandler = async () => {
 			<img
 				alt="default"
 				:src="user.data.photoUrl ? user.data.photoUrl : '/default.jpg'"
-				class="h-6 w-6 rounded-full"
+				class="h-6 w-6 select-none rounded-full"
 			/>
 		</div>
 		<div
