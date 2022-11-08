@@ -84,9 +84,7 @@ export const useUserStore = defineStore("counter", () => {
 				}
 				return (user.isAuthenticated = true)
 			}
-			console.log(firebaseUser)
 			const userData = await getUser(firebaseUser!.uid)!
-			console.log(userData)
 			user.data = {
 				uid: firebaseUser!.uid,
 				...userData
