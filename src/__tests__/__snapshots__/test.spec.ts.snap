@@ -1,0 +1,21 @@
+// Vitest Snapshot v1
+
+exports[`test component > It mounts succesfullyy  1`] = `
+<div>
+  <h1
+    data-test="counter"
+  >
+    counter 0
+  </h1>
+  <button
+    data-test="increment"
+  >
+    increment
+  </button>
+  <button
+    data-test="decrement"
+  >
+    decrement
+  </button>
+</div>
+`;
