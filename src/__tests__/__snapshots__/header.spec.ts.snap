@@ -1,0 +1,45 @@
+// Vitest Snapshot v1
+
+exports[`Header component > mounts ssuccesffulyy with correct pinia data 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <header
+    class="sticky top-0 z-20 border-b border-solid border-[#DBDBDB] bg-white"
+  >
+    <div
+      class="m-auto flex h-[60px] max-w-5xl items-center justify-between px-5"
+    >
+      <div>
+        <routerlink
+          to="/"
+        >
+          <instagram-logo-stub />
+        </routerlink>
+      </div>
+      <search-stub />
+      <div
+        class="flex items-center"
+      >
+        <div>
+          <routerlink
+            class="inline-block rounded bg-blue-500 px-3 py-1 uppercase text-white"
+            to="/register/login"
+          >
+             Log in 
+          </routerlink>
+          <routerlink
+            class="inline-block rounded px-3 py-1 uppercase text-blue-500"
+            to="/register/signup"
+          >
+             Sign up 
+          </routerlink>
+        </div>
+      </div>
+    </div>
+  </header>
+  <loading-bar-stub />
+  
+</div>
+`;

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest"
 
+import Test from "@/components/test.vue"
 import { mount, VueWrapper } from "@vue/test-utils"
-import Test from "../components/test.vue"
 
 const enum dataAttrs {
 	counter = '[data-test="counter"]',
