@@ -1,0 +1,39 @@
+// Vitest Snapshot v1
+
+exports[`Dropdown component > dropdown succesffuly mounts with equal id 1`] = `
+<div
+  class="relative ml-6"
+>
+  <div
+    class="relative flex cursor-pointer items-center justify-center rounded-full"
+    id="click"
+    tabindex="0"
+  >
+    <!--v-if-->
+    <img
+      alt="default"
+      class="h-6 w-6 select-none rounded-full"
+      src="/default.jpg"
+    />
+  </div>
+  <div
+    class="absolute -right-[10px] top-[40px] z-[1] w-[192px] rounded bg-white p-2 drop-shadow transition-all pointer-events-none invisible -translate-y-3 opacity-0"
+    data-test="false"
+  >
+    <div
+      class="triangle -top-[13px] right-[11px]"
+    />
+    <router-link-stub
+      class="block cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
+      tabindex="0"
+      to="/"
+    />
+    <p
+      class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
+      tabindex="0"
+    >
+       Log Out 
+    </p>
+  </div>
+</div>
+`;

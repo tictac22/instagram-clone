@@ -20,6 +20,7 @@ const logOutHandler = async () => {
 <template>
 	<div v-click-outside="collapseMenu" class="relative ml-6">
 		<div
+			id="click"
 			class="relative flex cursor-pointer items-center justify-center rounded-full"
 			tabindex="0"
 			@click="openMenu"
@@ -37,6 +38,7 @@ const logOutHandler = async () => {
 		</div>
 		<div
 			class="absolute -right-[10px] top-[40px] z-[1] w-[192px] rounded bg-white p-2 drop-shadow transition-all"
+			:data-test="expanded"
 			:class="[
 				expanded
 					? 'opacity-1 pointer-events-auto visible translate-y-0'
