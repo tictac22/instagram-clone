@@ -96,6 +96,7 @@ const deleteHistory = () => {
 				<div class="flex items-center justify-between p-3">
 					<h4 class="font-bold">Recent</h4>
 					<p
+						id="deleteButton"
 						class="cursor-pointer text-blue-300"
 						@click="deleteHistory"
 					>
@@ -107,6 +108,7 @@ const deleteHistory = () => {
 						v-for="user in filteredSuggestedUsers"
 						:key="user.uid"
 						:to="user.uid"
+						:data-test="user.uid"
 						class="flex w-full cursor-pointer items-center pl-3 hover:bg-[rgb(250,250,250)]"
 						@click="addToRecentSearches(user)"
 					>
