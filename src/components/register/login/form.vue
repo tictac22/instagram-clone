@@ -15,6 +15,8 @@ const state = reactive({
 })
 const form = useVuelidate(logInRules, state)
 const { authenficate } = useUserStore()
+
+const emit = defineEmits(["submit"])
 const submit = async () => {
 	state.isLoading = false
 	state.isLoading = true
@@ -23,6 +25,7 @@ const submit = async () => {
 		await logIn({
 			...state
 		})
+		emit("submit")
 		await authenficate()
 		router.push("/")
 	} catch (error) {
@@ -56,6 +59,7 @@ const submit = async () => {
 				v-for="input in logInInputs"
 				:key="input.name"
 				v-model="form[input.name].$model"
+				:data-test="input.name"
 				:touch="form[input.name].$touch"
 				:placeholder="input.placeholder"
 				:error="

@@ -1,6 +1,5 @@
 import { createTestingPinia } from "@pinia/testing"
 import { vi } from "vitest"
-
 type Props = {
 	stateName: string
 	state: {
