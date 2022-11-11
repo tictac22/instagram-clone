@@ -29,10 +29,10 @@ const subscribeCount = ref<HTMLDivElement | null>(null)
 const updateSubscribeValue = (subscribe: boolean) => {
 	const text = parseInt(subscribeCount.value!.innerHTML)
 	if (subscribe) {
-		subscribeCount.value!.innerHTML = `${text + 1}`
+		subscribeCount.value!.innerHTML = `${nFormatter(text + 1)}`
 		return
 	}
-	subscribeCount.value!.innerHTML = `${text - 1}`
+	subscribeCount.value!.innerHTML = `${nFormatter(text - 1)}`
 }
 </script>
 <template>

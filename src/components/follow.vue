@@ -26,6 +26,7 @@ const subscribe = () => {
 	<template v-if="user.data.uid !== route.params.id">
 		<button
 			v-if="!isSubscribed"
+			id="follow"
 			class="ml-6 rounded bg-blue-500 py-1 px-6 text-white"
 			@click="subscribe"
 		>

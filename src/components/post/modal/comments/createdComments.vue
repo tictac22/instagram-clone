@@ -9,6 +9,7 @@ const props = defineProps<{
 
 <template>
 	<div>
+		<p>hello comment</p>
 		<Comment
 			v-for="comment in props.usersCreatedPosts"
 			:key="comment.text"

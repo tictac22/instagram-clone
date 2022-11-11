@@ -24,7 +24,9 @@ useHead({
 })
 
 const usersCreatedPosts = ref<UserComment[]>([])
+const emit = defineEmits(["createPost"])
 const addcreatedPost = (data: UserComment) => {
+	emit("createPost")
 	usersCreatedPosts.value.unshift({
 		...data,
 		photoUrl: data.photoUrl ?? "",

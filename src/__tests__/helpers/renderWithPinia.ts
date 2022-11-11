@@ -8,9 +8,6 @@ type Props = {
 }
 export const renderWithPinia = ({ stateName, state }: Props) => {
 	return createTestingPinia({
-		createSpy: vi.fn(),
-		initialState: {
-			[stateName]: state
-		}
+		createSpy: vi.fn
 	})
 }
