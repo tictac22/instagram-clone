@@ -34,6 +34,7 @@ const subscribe = () => {
 		</button>
 		<button
 			v-else
+			id="unfollow"
 			class="ml-6 rounded bg-gray-500 py-1 px-6 text-white"
 			@click="subscribe"
 		>

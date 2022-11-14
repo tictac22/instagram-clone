@@ -2,18 +2,9 @@ import mainPostVue from "@/shared/mainPost.vue"
 import { flushPromises, mount } from "@vue/test-utils"
 import { createHead } from "@vueuse/head"
 import { describe, expect, it, vi } from "vitest"
-import { useRoute } from "vue-router"
 import { renderWithPinia } from "./helpers/renderWithPinia"
 
-vi.mock("vue-router", () => ({
-	useRoute: vi.fn()
-}))
 vi.mock("@/utils/firebase")
-const mocked = vi.mocked(useRoute).mockReturnValue({
-	params: {
-		id: "1"
-	}
-})
 
 describe("main post", () => {
 	it("mounts", async () => {
@@ -44,7 +35,7 @@ describe("main post", () => {
 			global: {
 				plugins: [
 					createHead(),
-					renderWithPinia({ stateName: "counter" })
+					renderWithPinia({ stateName: "counter", state: {} })
 				],
 				directives: {
 					clickOutside: () => {}

@@ -1,7 +1,10 @@
 type IParams = {
 	id?: string
+	router?: {
+		push: any
+	}
 }
-export const globalParams = ({ id = "" }: IParams) => {
+export const globalParams = ({ id = "", router }: IParams) => {
 	const mockRoute = {
 		path: "",
 		params: {
@@ -16,7 +19,8 @@ export const globalParams = ({ id = "" }: IParams) => {
 			clickOutside: () => {}
 		},
 		mocks: {
-			route: mockRoute
+			route: mockRoute,
+			router
 		}
 	}
 }

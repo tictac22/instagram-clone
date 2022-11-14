@@ -54,6 +54,7 @@ const logOutHandler = async () => {
 				Profile
 			</RouterLink>
 			<p
+				aria-label="log out"
 				class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
 				tabindex="0"
 				@click="logOutHandler"

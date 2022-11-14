@@ -21,7 +21,7 @@ vi.mocked(getUserPage).mockResolvedValue({
 vi.mock("vue-router", () => ({
 	useRoute: vi.fn()
 }))
-const mocked = vi.mocked(useRoute).mockReturnValue({
+vi.mocked(useRoute).mockReturnValue({
 	params: {
 		id: "1"
 	}
