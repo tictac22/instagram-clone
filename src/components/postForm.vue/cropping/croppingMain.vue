@@ -13,6 +13,7 @@ watch(formStep, value => {
 	if (value !== 2) return
 	const images: string[] = []
 	cropperRefs.value?.map(item => {
+		console.log(item, "croppped")
 		new Promise(resolve => {
 			const canvas = item.getCroppedCanvas().toDataURL() as string
 			images.push(canvas)

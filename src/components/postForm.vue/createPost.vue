@@ -58,18 +58,20 @@ watch(
 		tabindex="0"
 		icon="fa-solid fa-square-plus"
 		class="ml-6 h-6 w-6 cursor-pointer stroke-black stroke-[30px] text-white"
+		data-cy="createPost"
 		@click.stop="openPopup"
 		@keydown.enter="openPopup"
 	/>
 	<Teleport to="#modal">
 		<div
 			:class="[isDraggingStyle.open]"
-			class="fixed top-0 left-0 z-10 h-full w-full bg-black bg-opacity-70 transition-all"
+			class="fixed top-0 left-0 z-20 h-full w-full bg-black bg-opacity-70 transition-all"
 		>
 			<div class="flex min-h-full items-center justify-center p-20">
 				<font-awesome-icon
 					icon="fa-solid fa-xmark"
 					class="absolute top-2 right-2 h-5 w-5 text-white"
+					data-cy="closePopup"
 				/>
 				<div
 					v-click-outside="openConfirm"
@@ -89,7 +91,7 @@ watch(
 	<Teleport to="body">
 		<div
 			:class="[isDraggingStyle.confirm]"
-			class="fixed top-0 left-0 z-[11] h-full w-full bg-black bg-opacity-70 transition-all"
+			class="fixed top-0 left-0 z-[22] h-full w-full bg-black bg-opacity-70 transition-all"
 		>
 			<div class="flex min-h-full items-center justify-center p-20">
 				<div class="w-full max-w-[500px] rounded bg-white text-center">
@@ -101,6 +103,7 @@ watch(
 					</div>
 					<button
 						class="w-full border-t border-solid border-gray-300 py-2 font-medium text-red-500"
+						aria-label="confirm close popup"
 						@click="agreeConfirm"
 					>
 						Discard

@@ -23,6 +23,7 @@ const logOutHandler = async () => {
 			id="click"
 			class="relative flex cursor-pointer items-center justify-center rounded-full"
 			tabindex="0"
+			data-cy="dropdown"
 			@click="openMenu"
 			@keydown.enter="openMenu"
 		>
@@ -57,6 +58,7 @@ const logOutHandler = async () => {
 				aria-label="log out"
 				class="cursor-pointer px-4 py-2 transition-colors hover:bg-gray-200"
 				tabindex="0"
+				data-cy="logout"
 				@click="logOutHandler"
 				@keydown.enter="logOutHandler"
 			>

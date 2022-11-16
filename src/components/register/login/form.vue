@@ -73,6 +73,7 @@ const submit = async () => {
 			/>
 			<button
 				type="submit"
+				aria-label="submit form"
 				class="my-3 flex items-center justify-center rounded py-1 text-white"
 				:disabled="form.$invalid || state.isLoading"
 				:class="[form.$invalid ? 'bg-[#0095f64d]' : 'bg-[#0095f6]']"

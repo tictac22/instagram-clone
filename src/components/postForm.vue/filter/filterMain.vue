@@ -110,7 +110,7 @@ const capitalizeFirstLetter = (string: string) =>
 
 			<FilterNavigation />
 		</div>
-		<div class="relative z-50 h-full w-[340px] bg-white">
+		<div class="relative z-50 flex h-full w-[340px] flex-col bg-white">
 			<div class="flex items-center justify-center">
 				<p
 					class="flex-[100%] cursor-pointer border-b border-solid border-black py-4 text-center"
@@ -118,8 +118,11 @@ const capitalizeFirstLetter = (string: string) =>
 					Filters
 				</p>
 			</div>
+			<p v-if="filterErrors" class="ml-4 font-medium text-red-500">
+				Please select filters for your images
+			</p>
 			<div
-				class="m-2 grid grid-cols-3 justify-items-center gap-x-4 gap-y-4"
+				class="scrollbar-hide m-2 grid grid-cols-3 justify-items-center gap-x-4 gap-y-4 overflow-y-scroll"
 			>
 				<div
 					v-for="image in Object.keys(imageFilters)"
@@ -128,6 +131,7 @@ const capitalizeFirstLetter = (string: string) =>
 				>
 					<div
 						class="h-[88px] w-[88px] cursor-pointer overflow-hidden rounded-md border-2 border-solid text-center"
+						:aria-label="`select ${image} filter`"
 						:class="[
 							image === selectedFilter[currentImage]
 								? 'border-[rgb(0,149,246)]'
@@ -137,7 +141,7 @@ const capitalizeFirstLetter = (string: string) =>
 					>
 						<img
 							:src="`/filters/${image}.jpg`"
-							alt="image"
+							:alt="image"
 							class="h-[99px] w-[99px] rounded-md object-cover"
 						/>
 					</div>
@@ -153,9 +157,6 @@ const capitalizeFirstLetter = (string: string) =>
 					</p>
 				</div>
 			</div>
-			<p v-if="filterErrors" class="ml-4 font-medium text-red-500">
-				Please select filters for your images
-			</p>
 		</div>
 	</div>
 </template>

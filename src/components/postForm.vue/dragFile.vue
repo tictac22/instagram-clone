@@ -60,6 +60,7 @@ const isDraggingStyle = computed(() => ({
 			</p>
 			<button
 				class="mt-3 rounded bg-blue-500 p-1 px-2 text-white"
+				data-cy="select file"
 				@click="triggerInputFile"
 			>
 				Select from computer

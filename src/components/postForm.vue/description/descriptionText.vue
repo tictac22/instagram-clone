@@ -180,6 +180,7 @@ const createPost = async () => {
 		</div>
 		<button
 			v-else
+			aria-label="submit post"
 			class="mt-3 flex h-[39px] items-center justify-center rounded bg-blue-600 p-2 text-center text-white"
 			:disabled="disabledButton || state.isLoading"
 			:class="[disabledButton ? 'opacity-50' : 'opacity-100']"
