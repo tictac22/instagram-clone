@@ -75,6 +75,7 @@ exports[`Login form > mounts succesffuly 1`] = `
     </div>
     
     <button
+      aria-label="submit form"
       class="my-3 flex items-center justify-center rounded py-1 text-white bg-[#0095f64d]"
       disabled=""
       type="submit"

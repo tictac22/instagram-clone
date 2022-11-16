@@ -12,7 +12,9 @@
 		"eslint:staged": "eslint . --fix --max-warnings=3 && git add .",
 		"prepare": "husky install",
 		"test": "vitest -c ./vitest.config.ts",
-		"coverage": "vitest run   -c ./vitest.config.ts --coverage"
+		"coverage": "vitest run   -c ./vitest.config.ts --coverage",
+		"cypress": "npx cypress run",
+		"test:e2e": "start-server-and-test dev http://localhost:3000 cypress"
 	},
 	"lint-staged": {
 		"**/*.{vue,ts,js}": [
@@ -28,6 +30,7 @@
 		"@vuelidate/validators": "^2.0.0-alpha.31",
 		"@vueuse/head": "^0.9.8",
 		"firebase": "^9.10.0",
+		"firebase-admin": "^11.2.1",
 		"pinia": "^2.0.22",
 		"uuid": "^9.0.0",
 		"vue": "^3.2.37",
@@ -50,9 +53,12 @@
 		"@vue/test-utils": "^2.2.1",
 		"autoprefixer": "^10.4.11",
 		"cssnano": "^5.1.13",
+		"cypress": "^11.0.1",
+		"cypress-firebase": "^2.2.2",
 		"eslint": "^8.24.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-import-resolver-typescript": "^3.5.1",
+		"eslint-plugin-cypress": "^2.12.1",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-vue": "^9.5.1",
@@ -63,6 +69,7 @@
 		"prettier": "^2.7.1",
 		"prettier-plugin-tailwindcss": "^0.1.13",
 		"rollup-plugin-terser": "^7.0.2",
+		"start-server-and-test": "^1.14.0",
 		"tailwindcss": "^3.1.8",
 		"typescript": "^4.6.4",
 		"vite": "^3.1.0",

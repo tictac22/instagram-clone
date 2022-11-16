@@ -3,4 +3,5 @@
 
 yarn prettier
 yarn coverage
+yarn test:e2e
 yarn eslint:staged
